@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payhada-admin
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: payhada-admin
+  template:
+    metadata:
+      labels:
+        app: payhada-admin
+    spec:
+      containers:
+      - name: payhada-admin
+        image: up1st9iq.private-ncr.fin-ntruss.com/payhada-admin:latest
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "test"
+        ports:
+        - containerPort: 8005
+      imagePullSecrets:
+      - name: docker-bucket 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payhada-admin-svc
+spec:
+  ports:
+  - port: 8005
+    targetPort: 8005
+    protocol: TCP
+    name: http
+  selector:
+    app: payhada-admin

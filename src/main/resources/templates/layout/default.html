@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        <meta name="format-detection" content="telephone=no" />
+        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">PAYHADA - ADMIN</title>
+        
+    </head>
+    <body>
+        <th:block th:if="${hideHeader} ? false : true">
+            <div th:replace="fragments/header-main :: header"></div>
+            <div layout:fragment="top-banner" th:replace="fragments/top :: top"></div>
+        </th:block>
+        <div layout:fragment="content" class="common-content-wrapper"></div>
+        <th:block th:if="${hideHeader} ? false : true">
+            <footer th:replace="fragments/footer :: footer"></footer>
+        </th:block>
+        
+    </body>
+</html>
