@@ -37,5 +37,14 @@ public class MainController {
         
         return "index";
     }
+
+    @RequestMapping(value={"/404"})
+    public String errorPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		log.info("[MainController : errorPage] START");	
+
+		model.addAttribute("text","1212121212");
+        
+        return "error/maintenance";
+    }
 }
 

@@ -1,40 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" layout:decorate="layout/default" th:with="hideHeader=true">
     <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">PAYHADA - ADMIN</title>
-        <!-- BEGIN: VENDOR CSS-->
-        <link rel="stylesheet" type="text/css" th:href="@{/css/vendors/vendors.min.css}"/>
-        <!-- END: VENDOR CSS-->
-        <!-- BEGIN: Page Level CSS-->
-        <link rel="stylesheet" type="text/css" th:href="@{/css/themes/materialize.css}"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/themes/style.css}"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/pages/login.css}"/>
-        <!-- END: Page Level CSS-->
-        <!-- BEGIN: Custom CSS-->
-        <link rel="stylesheet" type="text/css" th:href="@{/css/custom/common.css}"/>
-        <!-- END: Custom CSS-->
-    </head>
-    <!-- END: Head-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/pages/login.css}" />
     </head>
     <body
-        class="
-            vertical-layout vertical-menu-collapsible
-            page-header-dark
-            vertical-modern-menu
-            preload-transitions
-            1-column
-            login-bg
-            blank-page blank-page
-        "
+        class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 1-column login-bg blank-page blank-page"
         data-open="click"
         data-menu="vertical-modern-menu"
         data-col="1-column"
     >
-        <div class="row">
+        <div layout:fragment="content" th:classappend="row">
             <div class="col s12">
                 <div class="container">
                     <div id="login-page" class="row">
@@ -62,16 +37,22 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <a
-                                            href="index.html"
+                                            th:href="@{/main}"
                                             class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12"
-                                            >Login</a
-                                        >
+                                            >Login
+                                        </a>
+                                        <!-- <button
+                                        type="submit"
+                                        class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12"
+                                        >Login
+                                    </button> -->
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="input-field col s6 m6 l6"></div>
                                     <div class="input-field col s6 m6 l6">
                                         <p class="margin right-align medium-small">
-                                            <a href="user-forgot-password.html">Forgot password ?</a>
+                                            <a href="#">Forgot password ?</a>
                                         </p>
                                     </div>
                                 </div>
@@ -82,16 +63,5 @@
                 <div class="content-overlay"></div>
             </div>
         </div>
-        <!-- BEGIN VENDOR JS-->
-        <script th:src="@{/js/vendors.min.js}"></script>
-        <!-- BEGIN VENDOR JS-->
-        <!-- BEGIN PAGE VENDOR JS-->
-        <!-- END PAGE VENDOR JS-->
-        <!-- BEGIN THEME  JS-->
-        <script th:src="@{/js/plugins.js}"></script>
-        <script th:src="@{/js/search.js}"></script>
-        <!-- END THEME  JS-->
-        <!-- BEGIN PAGE LEVEL JS-->
-        <!-- END PAGE LEVEL JS-->
     </body>
 </html>
