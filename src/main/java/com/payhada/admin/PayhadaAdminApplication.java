@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.payhada.admin.mapper")
+@MapperScan(basePackages = "mapper")
 @ServletComponentScan
 public class PayhadaAdminApplication extends SpringBootServletInitializer {
 
