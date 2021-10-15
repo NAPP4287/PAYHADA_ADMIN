@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     xmlns:th="http://www.thymeleaf.org" >
     <head>
         <meta charset="UTF-8"/>
@@ -7,17 +7,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
         <meta name="format-detection" content="telephone=no" />
         <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">PAYHADA - ADMIN</title>
-        
     </head>
     <body>
-        <th:block th:if="${hideHeader} ? false : true">
-            <div th:replace="fragments/header-main :: header"></div>
-            <div layout:fragment="top-banner" th:replace="fragments/top :: top"></div>
-        </th:block>
+        <div th:replace="fragments/header :: header"></div>
         <div layout:fragment="content" class="common-content-wrapper"></div>
-        <th:block th:if="${hideHeader} ? false : true">
-            <footer th:replace="fragments/footer :: footer"></footer>
-        </th:block>
-        
+        <footer th:replace="fragments/footer :: footer"></footer>
+        <script layout:fragment="page-script"></script>
     </body>
 </html>

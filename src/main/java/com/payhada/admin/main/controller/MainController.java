@@ -18,14 +18,24 @@ public class MainController {
 
 
     @RequestMapping(value={"/", "/login"})
-    public String main(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		log.info("[MainController : main] START");	
+    public String loginPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		log.info("[MainController : loginPage] START");	
+
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "0");
 
 		model.addAttribute("text","1212121212");
         
         return "login";
+    }
+
+    @RequestMapping(value={"/main"})
+    public String mainPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		log.info("[MainController : mainPage] START");	
+
+		model.addAttribute("text","1212121212");
+        
+        return "index";
     }
 }
 
