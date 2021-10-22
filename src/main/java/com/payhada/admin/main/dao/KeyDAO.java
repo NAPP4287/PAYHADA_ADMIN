@@ -3,8 +3,8 @@ package com.payhada.admin.main.dao;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface KeyDao {
+public interface KeyDAO {
 
-	public int setAesKey(String dbKey);
+	int setAesKey(String dbKey);
 	
 }
