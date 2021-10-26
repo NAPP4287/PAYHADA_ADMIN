@@ -1,7 +1,12 @@
 /*-------------------------------------------------
 	Style file contain theme components style
 -------------------------------------------------*/
-@import url(https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,500,600);
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap');
+*{
+    font-family: 'Gothic A1', sans-serif;
+}
+
+/*@import url(https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,500,600);*/
 .materialize-red
 {
     background-color: #e51c23 !important;
@@ -3893,7 +3898,8 @@ a
 
 html
 {
-    font-family: 'Muli', sans-serif !important;
+    /*font-family: 'Muli', sans-serif !important;*/
+    font-family: 'Gothic A1', sans-serif !important;
     font-weight: normal;
     line-height: 1.5;
 
@@ -3920,7 +3926,7 @@ html
 {
     html
     {
-        font-size: 15px;
+        font-size: 14px;
     }
 }
 
@@ -3931,7 +3937,8 @@ h4,
 h5,
 h6
 {
-    font-family: 'Muli', sans-serif;
+    /*font-family: 'Muli', sans-serif;*/
+    font-family: 'Gothic A1', sans-serif;
     font-weight: 400;
     line-height: 1.1;
 
@@ -3940,7 +3947,8 @@ h6
 
 p
 {
-    font-family: 'Muli', sans-serif;
+    /*font-family: 'Muli', sans-serif;*/
+    font-family: 'Gothic A1', sans-serif;
 }
 
 h1 a,
@@ -8543,7 +8551,8 @@ span.badge.pill
 
 .navbar .notification-badge
 {
-    font-family: 'Muli', sans-serif;
+    /*font-family: 'Muli', sans-serif;*/
+    font-family: 'Gothic A1', sans-serif;
 
     position: relative;
     top: -20px;
@@ -9011,15 +9020,12 @@ nav.display-none.search-sm .nav-wrapper form .input-field i
 
 .brand-sidebar span.logo-text
 {
-    font-size: 24px;
-
+    font-size: 22px;
+    font-weight: bold;
     visibility: visible;
-
-    padding-left: 7px;
-
+    padding-left: 23px;
     -webkit-transition: opacity .2s linear;
             transition: opacity .2s linear;
-
     opacity: 1;
 }
 
@@ -9032,7 +9038,7 @@ nav.display-none.search-sm .nav-wrapper form .input-field i
 
     display: inline-block;
 
-    margin: 1px 0;
+    margin-top: 10px;
     padding: 22px 12px 22px 22px;
 
     color: #333;
@@ -10508,7 +10514,7 @@ Cards
 
 .card .card-title
 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
 
     margin: 0;
