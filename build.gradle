@@ -12,8 +12,8 @@ bootRun {
     systemProperty "spring.profiles.active", activeProfile
 }
 
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+group = 'com.payhada'
+version = '2.0.0'
 sourceCompatibility = '1.8'
 
 def defaultEncoding = 'UTF8'

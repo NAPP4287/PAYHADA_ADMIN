@@ -1,8 +1,10 @@
-# vscode setting
+# editor directories and files
+.vscode
+.idea
 .gradle
 .settings
-.vscode
 bin
 .classpath
 .project
 logs
+build
