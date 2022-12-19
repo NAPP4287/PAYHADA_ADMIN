@@ -110,10 +110,23 @@ dependencies {
 
 }
 
+//apply plugin: 'org.siouan.frontend-jdk11'
+//
+//frontend {
+//	nodeDistributionProvided = false
+//	nodeInstallDirectory = file("${projectDir}/src/main/resources/static/node")
+//	packageJsonDirectory =  file("${projectDir}/src/main/resources/static")
+//	nodeVersion = '12.16.3'
+//	assembleScript = 'run build'
+//	cleanScript = 'run clean'
+//	checkScript = 'run check'
+//}
+
 test {
 	useJUnitPlatform()
 }
- 
+
+
 /*war { 
 	enabled = true  
 }*/

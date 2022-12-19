@@ -1,191 +1,191 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" layout:decorate="layout/default">
-    <head>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/vendors/animate.css}" />
-        <link rel="stylesheet" type="text/css" th:href="@{/css/vendors/chartist.min.css}" />
-        <link rel="stylesheet" type="text/css" th:href="@{/css/vendors/chartist-plugin-tooltip.css}" />
-        <link rel="stylesheet" type="text/css" th:href="@{/css/pages/dashboard-modern.css}" />
-        <link rel="stylesheet" type="text/css" th:href="@{/css/pages/intro.css}" />
-    </head>
-    <body
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/vendors/animate.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/vendors/chartist.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/vendors/chartist-plugin-tooltip.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/pages/dashboard-modern.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/pages/intro.css}" />
+</head>
+<body
         class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 2-columns"
         data-open="click"
         data-menu="vertical-modern-menu"
         data-col="2-columns"
-    >
-        <div layout:fragment="content" id="main">
-            <div class="row">
-                <!-- <div class="content-wrapper-before gradient-45deg-indigo-purple"></div> -->
-                <div class="col s12">
-                    <div class="container">
-                        <div class="section">
-                            <!-- card stats start -->
-                            <div id="card-stats" class="pt-0">
-                                <div class="row">
-                                    <div class="col s12 m6 l3">
-                                        <div class="card animate fadeLeft">
-                                            <div class="card-content cyan white-text">
-                                                <p class="card-stats-title"><i class="material-icons">person_outline</i>최근 가입 유저</p>
-                                                <h4 class="card-stats-number white-text">10</h4>
-                                                <p class="card-stats-compare">
-                                                    <i class="material-icons">keyboard_arrow_up</i> 15%
-                                                    <span class="cyan text text-lighten-5">from 1 week</span>
-                                                </p>
-                                            </div>
-                                            <div class="card-action cyan darken-1">
-                                                <div id="clients-bar" class="center-align"></div>
-                                            </div>
-                                        </div>
+>
+<div layout:fragment="content" id="main">
+    <div class="row">
+        <!-- <div class="content-wrapper-before gradient-45deg-indigo-purple"></div> -->
+        <div class="col s12">
+            <div class="container">
+                <div class="section">
+                    <!-- card stats start -->
+                    <div id="card-stats" class="pt-0">
+                        <div class="row">
+                            <div class="col s12 m6 l3">
+                                <div class="card animate fadeLeft">
+                                    <div class="card-content cyan white-text">
+                                        <p class="card-stats-title"><i class="material-icons">person_outline</i>최근 가입 유저</p>
+                                        <h4 class="card-stats-number white-text">10</h4>
+                                        <p class="card-stats-compare">
+                                            <i class="material-icons">keyboard_arrow_up</i> 15%
+                                            <span class="cyan text text-lighten-5">from 1 week</span>
+                                        </p>
                                     </div>
-                                    <div class="col s12 m6 l3">
-                                        <div class="card animate fadeLeft">
-                                            <div class="card-content red accent-2 white-text">
-                                                <p class="card-stats-title"><i class="material-icons">person_outline</i>이번 달 가입 유저</p>
-                                                <h4 class="card-stats-number white-text">566</h4>
-                                                <p class="card-stats-compare">
-                                                    <i class="material-icons">keyboard_arrow_up</i> 70%
-                                                    <span class="red-text text-lighten-5">from last month</span>
-                                                </p>
-                                            </div>
-                                            <div class="card-action red">
-                                                <div id="sales-compositebar" class="center-align"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col s12 m6 l3">
-                                        <div class="card animate fadeRight">
-                                            <div class="card-content orange lighten-1 white-text">
-                                                <p class="card-stats-title"><i class="material-icons">attach_money</i> 최근 거래 금액</p>
-                                                <h4 class="card-stats-number white-text">$100.00 AUD</h4>
-                                                <p class="card-stats-compare">
-                                                    <i class="material-icons">keyboard_arrow_up</i> 80%
-                                                    <span class="orange-text text-lighten-5">from 1 week</span>
-                                                </p>
-                                            </div>
-                                            <div class="card-action orange">
-                                                <div id="profit-tristate" class="center-align"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col s12 m6 l3">
-                                        <div class="card animate fadeRight">
-                                            <div class="card-content green lighten-1 white-text">
-                                                <p class="card-stats-title"><i class="material-icons">attach_money</i> 이번 달 거래 금액</p>
-                                                <h4 class="card-stats-number white-text">$800.00 AUD</h4>
-                                                <p class="card-stats-compare">
-                                                    <i class="material-icons">keyboard_arrow_down</i> 3%
-                                                    <span class="green-text text-lighten-5">from last month</span>
-                                                </p>
-                                            </div>
-                                            <div class="card-action green">
-                                                <div id="invoice-line" class="center-align"></div>
-                                            </div>
-                                        </div>
+                                    <div class="card-action cyan darken-1">
+                                        <div id="clients-bar" class="center-align"></div>
                                     </div>
                                 </div>
                             </div>
-                            <!--card stats end-->
-                            <div class="row">
-                                <div class="col s12 m6 l4">
-                                    <div class="card padding-4 animate fadeLeft">
-                                        <div class="row">
-                                            <div class="col s5 m5">
-                                            <h5 class="mb-0">10</h5>
-                                            <p class="no-margin">New</p>
-                                            <p class="mb-0 pt-8">12,900</p>
-                                        </div>
-                                        <div class="col s7 m7 right-align">
-                                            <i class="material-icons background-round mt-5 mb-5 gradient-45deg-purple-amber gradient-shadow white-text">perm_identity</i>
-                                            <p class="mb-0">총 가입 유저수</p>
-                                            </div>
-                                        </div>
+                            <div class="col s12 m6 l3">
+                                <div class="card animate fadeLeft">
+                                    <div class="card-content red accent-2 white-text">
+                                        <p class="card-stats-title"><i class="material-icons">person_outline</i>이번 달 가입 유저</p>
+                                        <h4 class="card-stats-number white-text">566</h4>
+                                        <p class="card-stats-compare">
+                                            <i class="material-icons">keyboard_arrow_up</i> 70%
+                                            <span class="red-text text-lighten-5">from last month</span>
+                                        </p>
                                     </div>
-                                    <div id="chartjs" class="card pt-0 pb-0 animate fadeLeft">
-                                        <div class="dashboard-revenue-wrapper padding-2 ml-2">
-                                            <span class="badge gradient-45deg-indigo-purple gradient-shadow mt-2 mr-2">AUD</span>
-                                            <p class="mt-2 mb-0 font-weight-600">현재 설정 환율<span class="no-margin grey-text lighten-3">  2021.10.09</span></p>
-                                            
-                                            <h5>1 AUD = 806 KRW</h5>
-                                        </div>
-                                        <div class="dashboard-revenue-wrapper padding-2 ml-2">
-                                            <span class="badge gradient-45deg-indigo-purple gradient-shadow mt-2 mr-2">AUD</span>
-                                            <p class="mt-2 mb-0 font-weight-600">현재 설정 수수료<span class="no-margin grey-text lighten-3">  2021.10.09</span></p>
-                                            <h6>Pay ID = 1.0 AUD</h6>
-                                            <h6>POLi = 3.0 AUD</h6>
-                                        </div>
-                                        <!-- <div class="sample-chart-wrapper card-gradient-chart">
-                                            <canvas id="custom-line-chart-sample-three" class="center"></canvas>
-                                        </div> -->
+                                    <div class="card-action red">
+                                        <div id="sales-compositebar" class="center-align"></div>
                                     </div>
                                 </div>
-                                <div class="col s12 m6 l8">
-                                    <div class="card subscriber-list-card animate fadeRight">
-                                        <div class="card-content pb-1">
-                                            <h4 class="card-title mb-0">최근 송금 목록 <i class="material-icons float-right">more_vert</i></h4>
-                                        </div>
-                                        <table class="subscription-table responsive-table highlight">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Company</th>
-                                                    <th>Start Date</th>
-                                                    <th>Status</th>
-                                                    <th>Amount</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Michael Austin</td>
-                                                    <td>ABC Fintech LTD.</td>
-                                                    <td>Jan 1,2019</td>
-                                                    <td><span class="badge pink lighten-5 pink-text text-accent-2">Close</span></td>
-                                                    <td>$ 1000.00</td>
-                                                    <td class="center-align"><a href="#"><i class="material-icons pink-text">clear</i></a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Aldin Rakić</td>
-                                                    <td>ACME Pvt LTD.</td>
-                                                    <td>Jan 10,2019</td>
-                                                    <td><span class="badge green lighten-5 green-text text-accent-4">Open</span></td>
-                                                    <td>$ 3000.00</td>
-                                                    <td class="center-align"><a href="#"><i class="material-icons pink-text">clear</i></a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>İris Yılmaz</td>
-                                                    <td>Collboy Tech LTD.</td>
-                                                    <td>Jan 12,2019</td>
-                                                    <td><span class="badge green lighten-5 green-text text-accent-4">Open</span></td>
-                                                    <td>$ 2000.00</td>
-                                                    <td class="center-align"><a href="#"><i class="material-icons pink-text">clear</i></a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lidia Livescu</td>
-                                                    <td>My Fintech LTD.</td>
-                                                    <td>Jan 14,2019</td>
-                                                    <td><span class="badge pink lighten-5 pink-text text-accent-2">Close</span></td>
-                                                    <td>$ 1100.00</td>
-                                                    <td class="center-align"><a href="#"><i class="material-icons pink-text">clear</i></a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                            </div>
+                            <div class="col s12 m6 l3">
+                                <div class="card animate fadeRight">
+                                    <div class="card-content orange lighten-1 white-text">
+                                        <p class="card-stats-title"><i class="material-icons">attach_money</i> 최근 거래 금액</p>
+                                        <h4 class="card-stats-number white-text">$100.00 AUD</h4>
+                                        <p class="card-stats-compare">
+                                            <i class="material-icons">keyboard_arrow_up</i> 80%
+                                            <span class="orange-text text-lighten-5">from 1 week</span>
+                                        </p>
+                                    </div>
+                                    <div class="card-action orange">
+                                        <div id="profit-tristate" class="center-align"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m6 l3">
+                                <div class="card animate fadeRight">
+                                    <div class="card-content green lighten-1 white-text">
+                                        <p class="card-stats-title"><i class="material-icons">attach_money</i> 이번 달 거래 금액</p>
+                                        <h4 class="card-stats-number white-text">$800.00 AUD</h4>
+                                        <p class="card-stats-compare">
+                                            <i class="material-icons">keyboard_arrow_down</i> 3%
+                                            <span class="green-text text-lighten-5">from last month</span>
+                                        </p>
+                                    </div>
+                                    <div class="card-action green">
+                                        <div id="invoice-line" class="center-align"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="content-overlay"></div>
+                    <!--card stats end-->
+                    <div class="row">
+                        <div class="col s12 m6 l4">
+                            <div class="card padding-4 animate fadeLeft">
+                                <div class="row">
+                                    <div class="col s5 m5">
+                                        <h5 class="mb-0">10</h5>
+                                        <p class="no-margin">New</p>
+                                        <p class="mb-0 pt-8">12,900</p>
+                                    </div>
+                                    <div class="col s7 m7 right-align">
+                                        <i class="material-icons background-round mt-5 mb-5 gradient-45deg-purple-amber gradient-shadow white-text">perm_identity</i>
+                                        <p class="mb-0">총 가입 유저수</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="chartjs" class="card pt-0 pb-0 animate fadeLeft">
+                                <div class="dashboard-revenue-wrapper padding-2 ml-2">
+                                    <span class="badge gradient-45deg-indigo-purple gradient-shadow mt-2 mr-2">AUD</span>
+                                    <p class="mt-2 mb-0 font-weight-600">현재 설정 환율<span class="no-margin grey-text lighten-3">  2021.10.09</span></p>
+
+                                    <h5>1 AUD = 806 KRW</h5>
+                                </div>
+                                <div class="dashboard-revenue-wrapper padding-2 ml-2">
+                                    <span class="badge gradient-45deg-indigo-purple gradient-shadow mt-2 mr-2">AUD</span>
+                                    <p class="mt-2 mb-0 font-weight-600">현재 설정 수수료<span class="no-margin grey-text lighten-3">  2021.10.09</span></p>
+                                    <h6>Pay ID = 1.0 AUD</h6>
+                                    <h6>POLi = 3.0 AUD</h6>
+                                </div>
+                                <!-- <div class="sample-chart-wrapper card-gradient-chart">
+                                    <canvas id="custom-line-chart-sample-three" class="center"></canvas>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col s12 m6 l8">
+                            <div class="card subscriber-list-card animate fadeRight">
+                                <div class="card-content pb-1">
+                                    <h4 class="card-title mb-0">최근 송금 목록 <i class="material-icons float-right">more_vert</i></h4>
+                                </div>
+                                <table class="subscription-table responsive-table highlight">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Start Date</th>
+                                        <th>Status</th>
+                                        <th>Amount</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Michael Austin</td>
+                                        <td>ABC Fintech LTD.</td>
+                                        <td>Jan 1,2019</td>
+                                        <td><span class="badge pink lighten-5 pink-text text-accent-2">Close</span></td>
+                                        <td>$ 1000.00</td>
+                                        <td class="center-align"><a href="#"><i class="material-icons pink-text">clear</i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Aldin Rakić</td>
+                                        <td>ACME Pvt LTD.</td>
+                                        <td>Jan 10,2019</td>
+                                        <td><span class="badge green lighten-5 green-text text-accent-4">Open</span></td>
+                                        <td>$ 3000.00</td>
+                                        <td class="center-align"><a href="#"><i class="material-icons pink-text">clear</i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>İris Yılmaz</td>
+                                        <td>Collboy Tech LTD.</td>
+                                        <td>Jan 12,2019</td>
+                                        <td><span class="badge green lighten-5 green-text text-accent-4">Open</span></td>
+                                        <td>$ 2000.00</td>
+                                        <td class="center-align"><a href="#"><i class="material-icons pink-text">clear</i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lidia Livescu</td>
+                                        <td>My Fintech LTD.</td>
+                                        <td>Jan 14,2019</td>
+                                        <td><span class="badge pink lighten-5 pink-text text-accent-2">Close</span></td>
+                                        <td>$ 1100.00</td>
+                                        <td class="center-align"><a href="#"><i class="material-icons pink-text">clear</i></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="content-overlay"></div>
         </div>
-        <script th:src="@{/js/chart.min.js}"></script>
-        <script th:src="@{/js/chartist.min.js}"></script>
-        <script th:src="@{/js/chartist-plugin-tooltip.js}"></script>
-        <script th:src="@{/js/chartist-plugin-fill-donut.min.js}"></script>
+    </div>
+</div>
+<script th:src="@{/js/chart.min.js}"></script>
+<script th:src="@{/js/chartist.min.js}"></script>
+<script th:src="@{/js/chartist-plugin-tooltip.js}"></script>
+<script th:src="@{/js/chartist-plugin-fill-donut.min.js}"></script>
 
-        <script th:src="@{/js/customizer.js}"></script>
+<script th:src="@{/js/customizer.js}"></script>
 
-        <script th:src="@{/js/intro.js}"></script>
-        <script th:src="@{/js/dashboard-modern.js}"></script>
-    </body>
+<script th:src="@{/js/intro.js}"></script>
+<script th:src="@{/js/dashboard-modern.js}"></script>
+</body>
 </html>
