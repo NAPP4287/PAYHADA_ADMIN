@@ -1,9 +1,7 @@
 package com.payhada.admin.exception;
 
-import com.payhada.admin.config.error.ErrorCode;
-import groovy.util.logging.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.payhada.admin.code.ErrorCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +14,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @Order(0)
 @Slf4j
 public class RestExceptionController {
-	
-	private final Logger log = LoggerFactory.getLogger(getClass());
-	
+
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)	
 	protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e){
 		log.debug("MethodArgumentTypeMismatchException",e);
@@ -44,7 +40,7 @@ public class RestExceptionController {
 		ErrorCode code =e.getError();
 		
 		if(code==null) {			
-			ErrorCode err=ErrorCode.NOT_DEFINED_ERR;
+			ErrorCode err=ErrorCode.API_SERVER_ERROR;
 			res.setErrorMsg(err.getMessage());
 			res.setErrorCode(err.getCode());	
 		}else {
@@ -58,7 +54,7 @@ public class RestExceptionController {
     protected ResponseEntity<ErrorResponse> handleApplicationException(Exception e) {
         log.error("GLOBAL EXCEPTION", e);
 		final ErrorResponse res = new ErrorResponse();		
-		ErrorCode err=ErrorCode.BUSINESS_PROCESS_ERR;
+		ErrorCode err=ErrorCode.API_PROCESS_ERROR;
 		res.setErrorMsg(err.getMessage());
 		res.setErrorCode(err.getCode());					
 		return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);    

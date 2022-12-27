@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.payhada.admin.dao.MemberDAO">
+
+	<select id="getMemberId" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			tb_member
+		WHERE
+			id = #{id}
+	</select>
+
+    <select id="findLoginInfo" resultType="memberDTO">
+        SELECT	  member_no
+				, DECRYPT(name) AS name
+				, id
+				, pwd
+				, status
+				, branch_cd
+				, agent_cd
+				, agent_nm
+				, email
+				, DECRYPT(tel)			AS tel
+				, DECRYPT(mobile)		AS mobile
+				, DECRYPT(job_tel)		AS job_tel
+				, DECRYPT(zip_code)		AS zip_code
+				, DECRYPT(addr)			AS addr
+				, DECRYPT(addr_detail)	AS addr_detail
+				, ip
+				, join_dt
+				, leave_dt
+				, pwd_ch_dt
+				, last_login_dt
+				, pwd_fail_cnt
+				, is_enabled
+             	, lock_time
+             	, otp_code
+             	, otp_dt
+             	, reg_dt
+				, reg_id
+				, user_role
+				, change_pw_yn 
+        FROM tb_member
+        WHERE id = #{id}
+          AND pwd = #{pwd}
+          AND status in (00, 01)
+    </select>
+
+	<select id="findOtpDetail" resultType="memberDTO">
+		SELECT	  member_no
+				, user_role
+				, id
+				, pwd
+             	, otp_code
+             	, otp_dt
+        FROM tb_member
+        WHERE member_no = #{member_no}
+          AND status in (00, 01)
+    </select>
+
+	<update id="updateFailCount">
+		UPDATE
+			tb_member
+		SET
+			pwd_fail_cnt = IFNULL(pwd_fail_cnt, 0) + 1
+		WHERE
+			id = #{id}
+	</update>
+
+	<select id="getFailAttempts" parameterType="String" resultType="memberDTO">
+		SELECT
+			pwd_fail_cnt
+			, is_enabled
+			, lock_time
+		FROM
+		    tb_member
+		WHERE
+			id = #{id}
+	</select>
+
+	<update id="updateEnabled">
+		UPDATE
+			tb_member
+		SET
+			pwd_fail_cnt = #{pwd_fail_cnt}
+			<if test="is_enabled != null and is_enabled != ''">
+				, is_enabled = #{is_enabled}
+				, lock_time = now()
+			</if>
+			<if test="lock_time == null">
+				, lock_time = #{lock_time}
+			</if>
+			WHERE
+			id = #{id}
+	</update>
+
+	<update id="updateOtp">
+		UPDATE
+			tb_member
+		SET
+			otp_code = #{otp_code}
+			, otp_dt = now()
+		WHERE
+			id = #{id}
+	</update>
+
+    <select id="getMemberCnt" resultType="Integer">
+        SELECT count(*) 
+        FROM tb_member
+        <where>
+        	<!-- 브랜치 삭제 카운트처리 -->
+        	<if test="branch_cd !=null">AND branch_cd = #{branch_cd}</if>
+        	<if test = "agent_cd !=null">AND agent_cd = #{agent_cd}</if>
+        	
+        </where>
+    </select>    
+    
+    <select id="getMember" resultType="memberDTO">
+    	SELECT z.*,
+			   COUNT(*)OVER() AS totCnt
+		FROM (SELECT  b.branch_nm as branch_nm
+	    	        , d.code_name as status_nm
+					, a.member_no
+					, DECRYPT(a.name) AS name
+					, a.id
+					, a.pwd
+					, a.status
+					, a.branch_cd
+					, a.agent_cd
+					, a.agent_nm
+					, a.email
+					, DECRYPT(a.tel) AS tel
+					, DECRYPT(a.mobile) AS mobile
+					, DECRYPT(a.job_tel) AS job_tel
+					, DECRYPT(a.zip_code) AS zip_code
+					, DECRYPT(a.addr) AS addr
+					, DECRYPT(a.addr_detail) AS addr_detail
+					, a.ip 
+					, a.join_dt
+					, a.leave_dt
+					, a.pwd_ch_dt
+					, a.last_login_dt
+					, a.pwd_fail_cnt
+					, a.reg_dt 
+					, a.reg_id
+					, a.user_role
+					, c.code_name as user_role_nm	 
+    	FROM   tb_member a
+    	INNER JOIN tb_branch b
+    	  ON a.branch_cd =b.branch_cd
+    	LEFT JOIN tb_code c
+    	  ON c.group_code='user_role'
+    	  AND a.user_role = c.code
+    	LEFT JOIN tb_code d
+		  ON d.group_code = 'member_status'
+		  AND a.status = d.code
+    	<where>
+	   		<if test="branch_cd !=null and branch_cd!=''">
+	   		  AND a.branch_cd=#{branch_cd}
+	   		</if>
+	   		<if test="status !=null and status!=''">
+	   		  AND a.status=#{status}
+	   		</if>
+	   		<if test="agent_cd !=null and agent_cd !=''">
+	   		  AND a.agent_cd=#{agent_cd}
+	   		</if>
+	   		<if test="member_no !=null and member_no!=''">
+	   		  AND a.member_no=#{member_no}
+	   		</if>
+   		</where>
+   		ORDER BY member_no DESC) z
+   		<!-- LIMIT #{searchDto.pageViewCnt} OFFSET #{searchDto.startIdx} -->
+    </select>
+
+	<select id="getMemberDetail" resultType="memberDTO">
+    	SELECT    b.branch_nm as branch_nm
+    	        , c.code_name as status_nm
+    			, a.member_no
+				, DECRYPT(a.name) AS name
+				, a.id
+				, a.pwd
+				, a.status
+				, a.branch_cd
+				, a.agent_cd
+				, a.agent_nm
+				, a.email
+				, DECRYPT(a.tel) AS tel
+				, DECRYPT(a.mobile) AS mobile
+				, DECRYPT(a.job_tel) AS job_tel
+				, DECRYPT(a.zip_code) AS zip_code
+				, DECRYPT(a.addr) AS addr
+				, DECRYPT(a.addr_detail) AS addr_detail
+				, a.ip
+				, DATE_FORMAT(a.join_dt, '%Y-%m-%d') AS join_dt
+				, DATE_FORMAT(a.leave_dt, '%Y-%m-%d') AS leave_dt
+				, a.pwd_ch_dt
+				, a.last_login_dt
+				, a.pwd_fail_cnt
+    	     	, a.is_enabled
+    	     	, a.otp_code
+    	     	, a.otp_dt
+				, a.reg_dt
+				, a.reg_id
+				, a.user_role    	        
+				, a.change_pw_yn
+    	FROM  tb_member a
+    		 ,tb_branch b
+    		 ,tb_code c 
+    	WHERE a.branch_cd =b.branch_cd 
+    	  AND c.group_code='member_status'
+    	  AND a.status =c.code  
+		  AND a.member_no=#{member_no}
+	   	ORDER BY reg_dt DESC
+	</select>
+	    
+	 <insert id="registerMember">
+    	INSERT INTO tb_member (member_no
+								, name
+								, id
+								, pwd
+								, status
+								, branch_cd
+								, email
+								, tel
+								, mobile
+								, job_tel
+								, zip_code
+								, addr
+								, addr_detail
+								, user_role
+								, join_dt
+								, leave_dt
+								, pwd_ch_dt
+								, last_login_dt
+								, pwd_fail_cnt
+								, agent_cd
+								, agent_nm
+								, reg_dt
+								, reg_id)	
+    	VALUES(	   (select member_no from (select COALESCE(max(member_no), 0)+1 as member_no from tb_member) t)
+				, encrypt(#{name})
+				, #{id}
+				, #{pwd}
+				, #{status}
+				, #{branch_cd}
+				, #{email}
+				, ENCRYPT(#{tel})
+				, ENCRYPT(#{mobile})
+				, ENCRYPT(#{job_tel})
+				, ENCRYPT(#{zip_code})
+				, ENCRYPT(#{addr})
+				, ENCRYPT(#{addr_detail})
+				, #{user_role}
+				, #{join_dt}
+				, #{leave_dt}
+				, now()
+				, NULL
+				, 0
+				, #{agent_cd}
+				, (select agent_nm from (select distinct(agent_nm) as agent_nm from tb_member where agent_cd = #{agent_cd}) t)
+				, now()
+				, #{reg_id}
+			)	
+    </insert>    
+	    
+    <update id="updateMember">
+    	UPDATE tb_member
+    		<trim prefix="SET" suffixOverrides=",">
+    			join_dt					= #{join_dt}, 
+    			leave_dt				= (CASE	WHEN #{leave_dt} IS NULL OR #{leave_dt} = '' THEN NULL
+												ELSE #{leave_dt}
+												end
+											),
+    	   	  	<if test="name !=null and name != ''">name								= encrypt(#{name}), </if>
+    			<if test="pwd !=null and pwd != ''">pwd									= #{pwd}, </if> 
+    			<if test="status != null and status != ''">status						= #{status}, </if> 
+    			<if test="branch_cd != null and branch_cd != ''">branch_cd				= #{branch_cd}, </if> 
+    			<if test="email !=null and email != ''">email							= #{email}, </if> 
+    			<if test="tel != null and tel != ''">tel								= encrypt(#{tel}), </if>
+    			<if test="mobile != null and mobile != ''">mobile						= encrypt(#{mobile}), </if>
+    			<if test="job_tel !=null and job_tel != ''">job_tel						= encrypt(#{job_tel}), </if>
+    			<if test="zip_code != null and zip_code != ''">zip_code					= encrypt(#{zip_code}), </if>
+    			<if test="addr != null and addr != ''">addr								= encrypt(#{addr}), </if>
+    			<if test="addr_detail != null and addr_detail != ''">addr_detail		= encrypt(#{addr_detail}), </if>
+    			<if test="user_role != null and user_role != ''">user_role				= #{user_role}, </if> 
+    			<if test="user_role_nm != null and user_role_nm != ''">user_role_nm		= #{user_role_nm}, </if> 
+    			<if test="ip != null and ip != ''">ip									= #{ip}, </if> 
+    			<if test="agent_cd !=null and agent_cd != ''">
+												    			agent_cd				= #{agent_cd},
+												    			agent_nm				= (select agent_nm from tb_agent where agent_cd = #{agent_cd}) ,
+    			</if> 
+    			<if test="pwd !=null and pwd != ''">			pwd_ch_dt				= now(),
+    								  							pwd_fail_cnt			= 0
+				</if>
+				<if test="change_pw_yn != null and change_pw_yn != ''">,change_pw_yn	= #{change_pw_yn}</if>
+    		</trim>   
+   		WHERE member_no=#{member_no}
+    </update>
+    <update id="deleteMember">
+		UPDATE tb_member
+		SET	  status='11'
+			, leave_dt	= now()
+		WHERE member_no	= #{member_no}
+    </update>
+    
+    <select id="getAllMember" resultType="memberDTO">
+    	SELECT
+			z.*
+			, COUNT(*)OVER() AS totCnt
+		FROM (SELECT
+					@rownum := @rownum + 1 AS rnum
+		            , m.member_no
+					, DECRYPT(m.name) AS name
+					, DECRYPT(m.mobile) AS mobile
+					, b.branch_nm as branch_nm
+					, DECRYPT(m.tel) AS tel
+					, m.id 
+					, m.email
+					, c.code_name AS user_role_nm
+			FROM  tb_branch b
+				, tb_member m
+			LEFT JOIN tb_code c
+			  ON c.group_code	= 'user_role'
+			 AND m.user_role	= c.code
+			<where>
+				m.branch_cd = b.branch_cd
+				AND (@rownum := 0) = 0
+			  	<if test="user_role != null and user_role != ''">AND m.user_role = #{user_role}</if>
+			  </where>
+			ORDER BY member_no DESC
+			) z
+		LIMIT #{searchDto.pageViewCnt} OFFSET #{searchDto.startIdx}
+    </select>
+</mapper>
+

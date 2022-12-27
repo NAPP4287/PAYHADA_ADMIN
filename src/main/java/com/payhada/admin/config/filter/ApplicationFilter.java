@@ -1,7 +1,6 @@
 package com.payhada.admin.config.filter;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,10 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ApplicationFilter implements Filter{
 
 	@Override

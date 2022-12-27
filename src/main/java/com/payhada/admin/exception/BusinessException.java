@@ -1,6 +1,6 @@
 package com.payhada.admin.exception;
 
-import com.payhada.admin.config.error.ErrorCode;
+import com.payhada.admin.code.ErrorCode;
 
 public class BusinessException extends Exception{
 	private static final long serialVersionUID = 1L;

@@ -1,0 +1,575 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Shadows+Into+Light&display=swap');/*�씠�긽�븳�븘湲곗껜 Shadows Into Light*/
+/* @font-face { font-family: 'NanumSquareRound'; src: url(/css/fonts/NanumSquareRound.woff); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'UhBeeRami'; src: url(/css/fonts/UhBeeRami.woff); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'UhBeepuding'; src: url(/css/fonts/UhBeepuding.woff); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'UhBeeDoolDool'; src: url(/css/fonts/UhBeeDoolDool.woff); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'BinggraeMelona'; src: url(/css/fonts/BinggraeMelona.woff); font-weight: normal; font-style: normal; } */
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+/*
+@font-face { font-family: 'NanumSquareRound'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'UhBeeRami'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeRami.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'UhBeepuding'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeepuding.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'UhBeeDoolDool'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeDoolDool.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'BinggraeMelona'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BinggraeMelona.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face {
+    font-family: 'LABDigital';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/LAB�뵒吏��꽭.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*/
+body {
+    font-size : 12px;
+}
+body,h1,h2,h3,h4,h5,h6,a,p,li,div,td,th {
+    font-family: 'Pretendard-Regular',sans-serif !important;
+}
+td a {
+    font-family: 'Pretendard-Regular',sans-serif !important;
+}
+.table > thead > tr > th, .table > tbody > tr > th {
+    padding : 0.7em;
+}
+.table-section table.pmd-table thead tr.center th{text-align: center;font-weight: 1000;color: black;}
+.table-section table.pmd-table tbody tr.center td{text-align: center;}
+.checkboxDiv .center th{text-align: center;font-weight: 1000;color: black;}
+.checkboxDiv .center td{text-align: center;font-weight: 1000;color: black;}
+
+.pagenation-form{text-align: center; margin-top: 20px;}
+.pagenation-form .btn-group > button{ min-width: 0px;}
+.pagenation-form i.pg-left-arrow{float: left;}
+
+.search-header .search-contents{float: left;margin:0 15px 0 15px}
+.mgr-20{margin-right: 20px;}
+
+
+.dropdown a div span.arrowPointer{
+    display: inline-block;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
+input[type=text], input[type=password], input[type=number], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.text-mandatory {
+    width:100px;
+}
+
+.menu-list .child-menu{
+    margin-left: 30px;
+}
+.pmd-checkbox-label {
+    margin: 0px -10px 0px 10px
+}
+
+.menu-list li a.active{
+    background-color: #eee;
+}
+
+.pmd-card-footer > .btn{margin: 5px 2px;}
+
+.input-group .addon-custom{
+    margin:8px 0;
+    display:table-cell;
+}
+
+.z-depth-inner{
+    margin: 50px;
+}
+
+tbody {
+    font-size : 12px;
+}
+select,
+option {
+    font-size : 12px;
+}
+/* 폰트 bold */
+.font_bold {
+    /*font-size : 9pt;*/
+    font-size : 13px;
+    font-weight : bold;
+}
+.font_bold_ {
+    font-weight : bold;
+}
+.font_bold a {
+    color : #31CC36;
+}
+
+.font_bold a:hover,
+.font_bold a:focus {
+    color:#002b17;
+}
+
+#member input,
+#member select {
+    width:93%;
+    margin-right:6px;
+    margin-left:0px;
+    margin-bottom:3px;
+}
+#member #zip_code {
+    width:73%;
+}
+#branch_form #branch_zip_cd {
+    width:81.8%;
+}
+label.error {
+    color : red;
+    margin:0;
+}
+
+.text-center{text-align: center;}
+
+/* fixed margin */
+.sidebar-margin{margin-left:274px;}
+.pull-center{
+    float: left !important;
+    margin-left: 50%;
+}
+
+#searchCodeModal #searchTxt {
+    margin:0;
+    padding:0;
+}
+#agent #nation_nm {
+    width:80%;
+}
+#user_role {
+    padding:8px;
+}
+#permitPage #pageRest {
+    background-color:#F5F5F5;
+}
+/* secession 페이지 */
+#table_setting {
+    overflow: hidden;
+}
+#table_setting #startDate {
+    width : 10%;
+}
+.table_secession div {
+    /* height : 40px; */
+    line-height:40px;
+    /* padding : 0 20px; */
+}
+.table_secession div>label:first-child {
+    width:250px;
+}
+
+.table_secession div>input[type=text] {
+    width:250px;
+}
+
+.table_secession #no_trans_hist,
+.table_secession #re_join {
+    margin-left:28px;
+}
+
+/* 공통버튼 화면깨짐으로 인한 주석처리 20201105 문시언 */
+/* #page_btn {
+	margin-top : 60px;
+	margin-bottom : 30px;
+} */
+
+#cert_image_front,
+#cert_image_back {
+    width : 400px;
+    height : 250px;
+}
+
+.full-width{
+    width: 100%;
+}
+.hide{
+    display: none;
+}
+/* 송금환경설정 */
+#rateModal_content {
+    width : 900px;
+}
+#rateModal #mDate {
+    width:20%;
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+}
+#rateModal #mCurrency {
+    width:12%;
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+}
+#rateModal #mTime {
+    border-color: white;
+    width : 32%;
+    padding:0px;
+    font-size : 1em;
+}
+#searchExchangeSetting {
+    border : solid 2px #CCCCCC;
+}
+#exchangeRateForm #mDate,
+#exchangeRateForm #mDate2 {
+    width:10%;
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+}
+#exchangeRateForm #reg_dt {
+    /*width:%;*/
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+}
+#exchangeRateForm #round {
+    width:47%;
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+}
+#exchangeRateForm #mTime {
+    width:10%;
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+}
+#exchangeRateForm #getCurrency {
+    width:auto;
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+
+}
+#exchangeRateForm #mTime2 {
+    width:10%;
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+}
+/* 정산 */
+#settingForm #table_setting {
+    height : 335px;
+}
+#settingForms {
+    width:100%;
+    height:500px;
+    overflow-x:hidden;
+}
+.subRound {
+    background-color:#e8e8e8;
+    border : 1px solid #CFCECE;
+    /* padding-left : 1%; */
+}
+.subRound button{
+    background-color : transparent;
+    border : 0;
+    padding : 10px;
+}
+
+.subRound.active {
+    background-color:white;
+    border-bottom: 1px solid white;
+    /* border : 1px solid #CFCECE;
+    padding-left : 1%; */
+}
+
+li {
+    list-style : none;
+}
+#roundModal {
+    margin: 0 5%;
+    padding: 0;
+}
+#roundModal .modal-dialog {
+    width: 80%;
+}
+#settingForm #startDate,
+#settingForm #endDate,
+#settingForm #trans_round {
+    /* width : 25%; */
+    width: 120px;
+    /*width: 147px;*/
+}
+
+
+#settingForm .bottom-btn-wrapper{
+    overflow: hidden;
+    margin : 0 40%;
+    align-items : center;
+}
+
+/* 송금 상세 모달 */
+#settlementModal .modal-dialog,
+#remittanceModal .modal-dialog {
+    width: 35%;
+}
+.modal-title{
+    font-weight: bold;
+}
+.modal-subtitle{
+    color: cornflowerblue;
+    margin-bottom: 10px;
+}
+.modal-body{
+    overflow: hidden;
+}
+
+.modal-left {
+    float: left;
+    width: 50%;
+}
+
+.modal-right {
+    float: right;
+    width: 50%;
+}
+
+#totCnt {
+    background-color : rgba(0,0,0,0);
+    border:0;
+    outline:0;
+    width:3%;
+    text-align : right;
+    padding:0;
+}
+
+#permit_name {
+    display : inline-block;
+    text-align : center;
+    width : 35%;
+    border:0;
+    outline:0;
+}
+
+#permit_userRole {
+    display : inline-block;
+    width : 20%;
+    border:0;
+    outline:0;
+}
+#vueSearchModal6 .row label {
+    height : 34px;
+    line-height: 45px;
+}
+#qna .qnaByUser {
+    width:0%;
+    border-color: white;
+    padding:0px;
+    font-size : 1em;
+}
+#commentContent {
+    width:100%;
+    background-color : rgba(0,0,0,0);
+    border-style: none;
+    font-size : 1em;
+}
+#qna .btn-event {
+    margin:0;
+    padding:0;
+}
+#qna a {
+    width:25px;
+    height:25px;
+    margin:0;
+    padding:0;
+}
+#qna i {
+    line-height: 30px;
+}
+#inputNull {
+    background-color : rgba(0,0,0,0);
+    border:0;
+    outline:0;
+    width:15%;
+    text-align: center;
+    padding : 0;
+    height:30px;
+}
+#ajaxFile {
+    width:78px;
+    float:left;
+}
+#fileLabelValue {
+    border:0;
+    outline:0;
+}
+
+.nav-tabs{
+    width: 100% !important;
+}
+
+
+.common-search .common-search-content{
+    padding: 20px;
+    box-shadow: 0px 3px 10px 0px #E8E8E8;
+    margin-top: 20px;
+}
+
+.common-search .common-search-content >h3{
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.search-content >div{
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-content >div >label{
+    flex: 1;
+    margin: 0;
+}
+
+.search-content >div >label select{
+    width : 100%!important;
+    margin: 0;
+}
+.search-content >div >label input{
+    width : 100%!important;
+    margin: 0;
+    height: 34px;
+}
+
+.search-content >div >label:first-of-type{
+    margin-right: 20px;
+}
+
+
+.search-content >div >label:nth-of-type(2){
+    flex: 3;
+}
+
+.search-content >div >label:last-of-type{
+    padding-left: 20px;
+    text-align: right;
+}
+
+
+.login-fail{
+    color: red;
+}
+
+.btn-primary{margin: 0;}
+
+.bootstrap-datetimepicker-widget{
+    z-index: 2000!important;
+}
+
+.currency-rate-table tr {
+    border-top: 1px solid #c9cacb;
+}
+
+.currency-rate-table th {
+    border-bottom: 1px solid #c9cacb !important;
+    border-left: 1px solid #c9cacb;
+}
+
+.currency-rate-table tr:nth-child(1) > th:nth-child(1) {
+    border-left: none;
+}
+
+.rate-table-bordered tr {
+    border-top: 1px solid #c9cacb;
+    /*border-bottom: 1px solid #c9cacb;*/
+}
+.rate-table-bordered th {
+    /*text-align: center !important;*/
+    border-bottom: 1px solid #c9cacb !important;
+    border-left: 1px solid #c9cacb;
+}
+
+.rate-table-bordered th:first-child {
+    border-left: none;
+}
+
+.rate-policy-table-border th {
+    width: 150px;
+    text-align: center !important;
+    background-color: #f5f5f5;
+    border-top: 1px solid #c9cacb !important;
+    border-left: 1px solid #c9cacb;
+    border-bottom: 1px solid #c9cacb;
+}
+.rate-policy-table-border td {
+    width: calc(50% - 280px);
+    text-align: center;
+    border-top: 1px solid #c9cacb !important;
+    border: 1px solid #c9cacb;
+    padding: 0px 10px 0px 10px;
+}
+
+.rate-unit {
+    float: right;
+    font-weight: bold;
+}
+
+.round-bold {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.important-rate-data {
+    font-weight: bold;
+    color: #4285f4;
+}
+
+/*로딩바*/
+.loading .circle {position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); width:40px; height:40px; border:10px solid #fff; border-top:10px solid #00aeff; border-radius:50em; transition:all .2s; z-index: 1;
+    animation-name:spinCircle;
+    animation-duration:.8s;
+    animation-iteration-count:infinite;
+    animation-timing-function:linear;
+}
+
+@keyframes spinCircle {
+    from {
+        transform:translate(-50%, -50%) rotate(0);
+    }
+    to {
+        transform:translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.setting-percent-input {
+    width: 96%;
+    float: left;
+}
+
+.setting-percent {
+    vertical-align: middle;
+    right: -5px;
+    bottom: -15px;
+    position: relative;
+}
+
+.form-check {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.form-check > input {
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+.h-100 {
+    height: 100% !important;
+}

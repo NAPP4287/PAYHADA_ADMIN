@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.payhada.admin.dao.LoginDAO">
+
+	<select id="selectMemberWithLoginId" parameterType="loginDTO" resultType="loginDTO">
+		SELECT tm.id
+		     , tm.pwd
+			 , tm.otp_code AS code
+			 , tm.member_no AS memberNo
+		FROM tb_member tm
+		WHERE tm.id = #{id}
+		<if test="pwd != null">
+			AND tm.pwd = #{pwd}
+		</if>
+	</select>
+
+</mapper>
+

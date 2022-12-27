@@ -1,9 +1,7 @@
 package com.payhada.admin.exception;
 
-import com.payhada.admin.config.error.ErrorCode;
-import groovy.util.logging.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.payhada.admin.code.ErrorCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Order(9)
 @Slf4j
 public class ExceptionController {
-	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)	
 	protected ResponseEntity<ErrorResponse> handleNullPointerException(MethodArgumentTypeMismatchException e){
@@ -34,7 +31,7 @@ public class ExceptionController {
 		ErrorCode code = e.getError();
 		ModelAndView mv = new ModelAndView();
 		if(code==null) {			
-			ErrorCode err=ErrorCode.NOT_DEFINED_ERR;
+			ErrorCode err=ErrorCode.API_SERVER_ERROR;
 			mv.addObject("errCode",err.getCode());	
 			mv.addObject("errMsg",err.getMessage());
 		}else {
@@ -52,7 +49,7 @@ public class ExceptionController {
 		ErrorCode code = e.getError();
 		ModelAndView mv = new ModelAndView();
 		if(code==null) {			
-			ErrorCode err=ErrorCode.NOT_DEFINED_ERR;
+			ErrorCode err=ErrorCode.API_SERVER_ERROR;
 			mv.addObject("errCode",err.getCode());	
 			mv.addObject("errMsg",err.getMessage());
 		}else {
@@ -68,7 +65,7 @@ public class ExceptionController {
         log.error(getClass().getName()+":::: GLOBAL EXCEPTION", e);
         
 		ModelAndView mv = new ModelAndView();
-		ErrorCode err=ErrorCode.BUSINESS_PROCESS_ERR;
+		ErrorCode err=ErrorCode.API_PROCESS_ERROR;
 		mv.addObject("errCode",err.getCode());	
 		mv.addObject("errMsg",err.getMessage());	
 		mv.setViewName("/error/500");			

@@ -1,12 +1,23 @@
 package com.payhada.admin.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.type.Alias;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+//@Data
+@Alias("memberDTO")
 public class MemberDTO {
 
     private int admin_idx;
@@ -25,7 +36,7 @@ public class MemberDTO {
     private String addr;
     private String addr_detail;
     private String ip;
-    private String pwd_fail_cnt;
+    private int pwd_fail_cnt;
     private String user_role;
     private String change_pw_yn;
     private String change_pw_date;
@@ -42,5 +53,8 @@ public class MemberDTO {
     private String modify_id;
 
     private SearchDTO searchDto;
+
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    private final List<String> roles = new ArrayList<>();
 
 }

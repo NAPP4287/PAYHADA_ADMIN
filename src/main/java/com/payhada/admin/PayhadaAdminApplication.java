@@ -29,24 +29,24 @@ public class PayhadaAdminApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(PayhadaAdminApplication.class);
 	}
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(PayhadaAdminApplication.class, args);
 	}
-	
+
    @Bean
    public ErrorPageFilter errorPageFilter() {
 
       return new ErrorPageFilter();
    }
 
-	
-    @Bean public FilterRegistrationBean<ErrorPageFilter> disableSpringBootErrorFilter(ErrorPageFilter filter) {     
+
+    @Bean public FilterRegistrationBean<ErrorPageFilter> disableSpringBootErrorFilter(ErrorPageFilter filter) {
 	    FilterRegistrationBean<ErrorPageFilter> filterRegistrationBean = new FilterRegistrationBean<ErrorPageFilter>();
 		filterRegistrationBean.setFilter(filter);
-		filterRegistrationBean.setEnabled(false); 
-		return filterRegistrationBean; 
+		filterRegistrationBean.setEnabled(false);
+		return filterRegistrationBean;
 	}
-	 
+
 
 }
