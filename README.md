@@ -1,11 +1,11 @@
 PAYHADA ADMIN V2
 =========================
 
-###
-### [ Frontend 연동 인터페이스 규격 ]
+##
+### [ Frontend - Backend 간 인터페이스 정의 ]
 ### (작성예정) https://www.notion.so/payhada-dev/F-B-Admin-09ff83401221488e91837d8372b3cdcd
 
-###
+##
 ### [ IntelliJ 에서 Frontend(Reactjs) 빌드 실패 시 ]
 #### 1. Frontend 모듈 내 오류 여부 확인
 ```text
