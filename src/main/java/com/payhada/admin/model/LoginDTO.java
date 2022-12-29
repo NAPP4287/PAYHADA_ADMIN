@@ -15,4 +15,5 @@ public class LoginDTO {
     private String pwd;
     private String code;
     private String memberNo;
+    private String userNo;
 }

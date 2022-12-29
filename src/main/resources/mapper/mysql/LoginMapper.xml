@@ -6,15 +6,27 @@
 <mapper namespace="com.payhada.admin.dao.LoginDAO">
 
 	<select id="selectMemberWithLoginId" parameterType="loginDTO" resultType="loginDTO">
-		SELECT tm.id
-		     , tm.pwd
-			 , tm.otp_code AS code
-			 , tm.member_no AS memberNo
-		FROM tb_member tm
-		WHERE tm.id = #{id}
+		SELECT e.login_id AS id
+		, e.pwd
+		, e.otp_code AS code
+		, e.user_no AS userNo
+		FROM employee e
+		WHERE e.login_id = #{id}
 		<if test="pwd != null">
-			AND tm.pwd = #{pwd}
+			AND e.pwd = #{pwd}
 		</if>
+	</select>
+
+	<select id="selectEmployeeRoles" parameterType="loginDTO" resultType="EmployeeRoleMappDTO">
+		SELECT *
+		FROM employee_role_mapp
+		WHERE user_no = #{userNo}
+	</select>
+
+	<select id="selectRoleGroupByCode" parameterType="String" resultType="RoleGroupDTO">
+		SELECT *
+		FROM role_group
+		WHERE role_group_code = #{roleGroupCode}
 	</select>
 
 </mapper>

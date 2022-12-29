@@ -64,19 +64,16 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
 
         String username = loginDto.getId();
         String password = loginDto.getPwd();
-        ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        if(username ==null || password == null){
+        if (username == null || password == null) {
             throw new AuthenticationServiceException("DATA IS MISS");
         }
 
-        //TODO 권한 설정 후 추가 진행
-        authorities.add(new SimpleGrantedAuthority("000000"));
-
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password, authorities);
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
         // Allow subclasses to set the "details" property
-        authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
-        return this.getAuthenticationManager().authenticate(authRequest);//getAuthenticationManager를 커스텀해줌
+        setDetails(request, authRequest);
+
+        return this.getAuthenticationManager().authenticate(authRequest); //getAuthenticationManager를 커스텀해줌
     }
 
     protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
