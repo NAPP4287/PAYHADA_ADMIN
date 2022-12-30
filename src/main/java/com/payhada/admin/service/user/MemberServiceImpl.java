@@ -3,12 +3,15 @@ package com.payhada.admin.service.user;
 import com.payhada.admin.common.keymanager.AesKeyConfig;
 import com.payhada.admin.common.setting.CommonPropertiesDTO;
 import com.payhada.admin.dao.MemberDAO;
+import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.model.MemberDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService  {	
@@ -109,7 +112,18 @@ public class MemberServiceImpl implements MemberService  {
 	public void updateOtp(MemberDTO dto) {
 		memberDao.updateOtp(dto);
 	}
-//
+
+	@Override
+	public List<LoginDTO> getEmployees() {
+		return memberDao.selectEmployees();
+	}
+
+	@Override
+	public LoginDTO getEmployee(String userNo) {
+		return memberDao.selectEmployeeByUserNo(userNo);
+	}
+
+	//
 //	@Override
 //	public List<MemberDTO> getMember(MemberDTO dto) {
 //		List<MemberDTO> list = memberDao.getMember(dto);
