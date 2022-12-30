@@ -1,12 +1,18 @@
-import Footer from "components/Footer";
-import { Button } from "reactstrap";
+import { Button, Input } from "reactstrap";
+import { useRecoilState } from "recoil";
+import { userInfoState, userInfoType } from "recoil/userState";
 
 function Login() {
+  const [userInfo, setUserInfo] = useRecoilState<userInfoType>(userInfoState);
+
   return (
     <div>
-      <h1>this is login page</h1>
-      <Footer />
-      <Button color="danger">버튼입니당!</Button>
+      <Input></Input>
+      <Button
+        color="danger"
+        onClick={() =>
+          setUserInfo({ ...userInfo, userToken: "user" })
+        }>{`${userInfo.userRole}`}</Button>
     </div>
   );
 }
