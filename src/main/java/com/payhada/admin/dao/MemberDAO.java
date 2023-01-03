@@ -1,6 +1,5 @@
 package com.payhada.admin.dao;
 
-import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.model.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,10 +22,6 @@ public interface MemberDAO {
 	public int getMemberCnt(MemberDTO dto);
 	public List<MemberDTO> getMember(MemberDTO dto);
 	public MemberDTO getMemberDetail(MemberDTO dto);
-
-    List<LoginDTO> selectEmployees();
-
-	LoginDTO selectEmployeeByUserNo(String userNo);
 //	public List<PermDTO> searchSeqById(PermDTO permDto);
 //	public String getMemberDetailPhoneNumber(MemberDTO dto);
 //	public int registerMember(MemberDTO dto);

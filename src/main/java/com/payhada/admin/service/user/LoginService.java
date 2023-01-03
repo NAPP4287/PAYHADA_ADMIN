@@ -1,13 +1,17 @@
 package com.payhada.admin.service.user;
 
+import com.payhada.admin.common.util.SHAEncryption;
 import com.payhada.admin.dao.LoginDAO;
-import com.payhada.admin.model.EmployeeRoleMappDTO;
 import com.payhada.admin.model.LoginDTO;
+import com.payhada.admin.model.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.security.auth.login.AccountNotFoundException;
 
 @Slf4j
 @Service
@@ -15,24 +19,8 @@ import java.util.List;
 public class LoginService {
     private final LoginDAO loginDAO;
 
-    public LoginDTO loginWithLoginIdAndPwd(LoginDTO loginDTO) {
+    public LoginDTO loginWithLoginIdAndPwd(LoginDTO loginDTO) throws Exception {
+        loginDTO.setPwd(SHAEncryption.encrypt512(loginDTO.getPwd()));
         return loginDAO.selectMemberWithLoginId(loginDTO);
-    }
-
-    public List<EmployeeRoleMappDTO> getEmployeeRoles(LoginDTO loginDTO) {
-        return loginDAO.selectEmployeeRoles(loginDTO.getUserNo());
-    }
-
-    public void resetLoginFailureData(String userNo) {
-        LoginDTO loginDTO = LoginDTO.builder()
-                .userNo(userNo)
-                .pwdFailCnt(0)
-                .lockStartTime(null)
-                .build();
-        loginDAO.updateEmployeeFailureData(loginDTO);
-    }
-
-    public void updateLoginFailureData(LoginDTO failureDTO) {
-        loginDAO.updateEmployeeFailureData(failureDTO);
     }
 }
