@@ -14,5 +14,5 @@ public interface LoginDAO {
 
     List<EmployeeRoleMappDTO> selectEmployeeRoles(String userNo);
 
-    RoleGroupDTO selectRoleGroupByCode(String roleGroupCode);
+    void updateEmployeeFailureData(LoginDTO loginDTO);
 }

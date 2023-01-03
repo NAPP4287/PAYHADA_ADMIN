@@ -335,5 +335,16 @@
 			) z
 		LIMIT #{searchDto.pageViewCnt} OFFSET #{searchDto.startIdx}
     </select>
+
+	<select id="selectEmployees" resultType="loginDTO">
+		SELECT login_id AS id, pwd, otp_code, user_no, pwd_fail_cnt, lock_start_time
+		FROM employee
+	</select>
+
+	<select id="selectEmployeeByUserNo" parameterType="String" resultType="loginDTO">
+		SELECT login_id AS id, pwd, otp_code, user_no, pwd_fail_cnt, lock_start_time
+		FROM employee
+		WHERE user_no = #{userNo}
+	</select>
 </mapper>
 

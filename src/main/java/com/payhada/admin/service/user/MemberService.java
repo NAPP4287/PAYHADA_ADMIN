@@ -1,6 +1,9 @@
 package com.payhada.admin.service.user;
 
+import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.model.MemberDTO;
+
+import java.util.List;
 
 public interface MemberService {
 	public int getMemberId(String id);
@@ -12,6 +15,10 @@ public interface MemberService {
 	public void updateFailAttempts(MemberDTO dto);
 	public void updateFailCount(String id);
 	public void updateOtp(MemberDTO dto);
+
+    List<LoginDTO> getEmployees();
+
+	LoginDTO getEmployee(String userNo);
 //
 //	public int getMemberCnt(MemberDTO dto);
 //	public List<MemberDTO> getMember(MemberDTO dto);

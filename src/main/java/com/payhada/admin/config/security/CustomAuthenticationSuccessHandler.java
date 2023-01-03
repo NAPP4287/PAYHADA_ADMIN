@@ -2,17 +2,13 @@ package com.payhada.admin.config.security;
 
 import com.payhada.admin.code.ErrorCode;
 import com.payhada.admin.model.LoginDTO;
+import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -22,41 +18,32 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @Component
-public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler  {
-//    private String loginidname;
-//    private String defaultUrl;
-//
-//    public String getLoginidname() {
-//        return loginidname;
-//    }
-//
-//    public void setLoginidname(String loginidname) {
-//        this.loginidname = loginidname;
-//    }
-//
-//    public String getDefaultUrl() {
-//        return defaultUrl;
-//    }
-//
-//    public void setDefaultUrl(String defaultUrl) {
-//        this.defaultUrl = defaultUrl;
-//    }
+public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    private final LoginService loginService;
 
     private RequestCache requestCache = new HttpSessionRequestCache();
+
+    protected CustomAuthenticationSuccessHandler(LoginService loginService) {
+        this.loginService = loginService;
+    }
 //    private RedirectStrategy redirectStragtegy = new DefaultRedirectStrategy();
 
     
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
+        LoginDTO loginDTO = (LoginDTO) authentication.getPrincipal();
+
+        // 로그인 성공 시 비밀번호 실패 카운트, 잠김시간 초기화
+        loginService.resetLoginFailureData(loginDTO.getUserNo());
+
         Map<String, Object> responseMap = new HashMap<>();
         LoginDTO data = null;
         String resultCode = ErrorCode.API_SERVER_ERROR.getCode();
@@ -87,6 +74,9 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // application/json
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         MediaType jsonMimeType = MediaType.APPLICATION_JSON;
+
+//        HttpSession session = request.getSession();
+//        session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
         if (jsonConverter.canWrite(responseMap.getClass(), jsonMimeType)) {
             jsonConverter.write(responseMap, jsonMimeType, new ServletServerHttpResponse(response));

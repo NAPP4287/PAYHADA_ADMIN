@@ -1,16 +1,12 @@
 package com.payhada.admin.service.user;
 
-import com.payhada.admin.common.util.SHAEncryption;
 import com.payhada.admin.dao.LoginDAO;
 import com.payhada.admin.model.EmployeeRoleMappDTO;
 import com.payhada.admin.model.LoginDTO;
-import com.payhada.admin.model.RoleGroupDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -19,25 +15,24 @@ import java.util.List;
 public class LoginService {
     private final LoginDAO loginDAO;
 
-    public LoginDTO loginWithLoginIdAndPwd(LoginDTO loginDTO) throws Exception {
-//        loginDTO.setPwd(SHAEncryption.encrypt512(loginDTO.getPwd()));
+    public LoginDTO loginWithLoginIdAndPwd(LoginDTO loginDTO) {
         return loginDAO.selectMemberWithLoginId(loginDTO);
     }
 
-    public List<SimpleGrantedAuthority> getEmployeeAuthorities(LoginDTO loginResult) {
-        List<EmployeeRoleMappDTO> employeeRoles = loginDAO.selectEmployeeRoles(loginResult.getUserNo());
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+    public List<EmployeeRoleMappDTO> getEmployeeRoles(LoginDTO loginDTO) {
+        return loginDAO.selectEmployeeRoles(loginDTO.getUserNo());
+    }
 
-        for (EmployeeRoleMappDTO dto : employeeRoles) {
-            String roleGroupCode = dto.getRoleGroupCode();
-            RoleGroupDTO roleGroupDTO = loginDAO.selectRoleGroupByCode(roleGroupCode);
+    public void resetLoginFailureData(String userNo) {
+        LoginDTO loginDTO = LoginDTO.builder()
+                .userNo(userNo)
+                .pwdFailCnt(0)
+                .lockStartTime(null)
+                .build();
+        loginDAO.updateEmployeeFailureData(loginDTO);
+    }
 
-            if (roleGroupDTO != null) {
-                String roleGroupName = roleGroupDTO.getRoleGroupName();
-                authorities.add(new SimpleGrantedAuthority(roleGroupName));
-            }
-        }
-
-        return authorities;
+    public void updateLoginFailureData(LoginDTO failureDTO) {
+        loginDAO.updateEmployeeFailureData(failureDTO);
     }
 }
