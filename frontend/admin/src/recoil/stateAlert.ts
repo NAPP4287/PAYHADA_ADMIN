@@ -1,7 +1,7 @@
 import { atom } from "recoil";
-import { basicAlertType } from "interface/commonAlertInterface";
+import { BasicAlertType } from "interface/InterfaceCommonAlert";
 
-export const commonAlertState = atom<basicAlertType>({
+export const commonAlertState = atom<BasicAlertType>({
   key: "commonAlertState",
   default: {
     isOpen: false,
@@ -10,6 +10,6 @@ export const commonAlertState = atom<basicAlertType>({
     content: "",
     action: undefined,
     cancel: undefined,
-    buttonText: { confirm: "", cancel: "" },
+    buttonText: { confirm: "확인", cancel: "취소" },
   },
 });

@@ -6,7 +6,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import { LabelSelectProps } from "interface/basicLabelInterface";
+import { LabelSelectProps } from "interface/InterfaceBasicLabel";
 
 const SelectOption = (
   value: string,

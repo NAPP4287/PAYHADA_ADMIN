@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { userInfoState } from "recoil/userState";
+import { userInfoState } from "recoil/stateUser";
 
 interface PrivateRouteProps {
   children?: ReactElement;
