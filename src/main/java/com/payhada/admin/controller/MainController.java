@@ -1,17 +1,13 @@
 package com.payhada.admin.controller;
 
-import com.payhada.admin.code.ErrorCode;
-import com.payhada.admin.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -23,6 +19,11 @@ public class MainController {
         log.debug("# # test api # # ");
         log.debug("Session: " + request.getSession().getAttribute("SPRING_SECURITY_CONTEXT"));
         return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @GetMapping("/test2")
+    public String test() {
+        return "ok";
     }
 
 }
