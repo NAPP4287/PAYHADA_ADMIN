@@ -1,4 +1,4 @@
-export interface basicAlertType {
+export interface BasicAlertType {
   isOpen: boolean;
   AlertType: string;
   title: string;

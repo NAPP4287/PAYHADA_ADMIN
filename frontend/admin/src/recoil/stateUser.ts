@@ -1,13 +1,13 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { userInfoType } from "interface/userInterface";
+import { UserInfoType } from "interface/InterfaceUser";
 
 const { persistAtom } = recoilPersist({
   key: "importantState",
   storage: sessionStorage,
 });
 
-export const userInfoState = atom<userInfoType>({
+export const userInfoState = atom<UserInfoType>({
   key: "userInfoState",
   default: {
     id: "",

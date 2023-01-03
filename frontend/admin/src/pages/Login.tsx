@@ -2,13 +2,13 @@ import { Form, Button } from "reactstrap";
 import { useState } from "react";
 import LabelInput from "components/atomic/atoms/LabelInput";
 import LabelSelect from "components/atomic/atoms/LabelSelect";
-import { loginInfoType, userInfoType } from "interface/userInterface";
+import { LoginInfoType, UserInfoType } from "interface/InterfaceUser";
 
 import { useRecoilState } from "recoil";
-import { userInfoState } from "recoil/userState";
+import { userInfoState } from "recoil/stateUser";
 
 function Login() {
-  const [userInfo, setUserInfo] = useRecoilState<userInfoType>(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState<UserInfoType>(userInfoState);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [nation, setNation] = useState<string>("국가를 선택해주세요.");
@@ -16,7 +16,7 @@ function Login() {
   const nationSelect: Array<string> = ["한국", "호주", "미국"];
 
   const getLogin = () => {
-    const loginData: loginInfoType = {
+    const loginData: LoginInfoType = {
       email: email,
       password: password,
       nation: nation,

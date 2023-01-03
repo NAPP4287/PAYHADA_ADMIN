@@ -1,5 +1,5 @@
 import { Input, Label, FormGroup } from "reactstrap";
-import { LabelInputProps } from "interface/basicLabelInterface";
+import { LabelInputProps } from "interface/InterfaceBasicLabel";
 
 function LabelInput(props: LabelInputProps) {
   const { label, placeholder, type, setChangeData, value } = props;
