@@ -2,7 +2,15 @@ import { Input, Label, FormGroup } from "reactstrap";
 import { LabelInputProps } from "interface/InterfaceBasicLabel";
 
 function LabelInput(props: LabelInputProps) {
-  const { label, placeholder, type, setChangeData, value } = props;
+  const {
+    label,
+    placeholder,
+    type,
+    setChangeData,
+    value,
+    isFailed,
+    failedText,
+  } = props;
 
   const inputChange = (e: any) => {
     setChangeData(e.target.value);
@@ -19,6 +27,7 @@ function LabelInput(props: LabelInputProps) {
         onChange={(e) => inputChange(e)}
         value={value}
       />
+      {isFailed && <span className="errorText">{failedText}</span>}
     </FormGroup>
   );
 }

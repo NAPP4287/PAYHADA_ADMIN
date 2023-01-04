@@ -49,3 +49,10 @@
 .modalBottom button:nth-child(1) {
   margin-left: 10px;
 }
+
+/* label input */
+.errorText {
+  font-size: 10px;
+  color: red;
+  padding-left: 10px;
+}

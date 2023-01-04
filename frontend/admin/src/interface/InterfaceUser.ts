@@ -9,3 +9,7 @@ export interface UserInfoType {
   userToken: string;
   userRole: string;
 }
+
+export interface InvalidCheckType {
+  [key: string]: RegExp;
+}

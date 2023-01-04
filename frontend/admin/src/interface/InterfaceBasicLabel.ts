@@ -4,6 +4,8 @@ export interface LabelInputProps {
   placeholder?: string;
   setChangeData?: Function | any;
   value: string;
+  isFailed?: boolean;
+  failedText?: string;
 }
 
 export interface LabelSelectProps {
@@ -12,4 +14,6 @@ export interface LabelSelectProps {
   setChangeData?: Function | any;
   value: string;
   dataArray: Array<string>;
+  isFailed?: boolean;
+  failedText?: string;
 }

@@ -40,7 +40,8 @@ const SelectOption = (
 };
 
 function LabelSelect(props: LabelSelectProps) {
-  const { label, type, setChangeData, value, dataArray } = props;
+  const { label, type, setChangeData, value, dataArray, isFailed, failedText } =
+    props;
 
   return (
     <FormGroup>
@@ -48,6 +49,7 @@ function LabelSelect(props: LabelSelectProps) {
         {label}
       </Label>
       {SelectOption(value, setChangeData, dataArray)}
+      {isFailed && <span className="errorText">{failedText}</span>}
     </FormGroup>
   );
 }
