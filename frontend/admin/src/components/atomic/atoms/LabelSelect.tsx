@@ -26,7 +26,7 @@ const SelectOption = (
           border: "1px solid #ced4da",
           height: "43px",
         }}>
-        {value}
+        {value === "" ? "국가를 선택해주세요" : value}
       </DropdownToggle>
       <DropdownMenu className="fullWidth">
         {dataArray.map((el, idx) => (

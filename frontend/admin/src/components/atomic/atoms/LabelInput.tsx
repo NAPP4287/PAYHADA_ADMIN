@@ -27,7 +27,7 @@ function LabelInput(props: LabelInputProps) {
         onChange={(e) => inputChange(e)}
         value={value}
       />
-      {isFailed && <span className="errorText">{failedText}</span>}
+      {!isFailed && <span className="errorText">{failedText}</span>}
     </FormGroup>
   );
 }

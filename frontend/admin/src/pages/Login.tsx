@@ -4,11 +4,8 @@ import { useState } from "react";
 import LabelInput from "components/atomic/atoms/LabelInput";
 import LabelSelect from "components/atomic/atoms/LabelSelect";
 // interface
-import { LoginInfoType, UserInfoType } from "interface/InterfaceUser";
-import {
-  ObjectBracketStringType,
-  ObjectBracketBooleanType,
-} from "interface/InterfaceCommon";
+import { UserInfoType } from "interface/InterfaceUser";
+import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
 // reciol
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
@@ -18,37 +15,34 @@ import { invalidCheck } from "utils/utilInput";
 function Login() {
   const nationSelect: Array<string> = ["한국", "호주", "미국"];
   const [userInfo, setUserInfo] = useRecoilState<UserInfoType>(userInfoState);
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [nation, setNation] = useState<string>("국가를 선택해주세요");
-  const [errorSelect, setErrorSelect] = useState<boolean>(false);
-  const [errorInput, setErrorInput] = useState<ObjectBracketBooleanType>({
-    email: false,
-    password: false,
+  const [nation, setNation] = useState<string>("");
+
+  const [invalidData, setInvalidData] = useState<ObjectBracketBooleanType>({
+    email: true,
+    password: true,
+    nation: true,
   });
 
   const getLogin = () => {
-    handleInvaildCheck();
+    handleInvaildCheck() &&
+      setUserInfo({ ...userInfo, userToken: "userToken" });
   };
 
   const handleInvaildCheck = () => {
-    const inputData: ObjectBracketStringType = {
-      email: email,
-      password: password,
+    const invalid = {
+      email: invalidCheck("email", email),
+      password: invalidCheck("password", password),
+      nation: !invalidCheck("nation", nation),
     };
-    const invalidData = invalidCheck(inputData);
-    const changeError: ObjectBracketBooleanType = {
-      email: false,
-      password: false,
-    };
-    invalidData.map((el) => (changeError[el] = true));
-    setErrorInput({ ...changeError });
 
-    if (nation === "국가를 선택해주세요") {
-      setErrorSelect(true);
-    } else {
-      setErrorSelect(false);
-    }
+    const valueArr = Object.values(invalid);
+    const findValue = valueArr.find((e) => e === false);
+    setInvalidData({ ...invalid });
+
+    return findValue === undefined;
   };
 
   return (
@@ -60,7 +54,7 @@ function Login() {
           label={"이메일"}
           setChangeData={setEmail}
           value={email}
-          isFailed={errorInput["email"]}
+          isFailed={invalidData.email}
           failedText={"이메일을 다시 확인해주세요"}
         />
         <LabelInput
@@ -69,7 +63,7 @@ function Login() {
           label={"비밀번호"}
           setChangeData={setPassword}
           value={password}
-          isFailed={errorInput["password"]}
+          isFailed={invalidData.password}
           failedText={"비밀번호를 다시 확인해주세요"}
         />
         <LabelSelect
@@ -78,7 +72,7 @@ function Login() {
           setChangeData={setNation}
           value={nation}
           dataArray={nationSelect}
-          isFailed={errorSelect}
+          isFailed={!invalidData.nation}
           failedText={"국가를 선택해주세요"}
         />
         <Button
