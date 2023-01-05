@@ -6,16 +6,27 @@
 <mapper namespace="com.payhada.admin.dao.LoginDAO">
 
 	<select id="selectMemberWithLoginId" parameterType="loginDTO" resultType="loginDTO">
-		SELECT tm.id
-		     , tm.pwd
-			 , tm.otp_code AS code
-			 , tm.member_no AS memberNo
-		FROM tb_member tm
-		WHERE tm.id = #{id}
-		<if test="pwd != null">
-			AND tm.pwd = #{pwd}
-		</if>
+		SELECT login_id AS id, pwd, otp_code, user_no, pwd_fail_cnt, lock_start_time
+		FROM employee
+		WHERE login_id = #{id}
 	</select>
 
+	<select id="selectEmployeeRoles" parameterType="loginDTO" resultType="EmployeeRoleMappDTO">
+		SELECT erm.user_no, erm.role_group_code, erm.role_level, r.role_group_name
+		FROM employee_role_mapp erm
+				 JOIN role_group r ON erm.role_group_code = r.role_group_code AND r.use_yn = 'Y'
+		WHERE erm.user_no = #{userNo}
+	</select>
+
+	<update id="updateEmployeeFailureData" parameterType="loginDTO">
+		UPDATE employee
+		<set>
+			lock_start_time = #{lockStartTime},
+			<if test="pwdFailCnt != null">
+				pwd_fail_cnt = #{pwdFailCnt},
+			</if>
+		</set>
+		WHERE user_no = #{userNo}
+	</update>
 </mapper>
 
