@@ -1,6 +1,6 @@
 import { Form, Button } from "reactstrap";
 import { useState } from "react";
-// component
+// components
 import LabelInput from "components/atomic/atoms/LabelInput";
 import LabelSelect from "components/atomic/atoms/LabelSelect";
 // interface
@@ -9,7 +9,7 @@ import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
 // reciol
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
-//util
+// utils
 import { invalidCheck } from "utils/utilInput";
 
 function Login() {
