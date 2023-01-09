@@ -3,7 +3,7 @@ import { commonAlertState } from "recoil/stateAlert";
 import { BasicAlertType } from "interface/InterfaceCommonAlert";
 import { Modal, Button } from "reactstrap";
 
-function BasicAlert() {
+const BasicAlert = () => {
   const [commonAlertInfo, setCommonAlertInfo] =
     useRecoilState<BasicAlertType>(commonAlertState);
 
@@ -61,6 +61,6 @@ function BasicAlert() {
       </div>
     </Modal>
   );
-}
+};
 
 export default BasicAlert;

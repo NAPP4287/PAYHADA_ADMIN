@@ -9,7 +9,7 @@ import BasicAlert from "components/atomic/atoms/AlertBasic";
 import { useRecoilValue } from "recoil";
 import { commonAlertState } from "recoil/stateAlert";
 
-function App() {
+const App = () => {
   const commonAlertInfo = useRecoilValue(commonAlertState);
 
   return (
@@ -18,6 +18,6 @@ function App() {
       {commonAlertInfo.isOpen && <BasicAlert />}
     </div>
   );
-}
+};
 
 export default App;

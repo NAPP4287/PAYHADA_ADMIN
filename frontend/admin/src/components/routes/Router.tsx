@@ -3,7 +3,7 @@ import Login from "pages/Login";
 import Main from "pages/Main";
 import PrivateRoute from "./PrivateRoute";
 
-function Router() {
+const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -16,6 +16,6 @@ function Router() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default Router;

@@ -6,6 +6,8 @@ export interface LabelInputProps {
   value: string;
   isFailed?: boolean;
   failedText?: string;
+  maxLength?: number;
+  labelInputStyle?: object;
 }
 
 export interface LabelSelectProps {
@@ -17,3 +19,14 @@ export interface LabelSelectProps {
   isFailed?: boolean;
   failedText?: string;
 }
+
+// Timer
+export interface TimerProps {
+  minutes: number;
+  seconds: number;
+  setMinutes: Function;
+  setSeconds: Function;
+  timerStyle?: object;
+}
+
+export interface InputTimerProps extends TimerProps, LabelInputProps {}

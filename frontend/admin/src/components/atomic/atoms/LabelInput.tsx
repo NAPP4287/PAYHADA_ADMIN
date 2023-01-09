@@ -1,7 +1,7 @@
-import { Input, Label, FormGroup } from "reactstrap";
+import { Input, Label } from "reactstrap";
 import { LabelInputProps } from "interface/InterfaceBasicLabel";
 
-function LabelInput(props: LabelInputProps) {
+const LabelInput = (props: LabelInputProps) => {
   const {
     label,
     placeholder,
@@ -10,6 +10,8 @@ function LabelInput(props: LabelInputProps) {
     value,
     isFailed,
     failedText,
+    maxLength,
+    labelInputStyle,
   } = props;
 
   const inputChange = (e: any) => {
@@ -17,8 +19,8 @@ function LabelInput(props: LabelInputProps) {
   };
 
   return (
-    <FormGroup>
-      <Label for={type} style={{ fontSize: "13px" }}>
+    <div className="marginBottom" style={{ ...labelInputStyle }}>
+      <Label for={type} className="label">
         {label}
       </Label>
       <Input
@@ -26,10 +28,11 @@ function LabelInput(props: LabelInputProps) {
         placeholder={placeholder}
         onChange={(e) => inputChange(e)}
         value={value}
+        maxLength={maxLength}
       />
       {!isFailed && <span className="errorText">{failedText}</span>}
-    </FormGroup>
+    </div>
   );
-}
+};
 
 export default LabelInput;
