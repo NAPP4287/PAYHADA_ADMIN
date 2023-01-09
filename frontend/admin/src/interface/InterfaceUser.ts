@@ -1,7 +1,13 @@
-export interface LoginInfoType {
+export interface LoginMainProps {
   email: string;
+  setEmail: Function;
   password: string;
-  nation: string;
+  setPassword: Function;
+  setIsLoginMain: Function;
+}
+
+export interface LoginCertProps {
+  email: string;
 }
 
 export interface UserInfoType {

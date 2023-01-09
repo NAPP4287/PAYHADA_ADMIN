@@ -39,7 +39,7 @@ const SelectOption = (
   );
 };
 
-function LabelSelect(props: LabelSelectProps) {
+const LabelSelect = (props: LabelSelectProps) => {
   const { label, type, setChangeData, value, dataArray, isFailed, failedText } =
     props;
 
@@ -52,6 +52,6 @@ function LabelSelect(props: LabelSelectProps) {
       {isFailed && <span className="errorText">{failedText}</span>}
     </FormGroup>
   );
-}
+};
 
 export default LabelSelect;

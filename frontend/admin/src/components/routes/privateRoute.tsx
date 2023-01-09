@@ -8,7 +8,7 @@ interface PrivateRouteProps {
   authentication: boolean;
 }
 
-function PrivateRoute({ authentication }: PrivateRouteProps) {
+const PrivateRoute = ({ authentication }: PrivateRouteProps) => {
   const userInfo = useRecoilValue(userInfoState);
 
   const changeUserInfo =
@@ -29,6 +29,6 @@ function PrivateRoute({ authentication }: PrivateRouteProps) {
       <Navigate to="/main" />
     );
   }
-}
+};
 
 export default PrivateRoute;
