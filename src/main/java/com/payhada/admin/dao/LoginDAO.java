@@ -8,9 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface LoginDAO {
-	LoginDTO selectMemberWithLoginId(LoginDTO loginDTO);
+	LoginDTO selectEmployeeWithLoginId(LoginDTO loginDTO);
 
 	List<EmployeeRoleMappDTO> selectEmployeeRoles(String userNo);
 
 	void updateEmployeeFailureData(LoginDTO loginDTO);
+
+	void updateLastLoginDate(String userNo);
+
+	void generateOTPCode(LoginDTO loginDTO);
 }

@@ -5,16 +5,16 @@
 
 <mapper namespace="com.payhada.admin.dao.LoginDAO">
 
-	<select id="selectMemberWithLoginId" parameterType="loginDTO" resultType="loginDTO">
-		SELECT login_id AS id, pwd, otp_code, user_no, pwd_fail_cnt, lock_start_time
-		FROM employee
+	<select id="selectEmployeeWithLoginId" parameterType="loginDTO" resultType="loginDTO">
+		SELECT login_id AS id, pwd, otp_code, otp_date, user_no, pwd_fail_cnt, lock_start_time, last_login_date
+		FROM employee 
 		WHERE login_id = #{id}
 	</select>
 
 	<select id="selectEmployeeRoles" parameterType="loginDTO" resultType="EmployeeRoleMappDTO">
 		SELECT erm.user_no, erm.role_group_code, erm.role_level, r.role_group_name
 		FROM employee_role_mapp erm
-				 JOIN role_group r ON erm.role_group_code = r.role_group_code AND r.use_yn = 'Y'
+		JOIN role_group r ON erm.role_group_code = r.role_group_code AND r.use_yn = 'Y'
 		WHERE erm.user_no = #{userNo}
 	</select>
 
@@ -26,6 +26,18 @@
 				pwd_fail_cnt = #{pwdFailCnt},
 			</if>
 		</set>
+		WHERE user_no = #{userNo}
+	</update>
+
+	<update id="updateLastLoginDate" parameterType="String">
+		UPDATE employee
+		SET last_login_date = NOW()
+		WHERE user_no = #{userNo}
+	</update>
+
+	<update id="generateOTPCode" parameterType="loginDTO">
+		UPDATE employee
+		SET otp_code = #{otpCode}, otp_date = NOW()
 		WHERE user_no = #{userNo}
 	</update>
 </mapper>
