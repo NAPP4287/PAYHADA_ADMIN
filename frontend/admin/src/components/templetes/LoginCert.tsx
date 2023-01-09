@@ -8,8 +8,16 @@ import { LoginCertProps } from "interface/InterfaceUser";
 const LoginCert = (props: LoginCertProps) => {
   const { email } = props;
   const [otpInput, setOtpInput] = useState<string>("");
+  const [isEnd, setIsEnd] = useState<boolean>(false);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(5);
+
+  const onDisableButton = () => {
+    if (otpInput.length !== 6 || isEnd) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div className="alginCenter">
@@ -23,6 +31,8 @@ const LoginCert = (props: LoginCertProps) => {
           minutes={minutes}
           setMinutes={setMinutes}
           setSeconds={setSeconds}
+          setIsEnd={setIsEnd}
+          isEnd={isEnd}
           placeholder={"인증번호를 입력해주세요"}
           type={"default"}
           label={"인증번호"}
@@ -36,7 +46,7 @@ const LoginCert = (props: LoginCertProps) => {
           block
           color="primary"
           type="button"
-          disabled>
+          disabled={onDisableButton()}>
           로그인
         </Button>
       </Form>

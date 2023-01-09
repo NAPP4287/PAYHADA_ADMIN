@@ -26,6 +26,8 @@ export interface TimerProps {
   seconds: number;
   setMinutes: Function;
   setSeconds: Function;
+  setIsEnd: Function;
+  isEnd: boolean;
   timerStyle?: object;
 }
 

@@ -1,5 +1,5 @@
 import { InputTimerProps } from "interface/InterfaceBasicLabel";
-import { Label } from "reactstrap";
+import { Button, Label } from "reactstrap";
 import Timer from "components/atomic/atoms/Timer";
 
 const InputTimer = (props: InputTimerProps) => {
@@ -18,11 +18,12 @@ const InputTimer = (props: InputTimerProps) => {
     setMinutes,
     setSeconds,
     timerStyle,
+    setIsEnd,
+    isEnd,
   } = props;
 
   const inputChange = (e: any) => {
     setChangeData(e.target.value);
-    console.log(e.target.value);
   };
 
   return (
@@ -39,13 +40,21 @@ const InputTimer = (props: InputTimerProps) => {
           value={value}
           maxLength={maxLength}
         />
-        <Timer
-          minutes={minutes}
-          seconds={seconds}
-          setMinutes={setMinutes}
-          setSeconds={setSeconds}
-          timerStyle={timerStyle}
-        />
+        {isEnd ? (
+          <Button color="secondary" type="button" className="label">
+            재요청
+          </Button>
+        ) : (
+          <Timer
+            minutes={minutes}
+            seconds={seconds}
+            setMinutes={setMinutes}
+            setSeconds={setSeconds}
+            timerStyle={timerStyle}
+            setIsEnd={setIsEnd}
+            isEnd={isEnd}
+          />
+        )}
       </div>
       {!isFailed && <span className="errorText">{failedText}</span>}
     </div>

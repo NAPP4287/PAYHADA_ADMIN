@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { TimerProps } from "interface/InterfaceBasicLabel";
 
 const Timer = (props: TimerProps) => {
-  const { minutes, seconds, setMinutes, setSeconds, timerStyle } = props;
+  const { minutes, seconds, setMinutes, setSeconds, timerStyle, setIsEnd } =
+    props;
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -11,6 +12,7 @@ const Timer = (props: TimerProps) => {
       }
       if (seconds === 0) {
         if (minutes === 0) {
+          setIsEnd(true);
           clearInterval(countdown);
         } else {
           setMinutes(minutes - 1);
@@ -19,7 +21,7 @@ const Timer = (props: TimerProps) => {
       }
     }, 1000);
     return () => clearInterval(countdown);
-  }, [minutes, seconds, setMinutes, setSeconds]);
+  }, [minutes, seconds, setIsEnd, setMinutes, setSeconds]);
 
   return (
     <span className="label" style={{ ...timerStyle }}>
