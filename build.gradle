@@ -115,17 +115,25 @@ dependencies {
 
 def webappDir = "$projectDir/frontend/admin"
 
+
 task appNpmInstall(type: NpmTask) {
 	workingDir = file("${webappDir}")
-	args = ["run", "build"]
+	args = ["install"]
+}
+
+task appNpmBuild(type: NpmTask) {
+	workingDir = file("${webappDir}")
+	args = ['run', 'build']
 }
 
 task copyWebApp(type: Copy) {
 	from 'frontend/admin/build'
 	into "build/resources/main/static"
 }
-copyWebApp.dependsOn(appNpmInstall)
-compileJava.dependsOn(copyWebApp)
+
+appNpmBuild.dependsOn appNpmInstall
+copyWebApp.dependsOn appNpmBuild
+compileJava.dependsOn copyWebApp
 
 
 test {
