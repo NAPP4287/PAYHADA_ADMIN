@@ -34,10 +34,9 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @Component
 public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+
     private final ObjectMapper objectMapper;
 
-    public static final String SPRING_SECURITY_FROM_USERNAME_KEY = "id";
-    public static final String SPRING_SECURITY_FROM_PASSWORD_KEY = "pwd";
     public static final String HTTP_METHOD = "POST";
     public static final String API_LOGIN_URL_PATH = "/api/v2/login";
 
@@ -82,7 +81,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
                 sessionDto.setSecret(secret);
                 loginDto = sessionDto;
             } catch (Exception e) {
-                throw new InsufficientAuthenticationException("SESSION IS NULL");
+                throw new InsufficientAuthenticationException("1차 인증부터 진행해 주세요.");
             }
         }
 

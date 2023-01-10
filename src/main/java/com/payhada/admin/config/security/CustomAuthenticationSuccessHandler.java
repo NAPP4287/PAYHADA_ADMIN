@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -45,10 +44,50 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // 로그인 성공 시 데이터 업데이트
         loginService.loginSuccessful(loginDTO.getUserNo());
-        // 1차 인증 (username / password) 일 경우 OTP 번호 생성 후 업데이트, 이메일 전송
-        if (loginDTO.getIsAuthenticatedByOTP().equals(Boolean.FALSE)) {
+
+        Integer authenticateStep = loginDTO.getAuthenticateStep();
+        ResponseDTO responseDTO;
+        if (authenticateStep == 1) {
+            // 1차 인증 (username / password) 일 경우 OTP 번호 생성 후 업데이트, 이메일 전송
             String otpCode = loginService.generateLoginOTP(loginDTO.getUserNo());
             loginDTO.setOtpCode(otpCode);
+
+            // TODO 이메일 전송
+            Map<String, Object> responseData = new HashMap<>();
+            // 메일전송 기능 구현 전 까지 임시로 사용
+            responseData.put("otpCode", loginDTO.getOtpCode());
+
+            responseDTO = ResponseDTO.builder()
+                    .resultCode(200)
+                    .resultMsg("1차 인증 성공")
+                    .data(new ObjectMapper().convertValue(responseData, new TypeReference<Map<String, Object>>() {}))
+                    .build();
+        } else if (authenticateStep == 2) {
+            // 2차 인증 (OTP) 중 코드 미일치 일 경우 (authenticateStep == 2)
+            responseDTO = ResponseDTO.builder()
+                    .resultCode(400)
+                    .resultMsg("OTP 코드가 일치하지 않습니다.")
+                    .build();
+        } else {
+            // 2차 인증 성공
+            List<Map<String, String>> roleGroupList = loginDTO.getEmployeeRoleMappDTOList().stream()
+                    .map(dto -> {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("roleGroupCode", dto.getRoleGroupCode());
+                        map.put("roleGroupName", dto.getRoleGroupName());
+                        return map;
+                    }).collect(Collectors.toList());
+
+            Map<String, Object> responseData = new HashMap<>();
+            responseData.put("userNo", loginDTO.getUserNo());
+            responseData.put("loginId", loginDTO.getId());
+            responseData.put("roleGroupList", roleGroupList);
+
+            responseDTO = ResponseDTO.builder()
+                    .resultCode(200)
+                    .resultMsg("2차 인증 성공")
+                    .data(new ObjectMapper().convertValue(responseData, new TypeReference<Map<String, Object>>() {}))
+                    .build();
         }
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
@@ -56,8 +95,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             requestCache.removeRequest(request, response);
             clearAuthenticationAttributes(request);
         }
-
-        ResponseDTO responseDTO = makeResponse(loginDTO);
 
         // application/json
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
@@ -68,27 +105,4 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
     }
 
-    private ResponseDTO makeResponse(LoginDTO loginDTO) {
-        List<Map<String, String>> roleGroupList = loginDTO.getEmployeeRoleMappDTOList().stream()
-                .map(dto -> {
-                    Map<String, String> map = new HashMap<>();
-                    map.put("roleGroupCode", dto.getRoleGroupCode());
-                    map.put("roleGroupName", dto.getRoleGroupName());
-                    return map;
-                }).collect(Collectors.toList());
-
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("userNo", loginDTO.getUserNo());
-        responseData.put("loginId", loginDTO.getId());
-        responseData.put("roleGroupList", roleGroupList);
-        responseData.put("isAuthenticatedByOTP", loginDTO.getIsAuthenticatedByOTP());
-        // 메일전송 기능 구현 전 까지 임시로 사용
-        responseData.put("otpCode", loginDTO.getOtpCode());
-
-        return ResponseDTO.builder()
-                .resultCode(200)
-                .resultMsg("정상")
-                .data(new ObjectMapper().convertValue(responseData, new TypeReference<Map<String, Object>>() {}))
-                .build();
-    }
 }

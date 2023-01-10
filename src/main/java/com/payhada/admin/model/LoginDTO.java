@@ -45,7 +45,8 @@ public class LoginDTO implements UserDetails {
 
     private String secret; // 사용자가 입력한 OTP Code
 
-    private Boolean isAuthenticatedByOTP;
+    // 인증 단계 (1: ID/PW 인증 성공, 2: OTP 인증 진행 중, 3: OTP 인증 성공)
+    private Integer authenticateStep;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -95,7 +96,7 @@ public class LoginDTO implements UserDetails {
     @Builder
     public LoginDTO(String id, String pwd, String otpCode, String otpDate, String userNo, Integer pwdFailCnt,
                     String lockStartTime, String lastLoginDate, List<EmployeeRoleMappDTO> employeeRoleMappDTOList,
-                    String agentCode, String secret, Boolean isAuthenticatedByOTP) {
+                    String agentCode, String secret, Integer authenticateStep) {
         this.id = id;
         this.pwd = pwd;
         this.otpCode = otpCode;
@@ -107,10 +108,10 @@ public class LoginDTO implements UserDetails {
         this.employeeRoleMappDTOList = employeeRoleMappDTOList;
         this.agentCode = agentCode;
         this.secret = secret;
-        this.isAuthenticatedByOTP = isAuthenticatedByOTP;
+        this.authenticateStep = authenticateStep;
     }
 
-    public void setIsAuthenticatedByOTP(Boolean isAuthenticatedByOTP) {
-        this.isAuthenticatedByOTP = isAuthenticatedByOTP;
+    public void setAuthenticateStep(Integer authenticateStep) {
+        this.authenticateStep = authenticateStep;
     }
 }
