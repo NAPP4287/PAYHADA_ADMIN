@@ -4,6 +4,9 @@ import { Form, Button } from "reactstrap";
 import InputTimer from "components/atomic/organisms/InputTimer";
 // interface
 import { LoginCertProps } from "interface/InterfaceUser";
+// recoil
+import { useRecoilState } from "recoil";
+import { userInfoState } from "recoil/stateUser";
 
 const LoginCert = (props: LoginCertProps) => {
   const { email } = props;
@@ -12,11 +15,19 @@ const LoginCert = (props: LoginCertProps) => {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(5);
 
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
   const onDisableButton = () => {
     if (otpInput.length !== 6 || isEnd) {
       return true;
     }
     return false;
+  };
+
+  const onClickCert = () => {
+    // OTP API 요청
+    console.log(otpInput);
+    setUserInfo({ ...userInfo, userToken: "임시 토큰입니다." });
   };
 
   return (
@@ -46,7 +57,8 @@ const LoginCert = (props: LoginCertProps) => {
           block
           color="primary"
           type="button"
-          disabled={onDisableButton()}>
+          disabled={onDisableButton()}
+          onClick={onClickCert}>
           로그인
         </Button>
       </Form>

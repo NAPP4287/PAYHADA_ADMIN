@@ -4,9 +4,9 @@ import LoginMain from "components/templetes/LoginMain";
 import LoginCert from "components/templetes/\bLoginCert";
 
 const Login = () => {
-  const [email, setEmail] = useState<string>("nanni@naver.com");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isLoginMain, setIsLoginMain] = useState<boolean>(false);
+  const [isLoginMain, setIsLoginMain] = useState<boolean>(true);
 
   return (
     <>

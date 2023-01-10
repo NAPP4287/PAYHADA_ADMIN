@@ -26,6 +26,13 @@ const InputTimer = (props: InputTimerProps) => {
     setChangeData(e.target.value);
   };
 
+  const resetTimer = () => {
+    setMinutes(5);
+    setSeconds(0);
+    setIsEnd(false);
+    setChangeData("");
+  };
+
   return (
     <div style={{ ...labelInputStyle }}>
       <Label for={type} className="label">
@@ -41,7 +48,11 @@ const InputTimer = (props: InputTimerProps) => {
           maxLength={maxLength}
         />
         {isEnd ? (
-          <Button color="secondary" type="button" className="label">
+          <Button
+            color="secondary"
+            type="button"
+            className="label"
+            onClick={resetTimer}>
             재요청
           </Button>
         ) : (
