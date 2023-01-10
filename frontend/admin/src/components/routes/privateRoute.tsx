@@ -23,11 +23,7 @@ const PrivateRoute = ({ authentication }: PrivateRouteProps) => {
       <Outlet />
     );
   } else {
-    return changeUserInfo.userToken === "" ? (
-      <Outlet />
-    ) : (
-      <Navigate to="/main" />
-    );
+    return changeUserInfo.userToken === "" ? <Outlet /> : <Navigate to="/" />;
   }
 };
 
