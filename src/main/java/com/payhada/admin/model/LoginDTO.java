@@ -1,22 +1,3 @@
-//package com.payhada.admin.model;
-//
-//import lombok.*;
-//import org.apache.ibatis.type.Alias;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//
-//@ToString
-//@Data
-//@NoArgsConstructor
-//@Alias("loginDTO")
-//public class LoginDTO {
-//    private String id;
-//    private String pwd;
-//    private String code;
-//    private String memberNo;
-//}
-
 package com.payhada.admin.model;
 
 import lombok.Builder;
@@ -46,7 +27,9 @@ public class LoginDTO implements UserDetails {
 
     private String pwd;
 
-    private String otpCode;
+    private String otpCode; // 발급된 OTP Code
+
+    private String otpDate;
 
     private String userNo;
 
@@ -54,7 +37,16 @@ public class LoginDTO implements UserDetails {
 
     private String lockStartTime;
 
-    private List<EmployeeRoleMappDTO> employeeRoleMappDTOList;
+    private String lastLoginDate;
+
+    private List<EmployeeRoleMappDTO> employeeRoleMappDTOList = new ArrayList<>();
+
+    private String agentCode;
+
+    private String secret; // 사용자가 입력한 OTP Code
+
+    // 인증 단계 (1: ID/PW 인증 성공, 2: OTP 인증 진행 중, 3: OTP 인증 성공)
+    private Integer authenticateStep;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -102,14 +94,24 @@ public class LoginDTO implements UserDetails {
     }
 
     @Builder
-    public LoginDTO(String id, String pwd, String otpCode, String userNo, Integer pwdFailCnt,
-                    String lockStartTime, List<EmployeeRoleMappDTO> employeeRoleMappDTOList) {
+    public LoginDTO(String id, String pwd, String otpCode, String otpDate, String userNo, Integer pwdFailCnt,
+                    String lockStartTime, String lastLoginDate, List<EmployeeRoleMappDTO> employeeRoleMappDTOList,
+                    String agentCode, String secret, Integer authenticateStep) {
         this.id = id;
         this.pwd = pwd;
         this.otpCode = otpCode;
+        this.otpDate = otpDate;
         this.userNo = userNo;
         this.pwdFailCnt = pwdFailCnt;
         this.lockStartTime = lockStartTime;
+        this.lastLoginDate = lastLoginDate;
         this.employeeRoleMappDTOList = employeeRoleMappDTOList;
+        this.agentCode = agentCode;
+        this.secret = secret;
+        this.authenticateStep = authenticateStep;
+    }
+
+    public void setAuthenticateStep(Integer authenticateStep) {
+        this.authenticateStep = authenticateStep;
     }
 }

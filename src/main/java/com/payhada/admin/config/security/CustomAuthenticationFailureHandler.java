@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Component
-public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler  {
+public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     // 계정 잠금 시간
     private static final long LOCK_MIN = 30;
@@ -40,7 +40,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         this.objectMapper = new ObjectMapper();
     }
 
-    //TODO 수정 필요
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
             throws IOException, ServletException {
@@ -50,6 +49,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         int resultCode;
         String resultMsg = exception.getMessage();
 
+        ResponseDTO responseDTO;
         try {
             LoginDTO loginDto = objectMapper.readValue(StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8), LoginDTO.class);
 
@@ -67,53 +67,57 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 resultCode = 404;
             } else if (exception instanceof BadCredentialsException) {
                 resultCode = 400;
-                // 비밀번호 실패 카운트 변경
-                // 5회 이상 실패 시 계정 잠금
-                LoginDTO failureDTO = loginService.loginWithLoginIdAndPwd(loginDto);
-                String userNo = failureDTO.getUserNo();
-                int pwdFailCnt = failureDTO.getPwdFailCnt();
-                String lockStartTime;
-                if (pwdFailCnt > 5) {
-                    lockStartTime = LocalDateTime.now().plusMinutes(LOCK_MIN).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    // 잠김 시간 이후 다시 5번의 기회를 위해 비밀번호 실패 카운트 초기화
-                    pwdFailCnt = 0;
+                if (exception.getMessage().equals("PASSWORD")) {
+                    // 비밀번호 실패 카운트 변경
+                    // 5회 이상 실패 시 계정 잠금
+                    LoginDTO failureDTO = loginService.login(loginDto);
+                    String userNo = failureDTO.getUserNo();
+                    int pwdFailCnt = failureDTO.getPwdFailCnt();
+                    String lockStartTime;
+                    if (pwdFailCnt > 5) {
+                        lockStartTime = LocalDateTime.now().plusMinutes(LOCK_MIN).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        // 잠김 시간 이후 다시 5번의 기회를 위해 비밀번호 실패 카운트 초기화
+                        pwdFailCnt = 0;
+                    } else {
+                        lockStartTime = null;
+                        pwdFailCnt++;
+                    }
+                    failureDTO = LoginDTO.builder()
+                            .userNo(userNo)
+                            .pwdFailCnt(pwdFailCnt)
+                            .lockStartTime(lockStartTime)
+                            .build();
+                    loginService.updateLoginFailureData(failureDTO);
+
+                    resultMsg = "패스워드가 일치하지 않습니다.";
                 } else {
-                    lockStartTime = null;
-                    pwdFailCnt++;
+                    resultMsg = "OTP 코드가 일치하지 않습니다.";
                 }
-                failureDTO = LoginDTO.builder()
-                        .userNo(userNo)
-                        .pwdFailCnt(pwdFailCnt)
-                        .lockStartTime(lockStartTime)
-                        .build();
-                loginService.updateLoginFailureData(failureDTO);
+
             } else if (exception instanceof LockedException) {
                 resultCode = 400;
-            } else if(exception instanceof InsufficientAuthenticationException) {
+            } else if (exception instanceof InsufficientAuthenticationException) {
                 resultCode = 400;
             } else {
                 resultCode = 500;
                 resultMsg = "서비스중 오류가 발생했습니다.";
             }
 
-            ResponseDTO responseDTO = ResponseDTO.builder()
+            responseDTO = ResponseDTO.builder()
                     .resultCode(resultCode)
                     .resultMsg(resultMsg)
                     .build();
-
-            if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {
-                jsonConverter.write(responseDTO, jsonMimeType, new ServletServerHttpResponse(response));
-            }
         } catch (Exception e) {
             log.error(e.getMessage());
 
-            ResponseDTO responseDTO = ResponseDTO.builder()
+            responseDTO = ResponseDTO.builder()
                     .resultCode(500)
                     .resultMsg("서비스중 오류가 발생했습니다.")
                     .build();
-            if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {
-                jsonConverter.write(responseDTO, jsonMimeType, new ServletServerHttpResponse(response));
-            }
+        }
+
+        if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {
+            jsonConverter.write(responseDTO, jsonMimeType, new ServletServerHttpResponse(response));
         }
     }
 }
