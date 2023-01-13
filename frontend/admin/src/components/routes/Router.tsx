@@ -1,17 +1,26 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "pages/Login";
 import Main from "pages/Main";
+import Settings from "pages/Settings";
 import PrivateRoute from "./PrivateRoute";
+import Nav from "components/atomic/organisms/Nav";
+import { userInfoState } from "recoil/stateUser";
+import { useRecoilValue } from "recoil";
 
 const Router = () => {
+  const userInfo = useRecoilValue(userInfoState);
+
   return (
     <BrowserRouter>
+      {userInfo.userToken !== "" && <Nav />}
+
       <Routes>
         <Route element={<PrivateRoute authentication={false} />}>
           <Route path="/login" element={<Login />} />
         </Route>
         <Route element={<PrivateRoute authentication={true} />}>
           <Route path="/" element={<Main />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
     </BrowserRouter>

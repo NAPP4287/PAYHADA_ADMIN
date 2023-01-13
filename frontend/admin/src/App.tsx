@@ -1,7 +1,7 @@
 import "assets/css/common.css";
-import "assets/argon/vendor/nucleo/css/nucleo.css";
-import "assets/argon/vendor/font-awesome/css/font-awesome.min.css";
-import "assets/argon/css/argon-design-system-react.min.css";
+import "assets/argon/plugins/nucleo/css/nucleo.css";
+// import "assets/argon/font-awesome/css/font-awesome.min.css";
+import "assets/argon/css/argon-dashboard-react.min.css";
 
 import Router from "components/routes/Router";
 import BasicAlert from "components/atomic/atoms/AlertBasic";

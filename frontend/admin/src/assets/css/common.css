@@ -13,6 +13,14 @@
   border-radius: 10px;
 }
 
+.textBold {
+  font-weight: bold !important;
+}
+
+.textCenter {
+  text-align: center;
+}
+
 .fullWidth {
   width: 100%;
 }
@@ -96,4 +104,38 @@
 
 .label {
   font-size: 13px !important;
+}
+
+/* sideMenu */
+
+.menuSubItem {
+  padding: 10px 0 10px 62px;
+  color: #757679;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 12px;
+}
+
+.menuSubItem:hover {
+  background-color: #e3f1ff;
+  color: #009efd;
+}
+
+.fixMenu {
+  background-color: #e3f1ff;
+  color: #009efd;
+}
+
+.menuOpenActive {
+  color: #009efd !important;
+}
+
+.scrollBar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+  height: 10%;
+  border-radius: 10px;
 }
