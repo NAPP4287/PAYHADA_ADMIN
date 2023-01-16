@@ -1,4 +1,5 @@
 import { InvalidCheckType } from "interface/InterfaceUser";
+import { KeyboardEvent } from "react";
 
 const rInvalidRule: InvalidCheckType = {
   // eslint-disable-next-line
@@ -11,3 +12,20 @@ const rInvalidRule: InvalidCheckType = {
 export const invalidCheck = (type: string, inputData: string) => {
   return rInvalidRule[type].test(inputData);
 };
+
+export const onKeyPressEnter = (
+  e: KeyboardEvent<HTMLInputElement>,
+  action: Function,
+  enterAble?: boolean,
+) => {
+  if (enterAble === undefined && e.key === "Enter") {
+    action();
+  }
+  if (e.key === "Enter" && !enterAble) {
+    return e.preventDefault();
+  } else if (e.key === "Enter" && enterAble) {
+    return action();
+  }
+};
+
+// export const un

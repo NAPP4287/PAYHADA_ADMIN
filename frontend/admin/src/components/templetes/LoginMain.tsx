@@ -45,6 +45,7 @@ const LoginMain = (props: LoginMainProps) => {
           value={email}
           isFailed={invalidData.email}
           failedText={"이메일을 다시 확인해주세요"}
+          onEnter={getLogin}
         />
         <LabelInput
           placeholder={"비밀번호를 입력해주세요"}
@@ -54,6 +55,7 @@ const LoginMain = (props: LoginMainProps) => {
           value={password}
           isFailed={invalidData.password}
           failedText={"비밀번호를 다시 확인해주세요"}
+          onEnter={getLogin}
         />
         <Button
           block

@@ -12,22 +12,22 @@ const LoginCert = (props: LoginCertProps) => {
   const { email } = props;
   const [otpInput, setOtpInput] = useState<string>("");
   const [isEnd, setIsEnd] = useState<boolean>(false);
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(5);
+  const [seconds, setSeconds] = useState(300);
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
-  const onDisableButton = () => {
+  const onCheckOtp = () => {
     if (otpInput.length !== 6 || isEnd) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   };
 
   const onClickCert = () => {
     // OTP API 요청
-    console.log(otpInput);
-    setUserInfo({ ...userInfo, userToken: "임시 토큰입니다." });
+    if (onCheckOtp()) {
+      setUserInfo({ ...userInfo, userToken: "임시 토큰입니다." });
+    }
   };
 
   return (
@@ -39,8 +39,6 @@ const LoginCert = (props: LoginCertProps) => {
         </p>
         <InputTimer
           seconds={seconds}
-          minutes={minutes}
-          setMinutes={setMinutes}
           setSeconds={setSeconds}
           setIsEnd={setIsEnd}
           isEnd={isEnd}
@@ -51,13 +49,13 @@ const LoginCert = (props: LoginCertProps) => {
           value={otpInput}
           maxLength={6}
           isFailed={true}
+          onEnter={onClickCert}
+          resetTime={300}
         />
         <Button
           className="marginTop"
           block
           color="primary"
-          type="button"
-          disabled={onDisableButton()}
           onClick={onClickCert}>
           로그인
         </Button>
