@@ -6,6 +6,10 @@ export interface ObjectBracketBooleanType {
   [key: string]: boolean;
 }
 
-export interface ObjectBracketNumterType {
+export interface ObjectBracketNumberType {
   [key: string]: number;
+}
+
+export interface ObjectBracketObjectType {
+  [key: string]: object;
 }

@@ -1,6 +1,7 @@
 import { Input, Label } from "reactstrap";
 import { LabelInputProps } from "interface/InterfaceBasicLabel";
 import { onKeyPressEnter } from "utils/utilInput";
+import React from "react";
 
 const LabelInput = (props: LabelInputProps) => {
   const {
@@ -15,7 +16,7 @@ const LabelInput = (props: LabelInputProps) => {
     onEnter,
   } = props;
 
-  const inputChange = (e: any) => {
+  const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChangeData(e.target.value);
   };
 

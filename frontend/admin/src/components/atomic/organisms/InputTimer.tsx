@@ -47,7 +47,7 @@ const InputTimer = (props: InputTimerProps) => {
     setMinutes(Math.floor(seconds / 60));
   };
 
-  const handleEnterPress = (e: any) => {
+  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (isEnd && e.key === "Enter") {
       return e.preventDefault();
     }

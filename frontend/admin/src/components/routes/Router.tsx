@@ -3,7 +3,7 @@ import Login from "pages/Login";
 import Main from "pages/Main";
 import Settings from "pages/Settings";
 import PrivateRoute from "./PrivateRoute";
-import Nav from "components/atomic/organisms/Nav";
+import NavSide from "components/atomic/organisms/NavSide";
 import { userInfoState } from "recoil/stateUser";
 import { useRecoilValue } from "recoil";
 
@@ -12,7 +12,7 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      {userInfo.userToken !== "" && <Nav />}
+      {userInfo.userToken !== "" && <NavSide />}
 
       <Routes>
         <Route element={<PrivateRoute authentication={false} />}>

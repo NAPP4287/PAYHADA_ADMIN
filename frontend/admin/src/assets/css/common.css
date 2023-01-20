@@ -63,6 +63,10 @@
   margin-left: 10px;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 /* label input */
 .errorText {
   font-size: 10px;
