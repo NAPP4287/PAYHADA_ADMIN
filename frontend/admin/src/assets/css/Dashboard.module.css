@@ -1,0 +1,92 @@
+.dashWrap {
+  padding: 50px 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.leftTopCard {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.leftTopCard > div:nth-child(1) {
+  margin-left: 0;
+}
+
+.topCard {
+  width: 18rem;
+  margin-left: 15px;
+}
+
+.chartWrap {
+  margin-top: 15px;
+}
+
+.dashRight {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.bottomLeftCardWrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.bottomLeftCardWrap > div {
+  flex: 1;
+}
+
+.dashRight > div:nth-child(2) {
+  margin-top: 15px;
+}
+
+@media (max-width: 1800px) {
+  .dashboardLeft {
+    width: 1800px;
+  }
+  .topCard {
+    width: calc(100% / 4 - 15px);
+  }
+  .dashRight {
+    margin-left: 0;
+    margin-top: 15px;
+    display: flex;
+  }
+  .dashRight > div {
+    flex: 1;
+  }
+  .dashRight > div:nth-child(2) {
+    margin-left: 15px;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 1400px) {
+  .topCard {
+    width: calc(100% / 2 - 10px);
+    margin-left: 15px;
+    margin-top: 15px;
+  }
+  .leftTopCard > div:nth-child(3) {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .topCard {
+    width: 100%;
+    margin-left: 0;
+  }
+  .leftTopCard > div:nth-child(1) {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashWrap {
+    padding: 20px 30px;
+  }
+}
