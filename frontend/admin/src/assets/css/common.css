@@ -29,8 +29,30 @@
   margin-top: 40px;
 }
 
+.smarginTop {
+  margin-top: 15px;
+}
+
 .marginBottom {
   margin-bottom: 15px;
+}
+
+.marginLeft {
+  margin-left: 15px;
+}
+
+.marginRight {
+  margin-right: 15px;
+}
+
+.alignRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.boxTitle {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 @media (max-width: 700px) {
@@ -108,6 +130,19 @@
 
 .label {
   font-size: 13px !important;
+}
+
+.adminWrap {
+  padding: 50px 30px;
+  display: flex;
+}
+
+.textHidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  width: 90%;
 }
 
 /* sideMenu */

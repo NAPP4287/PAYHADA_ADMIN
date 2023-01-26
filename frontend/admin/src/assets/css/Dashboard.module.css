@@ -19,10 +19,6 @@
   margin-left: 15px;
 }
 
-.chartWrap {
-  margin-top: 15px;
-}
-
 .dashRight {
   flex: 1;
   margin-left: 15px;
@@ -35,12 +31,44 @@
   margin-top: 15px;
 }
 
-.bottomLeftCardWrap > div {
+.bottomLeftCardWrap > div:nth-child(1) {
   flex: 1;
+}
+
+.bottomLeftCardWrap > div:nth-child(2) {
+  flex: 2;
 }
 
 .dashRight > div:nth-child(2) {
   margin-top: 15px;
+}
+
+.chartTopWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chartTitle,
+.selectBtnWrap,
+.btnWrap,
+.selectWrap {
+  flex: 1;
+}
+.btnWrap {
+  display: flex;
+  align-items: center;
+}
+
+.btnWrap > button,
+.selectWrap select {
+  font-size: 13px !important;
+  padding: 3px 10px;
+  flex: 1;
+}
+
+.selectWrap select {
+  margin-left: 10px;
 }
 
 @media (max-width: 1800px) {
@@ -73,6 +101,10 @@
   .leftTopCard > div:nth-child(3) {
     margin-left: 0;
   }
+
+  .selectBtnWrap {
+    width: 100%;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -82,6 +114,9 @@
   }
   .leftTopCard > div:nth-child(1) {
     margin-top: 0;
+  }
+  .chartTopWrap {
+    display: block;
   }
 }
 
