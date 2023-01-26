@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -48,6 +50,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
         int resultCode;
         String resultMsg = exception.getMessage();
+        Map<String, Object> data = null;
 
         ResponseDTO responseDTO;
         try {
@@ -72,28 +75,29 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                     // 5회 이상 실패 시 계정 잠금
                     LoginDTO failureDTO = loginService.login(loginDto);
                     String userNo = failureDTO.getUserNo();
-                    int pwdFailCnt = failureDTO.getPwdFailCnt();
-                    String lockStartTime;
-                    if (pwdFailCnt > 5) {
+                    int pwdFailCnt = failureDTO.getPwdFailCnt() + 1;
+                    String lockStartTime = null;
+
+                    resultMsg = "패스워드가 일치하지 않습니다.";
+                    data = new HashMap<>();
+                    data.put("pwdFailCnt", pwdFailCnt);
+
+                    if (pwdFailCnt > 4) {
                         lockStartTime = LocalDateTime.now().plusMinutes(LOCK_MIN).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                         // 잠김 시간 이후 다시 5번의 기회를 위해 비밀번호 실패 카운트 초기화
                         pwdFailCnt = 0;
-                    } else {
-                        lockStartTime = null;
-                        pwdFailCnt++;
                     }
+
                     failureDTO = LoginDTO.builder()
                             .userNo(userNo)
                             .pwdFailCnt(pwdFailCnt)
                             .lockStartTime(lockStartTime)
                             .build();
-                    loginService.updateLoginFailureData(failureDTO);
 
-                    resultMsg = "패스워드가 일치하지 않습니다.";
+                    loginService.updateLoginFailureData(failureDTO);
                 } else {
                     resultMsg = "OTP 코드가 일치하지 않습니다.";
                 }
-
             } else if (exception instanceof LockedException) {
                 resultCode = 400;
             } else if (exception instanceof InsufficientAuthenticationException) {
@@ -106,6 +110,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             responseDTO = ResponseDTO.builder()
                     .resultCode(resultCode)
                     .resultMsg(resultMsg)
+                    .data(data)
                     .build();
         } catch (Exception e) {
             log.error(e.getMessage());

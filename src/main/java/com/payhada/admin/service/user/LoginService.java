@@ -2,18 +2,26 @@ package com.payhada.admin.service.user;
 
 import com.payhada.admin.common.util.StringUtils;
 import com.payhada.admin.dao.LoginDAO;
+import com.payhada.admin.model.EmployeeInfoDTO;
 import com.payhada.admin.model.EmployeeRoleMappDTO;
 import com.payhada.admin.model.LoginDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class LoginService {
+    // OTP 제한 시간
+    private static final long OTP_LIMIT_TIME = 3;
+
     private final LoginDAO loginDAO;
 
     public LoginDTO login(LoginDTO loginDTO) {
@@ -54,16 +62,27 @@ public class LoginService {
         loginDAO.updateLastLoginDate(userNo);
     }
 
-    public String generateLoginOTP(String userNo) {
+    public Map<String, String> generateLoginOTP(String userNo) {
         String otpCode = StringUtils.generateRandomNumberString();
+        String otpDate = LocalDateTime.now().plusMinutes(OTP_LIMIT_TIME)
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         LoginDTO loginDTO = LoginDTO.builder()
                 .userNo(userNo)
                 .otpCode(otpCode)
+                .otpDate(otpDate)
                 .build();
 
         loginDAO.generateOTPCode(loginDTO);
 
-        return otpCode;
+        Map<String, String> otpData = new HashMap<>();
+        otpData.put("otpCode", otpCode);
+        otpData.put("otpDate", otpDate);
+
+        return otpData;
+    }
+
+    public EmployeeInfoDTO getEmployeeInfo(String userNo) {
+        return loginDAO.selectEmployeeInfo(userNo);
     }
 }

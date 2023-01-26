@@ -7,14 +7,8 @@ public class BusinessException extends Exception{
 
 	private final ErrorCode errorCode;
 
-	public BusinessException(ErrorCode code) throws Exception {
+	public BusinessException(ErrorCode code) {
 		this.errorCode = code;
-		
-		try {
-			
-		} catch (Exception e) {
-			throw new ApplicationException(code);
-		}
 	}
 
 	public ErrorCode getError() {

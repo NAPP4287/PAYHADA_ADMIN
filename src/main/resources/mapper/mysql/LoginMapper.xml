@@ -37,8 +37,18 @@
 
 	<update id="generateOTPCode" parameterType="loginDTO">
 		UPDATE employee
-		SET otp_code = #{otpCode}, otp_date = NOW()
+		SET otp_code = #{otpCode}, otp_date = #{otpDate}
 		WHERE user_no = #{userNo}
 	</update>
+
+	<select id="selectEmployeeInfo" resultType="EmployeeInfoDTO" parameterType="String">
+		SELECT user_no, decrypt(user_name) AS userName, decrypt(first_name_en) AS firstNameEn, decrypt(last_name_en) AS lastNameEn,
+		       email, decrypt(tel_num) AS telNum, decrypt(mobile_num) AS mobileNum, gender, decrypt(birth) AS birth, nationality_code,
+		       decrypt(zip_code) AS zipCode, decrypt(address) AS address, decrypt(address_detail) AS addressDetail,
+			   decrypt(address_en) AS addressEn, decrypt(address_detail_en) AS addressDetailEn, decrypt(city) AS city,
+			   decrypt(state) AS state, join_date, leave_date, modify_date, modify_user_no
+		FROM employee_info
+		WHERE user_no = #{userNo}
+	</select>
 </mapper>
 

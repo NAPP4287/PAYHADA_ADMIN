@@ -1,6 +1,7 @@
 package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payhada.admin.service.MailService;
 import com.payhada.admin.service.user.LoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,12 +13,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
-	private static final String[] PERMIT_ALL = {"/api/v2/login", "/api/v2/test"};
+	private static final String[] PERMIT_ALL = {"/api/v2/login", "/api/v2/test", "/api/v2/test3"};
 
 	private final LoginService loginService;
 
-	public SecurityConfig(LoginService loginService) {
+	private final MailService mailService;
+
+	public SecurityConfig(LoginService loginService, MailService mailService) {
 		this.loginService = loginService;
+		this.mailService = mailService;
 	}
 
 
@@ -45,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		return new JsonUsernamePasswordAuthenticationFilter(
 				new ObjectMapper(),
 				new JsonAuthenticationManager(loginService),
-				new CustomAuthenticationSuccessHandler(loginService),
+				new CustomAuthenticationSuccessHandler(loginService, mailService),
 				new CustomAuthenticationFailureHandler(loginService)
 		);
 	}
