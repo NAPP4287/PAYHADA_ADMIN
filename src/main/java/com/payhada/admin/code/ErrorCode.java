@@ -22,7 +22,13 @@ public enum ErrorCode {
 	USER_SESSION_EXPIRED("E2000", "세션이 만료 되었습니다."),
 	USER_NOT_FOUND("E2001", "등록되지 않은 사용자 입니다."),
 	USER_UNAUTHORIZED("E2002", "인증에 실패하였습니다."),
-	USER_AUTH_REQUIRED("E2003", "해당 요청에 대한 권한이 없습니다.");
+	USER_AUTH_REQUIRED("E2003", "해당 요청에 대한 권한이 없습니다."),
+
+	/** NCP 관련 오류 코드 */
+	NCP_MAKE_SIGNATURE_ERR("E3000", "NCP Signature 생성 중 오류가 발생했습니다."),
+	NCP_GENERATE_HEADER_ERR("E3001", "NCP Header 생성 중 오류가 발생했습니다."),
+	NCP_FAIL_MAIL_SERVICE("E3002", "NCP Mail Service 요청 중 오류가 발생했습니다."),
+	;
 
 	@Getter
 	private String code;
