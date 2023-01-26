@@ -1,30 +1,40 @@
 package com.payhada.admin.common.connector;
 
 
+import com.google.gson.Gson;
+import com.payhada.admin.code.ErrorCode;
+import com.payhada.admin.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class HttpConnector implements Connector{
-	Logger log = LoggerFactory.getLogger(HttpConnector.class);
-	
+@Slf4j
+@Component
+public class HttpConnector implements Connector {
+
 	private String url;
+
 	public void setConnectionUrl(String url) {
 		this.url=url;
 	}
@@ -150,5 +160,47 @@ public class HttpConnector implements Connector{
 		}
 
 		return returnData;
+	}
+
+	@Override
+	public String postJson(String url, Map<String, String> header, Map<String, Object> body) throws BusinessException {
+		log.debug("HTTP POST REQUEST");
+		log.debug("url :: {}", url);
+		log.debug("header :: {}", header);
+		log.debug("body :: {}", body);
+
+		try {
+			HttpPost httpPost = new HttpPost(url);
+			httpPost.setHeader("Content-type", "application/json");
+			header.forEach(httpPost::setHeader);
+
+			Gson gson = new Gson();
+			String bodyStr = gson.toJson(body);
+			HttpEntity httpEntity = new StringEntity(bodyStr);
+			httpPost.setEntity(httpEntity);
+
+			CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+			CloseableHttpResponse response = httpClient.execute(httpPost);
+
+			String responseStr;
+			int responseStatusCode = response.getStatusLine().getStatusCode();
+			if (responseStatusCode == 200) {
+				ResponseHandler<String> handler = new BasicResponseHandler();
+				responseStr = handler.handleResponse(response);
+			} else {
+				HttpEntity entity = response.getEntity();
+				responseStr = EntityUtils.toString(entity, StandardCharsets.UTF_8);
+			}
+
+			log.debug("Response Status :: {}", responseStatusCode);
+			log.debug("Response Body :: {}", responseStr);
+
+			return responseStr;
+		} catch (Exception e) {
+ 			log.error("HTTP POST REQUEST 실패");
+			log.error(e.getMessage());
+
+			throw new BusinessException(ErrorCode.API_SERVER_ERROR);
+		}
 	}
 }
