@@ -14,15 +14,15 @@ const DashboardRemStatus = () => {
           Remittance status
         </span>
 
-        <div className={styles.tableWrap}>
+        <div>
           <Table className="align-items-center smarginTop" responsive>
             <thead className="thead-light">
               <tr>
-                <th scope="col">remittance</th>
-                <th scope="col">all</th>
-                <th scope="col">process</th>
-                <th scope="col">complete</th>
-                <th scope="col">cancel</th>
+                <th scope="col">송금현황</th>
+                <th scope="col">전체</th>
+                <th scope="col">진행중</th>
+                <th scope="col">완료</th>
+                <th scope="col">취소</th>
               </tr>
             </thead>
             <tbody>
