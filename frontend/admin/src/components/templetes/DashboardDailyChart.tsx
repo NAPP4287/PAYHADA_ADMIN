@@ -13,7 +13,7 @@ import { dummyChart } from "data/dummyData";
 // interface
 import { DailyChartProps } from "interface/interfaceDashboard";
 
-const DashboardChart = () => {
+const DashboardDailyChart = () => {
   const [thisMonthArr, setThisMonthArr] = useState<Array<DailyChartProps>>([]);
   const [selectDate, setSelectDate] = useState({ year: 0, month: 0 });
   const [selectChart, setSelectChart] = useState<number>(0);
@@ -80,7 +80,7 @@ const DashboardChart = () => {
   const chartData: any = () => {
     if (selectChart === 0) {
       return chartOption(thisMonthDate, [
-        { name: "회원명수", data: arrChartData("userCount") },
+        { name: "가입명수", data: arrChartData("userCount") },
         { name: "인증명수", data: arrChartData("certUserCount") },
       ]);
     } else if (selectChart === 1) {
@@ -105,7 +105,7 @@ const DashboardChart = () => {
   };
 
   return (
-    <Card className="card-stats mb-lg-0">
+    <Card>
       <CardBody>
         <div className={styles.chartTopWrap}>
           <span className={`boxTitle ${styles.chartTitle}`}>Daily Graph</span>
@@ -151,11 +151,11 @@ const DashboardChart = () => {
           series={chartData().series}
           options={chartData().options}
           type="bar"
-          height={windowHeight - 500}
+          height={windowHeight / 2}
         />
       </CardBody>
     </Card>
   );
 };
 
-export default DashboardChart;
+export default DashboardDailyChart;

@@ -31,3 +31,9 @@ select,
 input {
   font-size: 15px;
 }
+
+th,
+td,
+tr {
+  text-align: center;
+}

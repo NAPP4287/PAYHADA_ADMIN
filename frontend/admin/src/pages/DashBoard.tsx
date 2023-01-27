@@ -5,7 +5,8 @@ import { topAllData } from "data/dashBoardData";
 import styles from "assets/css/Dashboard.module.css";
 // components
 import InfoCard from "components/atomic/atoms/InfoCard";
-import DashboardChart from "components/templetes/DashboardChart";
+import DashboardDailyChart from "components/templetes/DashboardDailyChart";
+import DashboardRemStatus from "components/templetes/DashboardRemStatus";
 
 const DashBoard = () => {
   return (
@@ -23,16 +24,14 @@ const DashBoard = () => {
           ))}
         </div>
 
-        <div className="smarginTop">
-          <DashboardChart />
+        <div className={`smarginTop ${styles.leftChartWrap}`}>
+          <DashboardDailyChart />
         </div>
 
         <div className={styles.bottomLeftCardWrap}>
-          <Card className="card-stats mb-lg-0">
-            <CardBody>ㅇㅇㅇ</CardBody>
-          </Card>
+          <DashboardRemStatus />
 
-          <Card className="card-stats mb-lg-0 marginLeft">
+          <Card>
             <CardBody>ㅇㅇㅇ</CardBody>
           </Card>
         </div>

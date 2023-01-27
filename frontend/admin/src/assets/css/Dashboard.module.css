@@ -2,12 +2,19 @@
   padding: 50px 30px;
   display: flex;
   flex-wrap: wrap;
+  height: 100vh;
+}
+
+.dashboardLeft {
+  display: flex;
+  flex-direction: column;
 }
 
 .leftTopCard {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  flex: 1;
 }
 
 .leftTopCard > div:nth-child(1) {
@@ -22,6 +29,8 @@
 .dashRight {
   flex: 1;
   margin-left: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .bottomLeftCardWrap {
@@ -36,23 +45,41 @@
 }
 
 .bottomLeftCardWrap > div:nth-child(2) {
-  flex: 2;
+  flex: 1;
+  margin-left: 15px;
 }
 
-.dashRight > div:nth-child(2) {
+.rightMiddleCard,
+.rightBottomCard {
   margin-top: 15px;
+}
+
+.rightTopCard {
+  flex: 1;
+  background-color: orchid;
+}
+
+.rightMiddleCard {
+  background-color: orange;
+}
+
+.rightBottomCard {
+  background-color: pink;
 }
 
 .chartTopWrap {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 15px;
 }
 
 .chartTitle,
 .selectBtnWrap,
 .btnWrap,
-.selectWrap {
+.selectWrap,
+.rightMiddleCard,
+.rightBottomCard {
   flex: 1;
 }
 .btnWrap {
@@ -71,6 +98,10 @@
   margin-left: 10px;
 }
 
+th {
+  padding: 10px 5px !important;
+}
+
 @media (max-width: 1800px) {
   .dashboardLeft {
     width: 1800px;
@@ -87,8 +118,8 @@
     flex: 1;
   }
   .dashRight > div:nth-child(2) {
-    margin-left: 15px;
-    margin-top: 0;
+    margin-top: 15px;
+    margin-left: 0;
   }
 }
 
@@ -117,6 +148,18 @@
   }
   .chartTopWrap {
     display: block;
+  }
+  .bottomLeftCardWrap {
+    flex-direction: column;
+  }
+  .bottomLeftCardWrap > div:nth-child(2) {
+    margin-left: 0;
+    margin-top: 15px;
+  }
+
+  .tableWrap {
+    overflow: hidden;
+    width: 50vw;
   }
 }
 
