@@ -85,4 +85,8 @@ public class LoginService {
     public EmployeeInfoDTO getEmployeeInfo(String userNo) {
         return loginDAO.selectEmployeeInfo(userNo);
     }
+
+    public String[] getAllRoleGroupNames() {
+        return loginDAO.selectAllGroupNames();
+    }
 }

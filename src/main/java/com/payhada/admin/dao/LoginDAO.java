@@ -20,4 +20,6 @@ public interface LoginDAO {
 	void generateOTPCode(LoginDTO loginDTO);
 
     EmployeeInfoDTO selectEmployeeInfo(String userNo);
+
+	String[] selectAllGroupNames();
 }

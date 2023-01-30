@@ -50,5 +50,11 @@
 		FROM employee_info
 		WHERE user_no = #{userNo}
 	</select>
+
+	<select id="selectAllGroupNames" resultType="String">
+		SELECT role_group_code
+		FROM role_group
+	</select>
+
 </mapper>
 
