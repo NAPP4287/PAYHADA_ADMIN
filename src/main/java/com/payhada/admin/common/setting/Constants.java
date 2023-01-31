@@ -2,9 +2,8 @@ package com.payhada.admin.common.setting;
 
 public class Constants {
 	public static final String SUCCESS						= "00";		//결과성공
-	public static final String REQEUST						= "01";		//요청
+	public static final String REQUEST						= "01";		//요청
 	public static final String FAILTURE						= "11";		//결과실패
-	
 	
 	//user_status
 	public static final String USER_OK						= "00";		// 정상
@@ -22,7 +21,7 @@ public class Constants {
 	
 	//trade_status (trade)
 	public static final String TRADE_COMPLETE				= "00";
-	public static final String TRADE_REQEUST				= "01";
+	public static final String TRADE_REQUEST				= "01";
 	public static final String TRADE_PAYMENT_COMPLETE		= "02";
 	public static final String TRADE_TRANSFER_READY			= "03";
 	public static final String TRADE_WAIT_TRANSFER			= "04";
@@ -49,12 +48,12 @@ public class Constants {
 	public static final String CANCEL_AML_CHECK				= "06";
 	
 	// prefunding
-	public static final String prefunding_deposit			="입금";
-	public static final String prefunding_withdrawal		="출금";
+	public static final String PREFUNDING_DEPOSIT			="입금";
+	public static final String PREFUNDING_WITHDRAWAL		="출금";
 	
 	//settlement_status
 	public static final String SETTLEMENT_COMPLETE			="00";	
-	public static final String SETTLEMENT_REQEUST			="01";
+	public static final String SETTLEMENT_REQUEST			="01";
 	
 	//wlf_status
 	public static final String WLF_OK						= "00";		//WLF정상
@@ -62,13 +61,13 @@ public class Constants {
 	
 	//aml_status
 	public static final String AML_OK						= "00";		//AML정상
-	public static final String AML_REQEUST					= "01";		//AML요청
+	public static final String AML_REQUEST					= "01";		//AML요청
 	public static final String AML_ADMIN_OK					= "02";		//WLF관리자승인
 	public static final String AML_REJECTED					= "11";		//WLF불가
 	
 	//str_status
 	public static final String STR_OK						= "00";		//STR적용
-	public static final String STR_REQEUST					= "01";		//STR요청
+	public static final String STR_REQUEST					= "01";		//STR요청
 	public static final String STR_REJECTED					= "11";		//STR불가
 	
 	//product_cd

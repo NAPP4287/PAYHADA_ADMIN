@@ -32,21 +32,8 @@ public class LoginService {
         return loginDAO.selectEmployeeRoles(loginDTO.getUserNo());
     }
 
-    public void resetLoginFailureData(String userNo) {
-        LoginDTO loginDTO = LoginDTO.builder()
-                .userNo(userNo)
-                .pwdFailCnt(0)
-                .lockStartTime(null)
-                .build();
-        loginDAO.updateEmployeeFailureData(loginDTO);
-    }
-
     public void updateLoginFailureData(LoginDTO failureDTO) {
         loginDAO.updateEmployeeFailureData(failureDTO);
-    }
-
-    public void updateLastLoginDate(String userNo) {
-        loginDAO.updateLastLoginDate(userNo);
     }
 
     public void loginSuccessful(String userNo) {

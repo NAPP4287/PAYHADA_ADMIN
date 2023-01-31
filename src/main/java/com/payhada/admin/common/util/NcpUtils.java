@@ -5,9 +5,9 @@ import com.payhada.admin.common.setting.NcpPropertiesDTO;
 import com.payhada.admin.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -15,20 +15,14 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 @Component
+@Slf4j
 public class NcpUtils {
 
-    public static NcpPropertiesDTO ncpPropertiesDTOStatic;
+    private static NcpPropertiesDTO ncpPropertiesDTOStatic;
 
-    private final NcpPropertiesDTO ncpPropertiesDTO;
-
-    public NcpUtils(NcpPropertiesDTO ncpPropertiesDTO) {
-        this.ncpPropertiesDTO = ncpPropertiesDTO;
-    }
-
-    @PostConstruct
-    private void init() {
+    @Autowired
+    public void setNcpPropertiesDTOStatic(NcpPropertiesDTO ncpPropertiesDTO) {
         NcpUtils.ncpPropertiesDTOStatic = ncpPropertiesDTO;
     }
 
