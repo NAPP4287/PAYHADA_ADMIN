@@ -19,3 +19,21 @@ li {
   margin: 0;
   padding: 0;
 }
+
+ul,
+li,
+div,
+p,
+span,
+button,
+option,
+select,
+input {
+  font-size: 15px;
+}
+
+th,
+td,
+tr {
+  text-align: center;
+}
