@@ -5,8 +5,6 @@ import com.payhada.admin.service.KeyService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DbKeyAop {
 
-    static final Logger log = LoggerFactory.getLogger(DbKeyAop.class.getName());
-
-    final String SET_KEY_EXECUTION = "execution(public * com.payhada.admin.service.*.*(..))";
+//    final String SET_KEY_EXECUTION = "execution(public * com.payhada.admin.service.*.*(..))";
+    final String POINT_CUT = "within(com.payhada.admin.service..*)";
 
     @Autowired
     AesKeyConfig keyConfig;
@@ -25,14 +22,14 @@ public class DbKeyAop {
     @Autowired
     KeyService keyService;
 
-    @Before(SET_KEY_EXECUTION)
+    @Before(POINT_CUT)
     public void before(JoinPoint joinPoint) {
-        if(matchStr(joinPoint.getTarget().toString(), "KeyServiceImpl"))
+        if (Boolean.TRUE.equals(matchStr(joinPoint.getTarget().toString(), "KeyServiceImpl")))
             return;
         keyService.setDbKey(keyConfig.getDbKey());
     }
 
     public static Boolean matchStr(String str1, String str2) {
-        return str1.indexOf(str2) > -1;
+        return str1.contains(str2);
     }
 }

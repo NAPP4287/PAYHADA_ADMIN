@@ -20,9 +20,6 @@ import java.util.List;
 @Component
 public class JsonAuthenticationManager implements AuthenticationManager {
 
-    // OTP 제한 시간
-    private static final long OTP_LIMIT_TIME = 3;
-
     private final LoginService loginService;
 
     public JsonAuthenticationManager(LoginService loginService) {
@@ -59,7 +56,7 @@ public class JsonAuthenticationManager implements AuthenticationManager {
             String otpCode = loginResult.getOtpCode();
             // OTP 제한시간 확인
             LocalDateTime otpDate = LocalDateTime.parse(loginResult.getOtpDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            if (otpDate.plusMinutes(OTP_LIMIT_TIME).isBefore(LocalDateTime.now())) {
+            if (otpDate.isBefore(LocalDateTime.now())) {
                 throw new CredentialsExpiredException("OTP 시간이 만료 되었습니다.");
             }
             // OTP 코드 확인

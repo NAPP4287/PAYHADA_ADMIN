@@ -1,5 +1,6 @@
 package com.payhada.admin.dao;
 
+import com.payhada.admin.model.EmployeeInfoDTO;
 import com.payhada.admin.model.EmployeeRoleMappDTO;
 import com.payhada.admin.model.LoginDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,4 +18,8 @@ public interface LoginDAO {
 	void updateLastLoginDate(String userNo);
 
 	void generateOTPCode(LoginDTO loginDTO);
+
+    EmployeeInfoDTO selectEmployeeInfo(String userNo);
+
+	String[] selectAllGroupNames();
 }
