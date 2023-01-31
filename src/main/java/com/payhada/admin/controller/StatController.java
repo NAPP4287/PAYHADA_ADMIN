@@ -15,9 +15,11 @@ import java.time.*;
 import java.time.format.TextStyle;
 import java.util.*;
 
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
+
 @RestController
 @Slf4j
-@RequestMapping("/stat")
+@RequestMapping("/api/v2/stat")
 public class StatController {
 
     private final StatService statService;
@@ -52,7 +54,7 @@ public class StatController {
 
         Response response = Response.builder()
                 .resultCode(200)
-                .resultMsg("OK")
+                .resultMsg(getMessage("E0000", request.getSession()))
                 .data(resultMap)
                 .build();
 
@@ -68,7 +70,7 @@ public class StatController {
 
         Response response = Response.builder()
                 .resultCode(200)
-                .resultMsg("OK")
+                .resultMsg(getMessage("E0000", request.getSession()))
                 .data(resultMap)
                 .build();
 
@@ -144,18 +146,20 @@ public class StatController {
         for (Month month : Month.values()) {
             String monthName = month.getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ROOT).toUpperCase(Locale.ROOT);
             int monthIntValue = month.getValue();
-            int index = monthIntValue - 1;
-            Map<String, Object> map;
+
             BigDecimal krw;
             BigDecimal usd;
             Map<String, Object> amountMap = new HashMap<>();
-            try {
-                map = monthlyRemittance.get(index);
-                krw = new BigDecimal(map.get("KRW").toString());
-                usd = new BigDecimal(map.get("USD").toString());
-            } catch (IndexOutOfBoundsException e) {
+            Map<String, Object> map = monthlyRemittance.stream().filter(v -> {
+                Number monthValue = (Number) v.get("month");
+                return monthValue.intValue() == monthIntValue;
+            }).findFirst().orElse(new HashMap<>());
+            if (map.isEmpty()) {
                 krw = null;
                 usd = null;
+            } else {
+                krw = new BigDecimal(map.get("KRW").toString());
+                usd = new BigDecimal(map.get("USD").toString());
             }
 
             amountMap.put("KRW", krw);
@@ -175,7 +179,7 @@ public class StatController {
 
         Response response = Response.builder()
                 .resultCode(200)
-                .resultMsg("OK")
+                .resultMsg(getMessage("E0000", null))
                 .data(resultMap)
                 .build();
 

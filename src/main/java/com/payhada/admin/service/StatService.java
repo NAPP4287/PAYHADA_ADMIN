@@ -105,16 +105,24 @@ public class StatService {
         }
     }
 
+    // 월별 유저 수
     public List<Map<String, Object>> getMonthlyUserCount() {
         return statDAO.selectMonthlyUserCount();
     }
 
+    // 월별 인증 유저 수
     public List<Map<String, Object>> getMonthlyCertUserCount() {
         return statDAO.selectMonthlyCertUserCount();
     }
 
+    // 월별 송금 건 수
     public List<Map<String, Object>> getMonthlyTxnCount() {
         return statDAO.selectMonthlyTxnCount();
+    }
+
+    // 월별 송금액
+    public List<Map<String, Object>> getMonthlyRemittance() {
+        return statDAO.selectMonthlyRemittance();
     }
 
     public List<Map<String, Object>> getMonthlyData(HttpServletRequest request) {
@@ -123,6 +131,7 @@ public class StatService {
         List<Map<String, Object>> monthlyUserCountList = getMonthlyUserCount();
         List<Map<String, Object>> monthlyCertUserCountList = getMonthlyCertUserCount();
         List<Map<String, Object>> monthlyTxnCountList = getMonthlyTxnCount();
+        List<Map<String, Object>> monthlyRemittanceList = getMonthlyRemittance();
 
         int currentMonth = LocalDate.now(getZoneId(request)).getMonthValue();
 
@@ -131,7 +140,7 @@ public class StatService {
 
             int finalI = i;
             Predicate<Map<String, Object>> thisMonthPredicate = obj -> {
-                Long month = (Long) obj.get("month");
+                Number month = (Number) obj.get("month");
                 return month.intValue() == finalI;
             };
 
@@ -139,6 +148,7 @@ public class StatService {
             map.put("userCount", Optional.ofNullable(getCountFromList(monthlyUserCountList, thisMonthPredicate, "userCount")).orElse(0));
             map.put("certUserCount", Optional.ofNullable(getCountFromList(monthlyCertUserCountList, thisMonthPredicate, "certUserCount")).orElse(0));
             map.put("txnCount", Optional.ofNullable(getCountFromList(monthlyTxnCountList, thisMonthPredicate, "txnCount")).orElse(0));
+            map.put("remittance", Optional.ofNullable(getCountFromList(monthlyRemittanceList, thisMonthPredicate, "KRW")).orElse(0));
 
             list.add(map);
         }
@@ -263,8 +273,4 @@ public class StatService {
         return remittance == null ? BigDecimal.ZERO : new BigDecimal(remittance);
     }
 
-    // 월별 송금액
-    public List<Map<String, Object>> getMonthlyRemittance() {
-        return statDAO.selectMonthlyRemittance();
-    }
 }

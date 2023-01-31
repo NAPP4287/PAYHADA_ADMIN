@@ -41,8 +41,7 @@
         SELECT MONTH(reg_dt) AS month, COUNT(*) AS userCount
         FROM tb_user
         WHERE
-            YEAR(reg_dt) = IF(MONTH(CURRENT_DATE()) = 1, YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)), YEAR(CURRENT_DATE()))
-            AND IF(MONTH(CURRENT_DATE()) = 1, 13, MONTH(CURRENT_DATE())) > MONTH(reg_dt)
+            YEAR(reg_dt) = YEAR(CURRENT_DATE())
             AND status != '11'
         GROUP BY MONTH(reg_dt)
         ORDER BY MONTH(reg_dt)
@@ -52,8 +51,7 @@
         SELECT MONTH(reg_dt) AS month, COUNT(*) AS certUserCount
         FROM tb_user
         WHERE
-            YEAR(reg_dt) = IF(MONTH(CURRENT_DATE()) = 1, YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)), YEAR(CURRENT_DATE()))
-            AND IF(MONTH(CURRENT_DATE()) = 1, 13, MONTH(CURRENT_DATE())) > MONTH(reg_dt)
+            YEAR(reg_dt) = YEAR(CURRENT_DATE())
             AND (status = '00' OR status = '21')
         GROUP BY MONTH(reg_dt)
         ORDER BY MONTH(reg_dt)
@@ -63,9 +61,17 @@
         SELECT MONTH(trade_complete_dt) AS month, COUNT(*) AS txnCount
         FROM tb_trade
         WHERE
-            YEAR(trade_complete_dt) = IF(MONTH(CURRENT_DATE()) = 1, YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)), YEAR(CURRENT_DATE()))
-            AND IF(MONTH(CURRENT_DATE()) = 1, 13, MONTH(CURRENT_DATE())) > MONTH(trade_complete_dt)
+            YEAR(trade_complete_dt) = YEAR(CURRENT_DATE())
             AND status = '00'
+        GROUP BY MONTH(trade_complete_dt)
+        ORDER BY MONTH(trade_complete_dt)
+    </select>
+
+    <select id="selectMonthlyRemittance" resultType="map">
+        SELECT MONTH(trade_complete_dt) AS month, SUM(CAST(reqeust_amt AS DECIMAL(10))) AS KRW, SUM(CAST(trade_usd_amt AS DECIMAL(10, 2))) AS USD
+        FROM tb_trade
+        WHERE status = '00' AND
+            YEAR(trade_complete_dt) = YEAR(CURRENT_DATE())
         GROUP BY MONTH(trade_complete_dt)
         ORDER BY MONTH(trade_complete_dt)
     </select>
@@ -217,15 +223,6 @@
         FROM tb_trade
         WHERE status = '00'
             AND DATE(trade_complete_dt) = (CURRENT_DATE() - INTERVAL 1 DAY)
-    </select>
-
-    <select id="selectMonthlyRemittance" resultType="map">
-        SELECT SUM(CAST(reqeust_amt AS DECIMAL(10))) AS KRW, SUM(CAST(trade_usd_amt AS DECIMAL(10, 2))) AS USD
-        FROM tb_trade
-        WHERE status = '00' AND
-            YEAR(trade_complete_dt) = YEAR(CURRENT_DATE())
-        GROUP BY MONTH(trade_complete_dt)
-        ORDER BY MONTH(trade_complete_dt)
     </select>
 
 </mapper>
