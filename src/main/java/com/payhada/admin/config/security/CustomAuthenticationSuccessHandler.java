@@ -1,5 +1,6 @@
 package com.payhada.admin.config.security;
 
+import com.payhada.admin.common.util.MessageSourceUtils;
 import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.MailService;
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
 
 @Slf4j
 @Component
@@ -69,19 +72,22 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
                 responseDTO = Response.builder()
                         .resultCode(200)
-                        .resultMsg("1차 인증 성공")
+                        .resultMsg(getMessage("successful-1", request.getSession()))
                         .data(responseData)
                         .build();
             } else if (authenticateStep == 2) {
                 // 2차 인증 (OTP) 중 코드 미일치 일 경우 (authenticateStep == 2)
                 responseDTO = Response.builder()
                         .resultCode(400)
-                        .resultMsg("OTP 코드가 일치하지 않습니다.")
+                        .resultMsg(getMessage("mismatch-otp", request.getSession()))
                         .build();
             } else {
                 // 2차 인증 성공
                 // 로그인 성공 시 데이터 업데이트
                 loginService.loginSuccessful(loginDTO.getUserNo());
+
+                // locale 설정
+                setLocale(request);
 
                 // JsonAuthenticationManager 에서 넣어준 권한을 가져옴
                 List<Map<String, String>> roleGroupList = loginDTO.getEmployeeRoleMappDTOList().stream()
@@ -99,7 +105,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
                 responseDTO = Response.builder()
                         .resultCode(200)
-                        .resultMsg("2차 인증 성공")
+                        .resultMsg(getMessage("successful-2", request.getSession()))
                         .data(responseData)
                         .build();
             }
@@ -114,7 +120,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
             responseDTO = Response.builder()
                     .resultCode(500)
-                    .resultMsg("서비스중 오류가 발생했습니다.")
+                    .resultMsg(getMessage("E9999", request.getSession()))
                     .build();
         }
 
@@ -127,4 +133,13 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
     }
 
+    private void setLocale(HttpServletRequest request) {
+        String locale = request.getHeader("locale");
+        if (locale == null) {
+            locale = "kr";
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute("locale", new Locale(locale));
+    }
 }

@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
 	private static final String[] PERMIT_ALL = {
-			"/api/v2/login", "/api/v2/test", "/api/v2/test3"
+			"/api/v2/login", "/api/v2/locale", "/api/v2/test", "/api/v2/test2"
 	};
 
 	private final LoginService loginService;
@@ -44,12 +44,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	  	http
 		  	.authorizeRequests()
 		  		.antMatchers(PERMIT_ALL).permitAll()
-				.antMatchers("/api/v2/test2").hasAnyAuthority("0000", "4100000102")
+//				.antMatchers("/api/v2/test2").hasAnyAuthority("0000", "4100000102")
 				.anyRequest().hasAnyAuthority(loginService.getAllRoleGroupNames());
 //				.anyRequest().authenticated();
-		http.csrf().disable();
+
+		http.csrf()
+				.disable();
+
 		http
-			.formLogin().disable()
+			.formLogin()
+				.disable()
 			.addFilterBefore(jsonUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 

@@ -31,6 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
+
 @Slf4j
 @Component
 public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
@@ -81,7 +83,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
                 sessionDto.setSecret(secret);
                 loginDto = sessionDto;
             } catch (Exception e) {
-                throw new InsufficientAuthenticationException("1차 인증부터 진행해 주세요.");
+                 throw new InsufficientAuthenticationException(getMessage("unauthenticated-1", request.getSession()));
             }
         }
 

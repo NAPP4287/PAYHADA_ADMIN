@@ -1,6 +1,7 @@
 package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payhada.admin.common.util.MessageSourceUtils;
 import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.user.LoginService;
@@ -26,6 +27,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
 
 @Slf4j
 @Component
@@ -78,7 +81,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                     int pwdFailCnt = failureDTO.getPwdFailCnt() + 1;
                     String lockStartTime = null;
 
-                    resultMsg = "패스워드가 일치하지 않습니다.";
+                    resultMsg = getMessage("mismatch-pw", request.getSession());
                     data = new HashMap<>();
                     data.put("pwdFailCnt", pwdFailCnt);
 
@@ -96,7 +99,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
                     loginService.updateLoginFailureData(failureDTO);
                 } else {
-                    resultMsg = "OTP 코드가 일치하지 않습니다.";
+                    resultMsg = getMessage("mismatch-otp", request.getSession());
                 }
             } else if (exception instanceof LockedException) {
                 resultCode = 400;
@@ -104,7 +107,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 resultCode = 400;
             } else {
                 resultCode = 500;
-                resultMsg = "서비스중 오류가 발생했습니다.";
+                resultMsg = getMessage("E9999", request.getSession());
             }
 
             responseDTO = Response.builder()
@@ -117,7 +120,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
             responseDTO = Response.builder()
                     .resultCode(500)
-                    .resultMsg("서비스중 오류가 발생했습니다.")
+                    .resultMsg(getMessage("E9999", request.getSession()))
                     .build();
         }
 

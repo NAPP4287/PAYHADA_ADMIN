@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
+
 @Slf4j
 @Component
 public class JsonAuthenticationManager implements AuthenticationManager {
@@ -34,10 +36,14 @@ public class JsonAuthenticationManager implements AuthenticationManager {
         LoginDTO loginResult = loginService.login(loginParam);
 
         // 계정 존재여부 확인
-        if (loginResult == null) throw new UsernameNotFoundException("등록되지 않은 사용자 입니다.");
+        if (loginResult == null) {
+            throw new UsernameNotFoundException(getMessage("E2001", null));
+        }
 
         // 계정 잠김 상태 확인
-        if (!loginResult.isAccountNonLocked()) throw new LockedException("계정이 잠김 상태 입니다.");
+        if (!loginResult.isAccountNonLocked()) {
+            throw new LockedException(getMessage("locked-account", null));
+        }
 
         // 사용자가 입력한 OTP Code
         String secret = loginParam.getSecret();
@@ -57,7 +63,7 @@ public class JsonAuthenticationManager implements AuthenticationManager {
             // OTP 제한시간 확인
             LocalDateTime otpDate = LocalDateTime.parse(loginResult.getOtpDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             if (otpDate.isBefore(LocalDateTime.now())) {
-                throw new CredentialsExpiredException("OTP 시간이 만료 되었습니다.");
+                throw new CredentialsExpiredException(getMessage("timeout-otp", null));
             }
             // OTP 코드 확인
             if (secret.equals(otpCode)) {
