@@ -17,7 +17,7 @@ import java.util.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/stat")
+@RequestMapping("/api/v2/stat")
 public class StatController {
 
     private final StatService statService;
