@@ -1,5 +1,6 @@
 package com.payhada.admin.common.setting;
 
+import com.payhada.admin.code.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,48 @@ public class Response {
             this.code = code;
             this.message = message;
         }
+    }
+
+    public static Response create(Integer resultCode, String resultMsg) {
+        return Response.builder()
+                .resultCode(resultCode)
+                .resultMsg(resultMsg)
+                .build();
+    }
+
+    public static Response create(Integer resultCode, Map<String, Object> data) {
+        return Response.builder()
+                .resultCode(resultCode)
+                .data(data)
+                .build();
+    }
+
+    public static Response create(Integer resultCode, ErrorCode errorCode) {
+        return Response.builder()
+                .resultCode(resultCode)
+                .error(Error.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build())
+                .build();
+    }
+
+    public static Response create(Integer resultCode, String resultMsg, Map<String, Object> data) {
+        return Response.builder()
+                .resultCode(resultCode)
+                .resultMsg(resultMsg)
+                .data(data)
+                .build();
+    }
+
+    public static Response create(Integer resultCode, String resultMsg, ErrorCode errorCode) {
+        return Response.builder()
+                .resultCode(resultCode)
+                .resultMsg(resultMsg)
+                .error(Error.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build())
+                .build();
     }
 }

@@ -1,7 +1,6 @@
 package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.payhada.admin.common.util.MessageSourceUtils;
 import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.user.LoginService;
@@ -110,18 +109,11 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 resultMsg = getMessage("E9999", request.getSession());
             }
 
-            responseDTO = Response.builder()
-                    .resultCode(resultCode)
-                    .resultMsg(resultMsg)
-                    .data(data)
-                    .build();
+            responseDTO = Response.create(resultCode, resultMsg, data);
         } catch (Exception e) {
             log.error(e.getMessage());
 
-            responseDTO = Response.builder()
-                    .resultCode(500)
-                    .resultMsg(getMessage("E9999", request.getSession()))
-                    .build();
+            responseDTO = Response.create(500, getMessage("E9999", request.getSession()));
         }
 
         if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {

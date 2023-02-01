@@ -14,22 +14,27 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
 	private static final String[] PERMIT_ALL = {
-			"/api/v2/login", "/api/v2/locale", "/api/v2/test", "/api/v2/test2"
+			"/api/v2/test", "/api/v2/test3"
 	};
 
 	private final LoginService loginService;
-
 	private final MailService mailService;
+	private final CustomLogoutSuccessHandler logoutSuccessHandler;
+	private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+	private final CustomAccessDeniedHandler accessDeniedHandler;
 
-	public SecurityConfig(LoginService loginService, MailService mailService) {
+	public SecurityConfig(LoginService loginService, MailService mailService, CustomLogoutSuccessHandler logoutSuccessHandler,
+						  CustomAuthenticationEntryPoint authenticationEntryPoint, CustomAccessDeniedHandler accessDeniedHandler) {
 		this.loginService = loginService;
 		this.mailService = mailService;
+		this.logoutSuccessHandler = logoutSuccessHandler;
+		this.authenticationEntryPoint = authenticationEntryPoint;
+		this.accessDeniedHandler = accessDeniedHandler;
 	}
 
 
 	@Override
-	public void configure(WebSecurity web) throws Exception
-	{
+	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers("/static/**", "/login", "/");
 	}
 
@@ -44,17 +49,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	  	http
 		  	.authorizeRequests()
 		  		.antMatchers(PERMIT_ALL).permitAll()
-//				.antMatchers("/api/v2/test2").hasAnyAuthority("0000", "4100000102")
+				.antMatchers("/api/v2/test2").hasAnyAuthority("0000", "4100000102")
 				.anyRequest().hasAnyAuthority(loginService.getAllRoleGroupNames());
 //				.anyRequest().authenticated();
-
-		http.csrf()
-				.disable();
-
+		http.csrf().disable();
 		http
-			.formLogin()
-				.disable()
-			.addFilterBefore(jsonUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+			.formLogin().disable()
+			.logout()
+				.logoutUrl("/api/v2/logout")
+				.logoutSuccessHandler(logoutSuccessHandler)
+				.invalidateHttpSession(true)
+			.and()
+			.addFilterBefore(jsonUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+			.exceptionHandling()
+				.authenticationEntryPoint(authenticationEntryPoint)
+				.accessDeniedHandler(accessDeniedHandler)
+		;
 	}
 
 	@Bean
