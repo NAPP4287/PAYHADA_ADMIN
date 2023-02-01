@@ -1,5 +1,6 @@
 package com.payhada.admin.controller;
 
+import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.StatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/stat")
+@RequestMapping("/api/v2/stat")
 public class StatController {
 
     private final StatService statService;
@@ -26,9 +27,9 @@ public class StatController {
     }
 
     @GetMapping("/daily")
-    public ResponseEntity<Map<String, Object>> getDailyData(HttpServletRequest request,
-                                                            @RequestParam(required = false) Integer year,
-                                                            @RequestParam(required = false) Integer month) {
+    public ResponseEntity<Response> getDailyData(HttpServletRequest request,
+                                                 @RequestParam(required = false) Integer year,
+                                                 @RequestParam(required = false) Integer month) {
         // year, month 가 null 일 경우 현재 년도와 월을 가져옴
         ZoneId zoneId = statService.getZoneId(request);
         LocalDate localDateNow = LocalDate.now(zoneId);
@@ -49,21 +50,33 @@ public class StatController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("list", list);
 
-        return ResponseEntity.ok(resultMap);
+        Response response = Response.builder()
+                .resultCode(200)
+                .resultMsg("OK")
+                .data(resultMap)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/monthly")
-    public ResponseEntity<Map<String, Object>> getMonthlyData(HttpServletRequest request) {
+    public ResponseEntity<Response> getMonthlyData(HttpServletRequest request) {
         List<Map<String, Object>> list = statService.getMonthlyData(request);
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("list", list);
 
-        return ResponseEntity.ok(resultMap);
+        Response response = Response.builder()
+                .resultCode(200)
+                .resultMsg("OK")
+                .data(resultMap)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Map<String, Object>> statisticAllData() {
+    public ResponseEntity<Response> statisticAllData() {
         // 지난달 데이터 조회
         Integer lastMonthUserCount = statService.getLastMonthUserCount();
         Integer lastMonthCertUserCount = statService.getLastMonthCertUserCount();
@@ -160,6 +173,12 @@ public class StatController {
         resultMap.put("lastDay", lastDay);
         resultMap.put("monthlyRemittance", monthlyRemittanceMap);
 
-        return ResponseEntity.ok(resultMap);
+        Response response = Response.builder()
+                .resultCode(200)
+                .resultMsg("OK")
+                .data(resultMap)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 }

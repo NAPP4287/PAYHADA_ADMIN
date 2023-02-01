@@ -2,7 +2,7 @@ package com.payhada.admin.exception;
 
 import com.payhada.admin.code.ErrorCode;
 
-public class BusinessException extends Exception{
+public class BusinessException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	private final ErrorCode errorCode;

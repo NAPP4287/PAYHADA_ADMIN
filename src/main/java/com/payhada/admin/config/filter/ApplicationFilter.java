@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//@Component
-public class ApplicationFilter implements Filter{
+public class ApplicationFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -29,17 +28,4 @@ public class ApplicationFilter implements Filter{
 		chain.doFilter(req, res);
 	}
 
-	// private HttpServletResponse addSameSite(HttpServletResponse res,String sameSite) {
-	// 	Collection<String> headers = res.getHeaders(HttpHeaders.SET_COOKIE);
-	// 	boolean firstHeader = true;
-	// 	for (String header : headers) {
-	// 		if(firstHeader) {
-	// 			res.setHeader(HttpHeaders.SET_COOKIE, String.format("%s; Secure; %s",header,"SameSite="+sameSite));
-	// 			firstHeader=false;
-	// 			continue;
-	// 		}
-	// 		res.addHeader(HttpHeaders.SET_COOKIE, String.format("%s; Secure; %s",header,"SameSite="+sameSite));
-	// 	}
-	// 	return res;
-	// }
 }

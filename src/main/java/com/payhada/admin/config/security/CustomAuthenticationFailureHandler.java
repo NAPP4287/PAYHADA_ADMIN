@@ -2,7 +2,7 @@ package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.payhada.admin.model.LoginDTO;
-import com.payhada.admin.model.ResponseDTO;
+import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -52,7 +52,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         String resultMsg = exception.getMessage();
         Map<String, Object> data = null;
 
-        ResponseDTO responseDTO;
+        Response responseDTO;
         try {
             LoginDTO loginDto = objectMapper.readValue(StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8), LoginDTO.class);
 
@@ -107,7 +107,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 resultMsg = "서비스중 오류가 발생했습니다.";
             }
 
-            responseDTO = ResponseDTO.builder()
+            responseDTO = Response.builder()
                     .resultCode(resultCode)
                     .resultMsg(resultMsg)
                     .data(data)
@@ -115,7 +115,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         } catch (Exception e) {
             log.error(e.getMessage());
 
-            responseDTO = ResponseDTO.builder()
+            responseDTO = Response.builder()
                     .resultCode(500)
                     .resultMsg("서비스중 오류가 발생했습니다.")
                     .build();

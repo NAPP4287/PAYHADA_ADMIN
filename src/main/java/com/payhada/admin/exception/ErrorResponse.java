@@ -1,32 +1,22 @@
 package com.payhada.admin.exception;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Getter
+@NoArgsConstructor
+@ToString
 public class ErrorResponse {
 	private String errorCode;
 	private String errorMsg;
 	private String status;
 
-	public String getErrorCode() {
-		return errorCode;
-	}
-
-	public void setErrorCode(String errorCode) {
+	@Builder
+	public ErrorResponse(String errorCode, String errorMsg, String status) {
 		this.errorCode = errorCode;
-	}
-
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
-	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 }

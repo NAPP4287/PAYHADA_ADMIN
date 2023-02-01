@@ -5,7 +5,6 @@ import com.payhada.admin.service.KeyService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -14,13 +13,16 @@ import org.springframework.stereotype.Component;
 public class DbKeyAop {
 
 //    final String SET_KEY_EXECUTION = "execution(public * com.payhada.admin.service.*.*(..))";
-    final String POINT_CUT = "within(com.payhada.admin.service..*)";
+    private static final String POINT_CUT = "within(com.payhada.admin.service..*)";
 
-    @Autowired
-    AesKeyConfig keyConfig;
+    private final AesKeyConfig keyConfig;
 
-    @Autowired
-    KeyService keyService;
+    private final KeyService keyService;
+
+    public DbKeyAop(AesKeyConfig keyConfig, KeyService keyService) {
+        this.keyConfig = keyConfig;
+        this.keyService = keyService;
+    }
 
     @Before(POINT_CUT)
     public void before(JoinPoint joinPoint) {
