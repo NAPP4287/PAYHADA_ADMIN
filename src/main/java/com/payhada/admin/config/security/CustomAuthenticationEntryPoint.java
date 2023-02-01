@@ -20,13 +20,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         response.setStatus(HttpStatus.OK.value());
 
-        Response responseDTO = Response.builder()
-                .resultCode(401)
-                .error(Response.Error.builder()
-                        .code(ErrorCode.USER_UNAUTHORIZED.getCode())
-                        .message(ErrorCode.USER_UNAUTHORIZED.getMessage())
-                        .build())
-                .build();
+        Response responseDTO = Response.create(401, ErrorCode.USER_UNAUTHORIZED);
 
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         MediaType jsonMimeType = MediaType.APPLICATION_JSON;

@@ -20,13 +20,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         response.setStatus(HttpStatus.OK.value());
 
-        Response responseDTO = Response.builder()
-                .resultCode(403)
-                .error(Response.Error.builder()
-                        .code(ErrorCode.USER_AUTH_REQUIRED.getCode())
-                        .message(ErrorCode.USER_AUTH_REQUIRED.getMessage())
-                        .build())
-                .build();
+        Response responseDTO = Response.create(403, ErrorCode.USER_AUTH_REQUIRED);
 
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         MediaType jsonMimeType = MediaType.APPLICATION_JSON;

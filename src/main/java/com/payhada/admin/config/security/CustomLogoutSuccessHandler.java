@@ -19,10 +19,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.setStatus(HttpStatus.OK.value());
 
-        Response responseDTO = Response.builder()
-                .resultCode(200)
-                .resultMsg("로그아웃 성공")
-                .build();
+        Response responseDTO = Response.create(200, "로그아웃 성공");
 
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         MediaType jsonMimeType = MediaType.APPLICATION_JSON;

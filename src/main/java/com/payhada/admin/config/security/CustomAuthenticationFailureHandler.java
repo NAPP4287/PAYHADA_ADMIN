@@ -1,6 +1,7 @@
 package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payhada.admin.code.ErrorCode;
 import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.user.LoginService;
@@ -104,21 +105,14 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 resultCode = 400;
             } else {
                 resultCode = 500;
-                resultMsg = "서비스중 오류가 발생했습니다.";
+                resultMsg = ErrorCode.API_SERVER_ERROR.getMessage();
             }
 
-            responseDTO = Response.builder()
-                    .resultCode(resultCode)
-                    .resultMsg(resultMsg)
-                    .data(data)
-                    .build();
+            responseDTO = Response.create(resultCode, resultMsg, data);
         } catch (Exception e) {
             log.error(e.getMessage());
 
-            responseDTO = Response.builder()
-                    .resultCode(500)
-                    .resultMsg("서비스중 오류가 발생했습니다.")
-                    .build();
+            responseDTO = Response.create(500, ErrorCode.API_SERVER_ERROR.getMessage());
         }
 
         if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {

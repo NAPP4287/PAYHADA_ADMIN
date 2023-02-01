@@ -1,5 +1,6 @@
 package com.payhada.admin.config.security;
 
+import com.payhada.admin.code.ErrorCode;
 import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.MailService;
@@ -67,17 +68,10 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 // 메일전송 기능 구현 전 까지 임시로 사용
                 responseData.put("otpCode", otpCode);
 
-                responseDTO = Response.builder()
-                        .resultCode(200)
-                        .resultMsg("1차 인증 성공")
-                        .data(responseData)
-                        .build();
+                responseDTO = Response.create(200, "1차 인증 성공", responseData);
             } else if (authenticateStep == 2) {
                 // 2차 인증 (OTP) 중 코드 미일치 일 경우 (authenticateStep == 2)
-                responseDTO = Response.builder()
-                        .resultCode(400)
-                        .resultMsg("OTP 코드가 일치하지 않습니다.")
-                        .build();
+                responseDTO = Response.create(400, "OTP 코드가 일치하지 않습니다.");
             } else {
                 // 2차 인증 성공
                 // 로그인 성공 시 데이터 업데이트
@@ -97,11 +91,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 responseData.put("loginId", loginDTO.getId());
                 responseData.put("roleGroupList", roleGroupList);
 
-                responseDTO = Response.builder()
-                        .resultCode(200)
-                        .resultMsg("2차 인증 성공")
-                        .data(responseData)
-                        .build();
+                responseDTO = Response.create(200, "2차 인증 성공", responseData);
             }
 
             SavedRequest savedRequest = requestCache.getRequest(request, response);
@@ -112,10 +102,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         } catch (Exception e) {
             log.error("CustomAuthenticationSuccessHandler Error :: {}", e.getMessage());
 
-            responseDTO = Response.builder()
-                    .resultCode(500)
-                    .resultMsg("서비스중 오류가 발생했습니다.")
-                    .build();
+            responseDTO = Response.create(500, ErrorCode.API_SERVER_ERROR.getMessage());
         }
 
         // application/json
