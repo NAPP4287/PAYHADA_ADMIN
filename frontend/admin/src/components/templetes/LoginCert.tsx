@@ -4,9 +4,13 @@ import { Form, Button } from "reactstrap";
 import InputTimer from "components/atomic/organisms/InputTimer";
 // interface
 import { LoginCertProps } from "interface/InterfaceUser";
+import { BasicAlertType } from "interface/InterfaceCommonAlert";
 // recoil
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
+import { commonAlertState } from "recoil/stateAlert";
+// apis
+import { callLogin } from "apis/loginApis";
 
 const LoginCert = (props: LoginCertProps) => {
   const { email } = props;
@@ -15,6 +19,8 @@ const LoginCert = (props: LoginCertProps) => {
   const [seconds, setSeconds] = useState(300);
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [commonAlertInfo, setCommonAlertInfo] =
+    useRecoilState<BasicAlertType>(commonAlertState);
 
   const onCheckOtp = () => {
     if (otpInput.length !== 6 || isEnd) {
@@ -23,10 +29,21 @@ const LoginCert = (props: LoginCertProps) => {
     return true;
   };
 
-  const onClickCert = () => {
+  const onClickCert = async () => {
     // OTP API 요청
     if (onCheckOtp()) {
-      setUserInfo({ ...userInfo, userToken: "임시 토큰입니다." });
+      const result = await callLogin({ secret: otpInput });
+      if (result.resultCode !== 200) {
+        setCommonAlertInfo({
+          ...commonAlertInfo,
+          isOpen: true,
+          title: "실패",
+          alertType: "error",
+          content: result.resultMsg,
+        });
+      } else {
+        setUserInfo({ ...userInfo, userNo: result.data.userNo });
+      }
     }
   };
 

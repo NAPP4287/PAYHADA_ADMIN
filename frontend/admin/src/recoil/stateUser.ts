@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { UserInfoType } from "interface/InterfaceUser";
+import { UserInfoType, FailCntType } from "interface/InterfaceUser";
 
 const { persistAtom } = recoilPersist({
   key: "importantState",
@@ -11,8 +11,17 @@ export const userInfoState = atom<UserInfoType>({
   key: "userInfoState",
   default: {
     id: "",
-    userToken: "",
-    userRole: "master",
+    loginId: "",
+    userNo: "",
+    roleGroupList: [],
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const pwdFailCntState = atom<FailCntType>({
+  key: "pwdFailCntState",
+  default: {
+    failCnt: 0,
   },
   effects_UNSTABLE: [persistAtom],
 });

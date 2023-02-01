@@ -5,20 +5,41 @@ import LabelInput from "components/atomic/atoms/LabelInput";
 // interface
 import { LoginMainProps } from "interface/InterfaceUser";
 import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
+import { BasicAlertType } from "interface/InterfaceCommonAlert";
 // utils
 import { invalidCheck } from "utils/utilInput";
+// apis
+import { callLogin } from "apis/loginApis";
+// recoil
+import { useRecoilState } from "recoil";
+import { commonAlertState } from "recoil/stateAlert";
 
 const LoginMain = (props: LoginMainProps) => {
   const { email, setEmail, password, setPassword, setIsLoginMain } = props;
-
   const [invalidData, setInvalidData] = useState<ObjectBracketBooleanType>({
     email: true,
     password: true,
-    nation: true,
   });
 
-  const getLogin = () => {
-    handleInvaildCheck() && setIsLoginMain(false);
+  const [commonAlertInfo, setCommonAlertInfo] =
+    useRecoilState<BasicAlertType>(commonAlertState);
+
+  const getLogin = async () => {
+    if (handleInvaildCheck()) {
+      const result = await callLogin({ id: email, pwd: password });
+
+      if (result.resultCode !== 200) {
+        setCommonAlertInfo({
+          ...commonAlertInfo,
+          isOpen: true,
+          title: "실패",
+          alertType: "error",
+          content: result.resultMsg,
+        });
+      } else {
+        setIsLoginMain(false);
+      }
+    }
   };
 
   const handleInvaildCheck = () => {

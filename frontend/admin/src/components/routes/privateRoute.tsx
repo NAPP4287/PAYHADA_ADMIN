@@ -17,13 +17,13 @@ const PrivateRoute = ({ authentication }: PrivateRouteProps) => {
       : userInfo;
 
   if (authentication) {
-    return changeUserInfo.userToken === "" ? (
+    return changeUserInfo.userNo === "" ? (
       <Navigate to={"/login"} />
     ) : (
       <Outlet />
     );
   } else {
-    return changeUserInfo.userToken === "" ? <Outlet /> : <Navigate to="/" />;
+    return changeUserInfo.userNo === "" ? <Outlet /> : <Navigate to="/" />;
   }
 };
 

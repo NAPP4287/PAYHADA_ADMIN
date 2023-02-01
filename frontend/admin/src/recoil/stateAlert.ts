@@ -5,7 +5,7 @@ export const commonAlertState = atom<BasicAlertType>({
   key: "commonAlertState",
   default: {
     isOpen: false,
-    AlertType: "normal",
+    alertType: "normal",
     title: "",
     content: "",
     action: undefined,

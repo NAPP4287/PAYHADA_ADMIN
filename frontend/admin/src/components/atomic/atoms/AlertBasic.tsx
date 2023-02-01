@@ -1,7 +1,9 @@
+import { Modal, Button } from "reactstrap";
+// recoil
 import { useRecoilState } from "recoil";
 import { commonAlertState } from "recoil/stateAlert";
+// interface
 import { BasicAlertType } from "interface/InterfaceCommonAlert";
-import { Modal, Button } from "reactstrap";
 
 const BasicAlert = () => {
   const [commonAlertInfo, setCommonAlertInfo] =
@@ -45,10 +47,13 @@ const BasicAlert = () => {
           <p>{commonAlertInfo.content}</p>
         </div>
         <div className="modalBottom">
-          <Button color="primary" type="button" onClick={actionButton}>
+          <Button
+            color={commonAlertInfo.alertType ? "danger" : "primary"}
+            type="button"
+            onClick={actionButton}>
             {commonAlertInfo.buttonText.confirm}
           </Button>
-          {commonAlertInfo.AlertType !== "normal" && (
+          {commonAlertInfo.alertType === "info" && (
             <Button
               color="secondary"
               outline

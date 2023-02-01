@@ -12,10 +12,19 @@ export interface LoginCertProps {
 
 export interface UserInfoType {
   id: string;
-  userToken: string;
-  userRole: string;
+  loginId: string;
+  userNo: string;
+  roleGroupList: Array<roleGroupType>;
 }
 
+export interface FailCntType {
+  failCnt: number;
+}
+
+interface roleGroupType {
+  roleGroupName: string;
+  roleGroupCode: string;
+}
 export interface InvalidCheckType {
   [key: string]: RegExp;
 }
