@@ -1,5 +1,6 @@
 package com.payhada.admin.config.security;
 
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.setting.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +20,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.setStatus(HttpStatus.OK.value());
 
-        Response responseDTO = Response.create(200, "로그아웃 성공");
+        Response responseDTO = Response.create(ResponseCode.SUCCESSFUL_LOGOUT.getCode());
 
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         MediaType jsonMimeType = MediaType.APPLICATION_JSON;

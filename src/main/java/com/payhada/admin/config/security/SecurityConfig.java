@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
 	private static final String[] PERMIT_ALL = {
-			"/api/v2/test", "/api/v2/test3"
+			"/api/v2/locale", "/api/v2/test", "/api/v2/test3"
 	};
 
 	private final LoginService loginService;

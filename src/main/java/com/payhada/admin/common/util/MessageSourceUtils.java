@@ -24,6 +24,18 @@ public class MessageSourceUtils {
         MessageSourceUtils.messageSourceStatic = messageSource;
     }
 
+    public static String getMessage(String code) {
+        Locale locale = DEFAULT_LOCALE;
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        if (attributes.getRequest().getSession() != null) {
+            HttpSession session = attributes.getRequest().getSession();
+            locale = getLocaleFromSession(session);
+        }
+
+        return messageSourceStatic.getMessage(code, null, locale);
+    }
+
     public static String getMessage(String code, @Nullable HttpSession session) {
         Locale locale;
 

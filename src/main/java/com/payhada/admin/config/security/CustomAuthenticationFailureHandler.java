@@ -1,6 +1,7 @@
 package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.user.LoginService;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
@@ -55,6 +57,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         Map<String, Object> data = null;
 
         Response responseDTO;
+        ResponseCode responseCode;
         try {
             LoginDTO loginDto = objectMapper.readValue(StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8), LoginDTO.class);
 
@@ -69,9 +72,8 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 - LockedException : 계정 잠김
             */
             if (exception instanceof UsernameNotFoundException) {
-                resultCode = 404;
+                responseCode = ResponseCode.USER_NOT_FOUND;
             } else if (exception instanceof BadCredentialsException) {
-                resultCode = 400;
                 if (exception.getMessage().equals("PASSWORD")) {
                     // 비밀번호 실패 카운트 변경
                     // 5회 이상 실패 시 계정 잠금
@@ -80,7 +82,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                     int pwdFailCnt = failureDTO.getPwdFailCnt() + 1;
                     String lockStartTime = null;
 
-                    resultMsg = getMessage("mismatch-pw", request.getSession());
+                    responseCode = ResponseCode.MISMATCH_PASSWORD;
                     data = new HashMap<>();
                     data.put("pwdFailCnt", pwdFailCnt);
 
@@ -98,22 +100,23 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
                     loginService.updateLoginFailureData(failureDTO);
                 } else {
-                    resultMsg = getMessage("mismatch-otp", request.getSession());
+                    responseCode = ResponseCode.MISMATCH_OTP;
                 }
             } else if (exception instanceof LockedException) {
-                resultCode = 400;
+                responseCode = ResponseCode.LOCKED_ACCOUNT;
             } else if (exception instanceof InsufficientAuthenticationException) {
-                resultCode = 400;
+                responseCode = ResponseCode.UNAUTHENTICATED_1;
+            } else if (exception instanceof CredentialsExpiredException) {
+                responseCode = ResponseCode.TIMEOUT_OTP;
             } else {
-                resultCode = 500;
-                resultMsg = getMessage("E9999", request.getSession());
+                responseCode = ResponseCode.API_SERVER_ERROR;
             }
 
-            responseDTO = Response.create(resultCode, resultMsg, data);
+            responseDTO = Response.create(responseCode.getCode(), data);
         } catch (Exception e) {
             log.error(e.getMessage());
 
-            responseDTO = Response.create(500, getMessage("E9999", request.getSession()));
+            responseDTO = Response.create(ResponseCode.API_SERVER_ERROR.getCode());
         }
 
         if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {

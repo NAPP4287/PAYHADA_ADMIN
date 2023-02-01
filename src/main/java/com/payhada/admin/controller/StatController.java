@@ -1,5 +1,6 @@
 package com.payhada.admin.controller;
 
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.StatService;
 import lombok.extern.slf4j.Slf4j;
@@ -52,13 +53,7 @@ public class StatController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("list", list);
 
-        Response response = Response.builder()
-                .resultCode(200)
-                .resultMsg(getMessage("E0000", request.getSession()))
-                .data(resultMap)
-                .build();
-
-        return ResponseEntity.ok(response);
+        return ResponseCode.API_STATUS_OK.toResponseEntity(resultMap);
     }
 
     @GetMapping("/monthly")
@@ -68,13 +63,7 @@ public class StatController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("list", list);
 
-        Response response = Response.builder()
-                .resultCode(200)
-                .resultMsg(getMessage("E0000", request.getSession()))
-                .data(resultMap)
-                .build();
-
-        return ResponseEntity.ok(response);
+        return ResponseCode.API_STATUS_OK.toResponseEntity(resultMap);
     }
 
     @GetMapping("/all")
@@ -177,12 +166,6 @@ public class StatController {
         resultMap.put("lastDay", lastDay);
         resultMap.put("monthlyRemittance", monthlyRemittanceMap);
 
-        Response response = Response.builder()
-                .resultCode(200)
-                .resultMsg(getMessage("E0000", null))
-                .data(resultMap)
-                .build();
-
-        return ResponseEntity.ok(response);
+        return ResponseCode.API_STATUS_OK.toResponseEntity(resultMap);
     }
 }

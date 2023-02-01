@@ -68,8 +68,8 @@ public class StatService {
 
             int finalI = i;
             Predicate<Map<String, Object>> thisDayPredicate = obj -> {
-                Integer day = (Integer) obj.get("day");
-                return day == finalI;
+                Number day = (Number) obj.get("day");
+                return day.intValue() == finalI;
             };
 
             map.put("day", i);
@@ -154,8 +154,8 @@ public class StatService {
         }
 
         list.sort((o1, o2) -> {
-            Long o1Month = (Long) o1.get("month");
-            Long o2Month = (Long) o2.get("month");
+            Integer o1Month = (Integer) o1.get("month");
+            Integer o2Month = (Integer) o2.get("month");
 
             return o1Month.compareTo(o2Month);
         });

@@ -1,6 +1,6 @@
 package com.payhada.admin.config.security;
 
-import com.payhada.admin.code.ErrorCode;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.setting.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +20,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         response.setStatus(HttpStatus.OK.value());
 
-        Response responseDTO = Response.create(403, ErrorCode.USER_AUTH_REQUIRED);
+        Response responseDTO = Response.create(ResponseCode.USER_AUTH_REQUIRED.getCode());
 
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         MediaType jsonMimeType = MediaType.APPLICATION_JSON;

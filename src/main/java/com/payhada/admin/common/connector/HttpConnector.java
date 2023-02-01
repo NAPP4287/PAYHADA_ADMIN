@@ -2,7 +2,7 @@ package com.payhada.admin.common.connector;
 
 
 import com.google.gson.Gson;
-import com.payhada.admin.code.ErrorCode;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
@@ -200,7 +200,7 @@ public class HttpConnector implements Connector {
  			log.error("HTTP POST REQUEST 실패");
 			log.error(e.getMessage());
 
-			throw new BusinessException(ErrorCode.API_SERVER_ERROR);
+			throw new BusinessException(ResponseCode.API_SERVER_ERROR);
 		}
 	}
 }

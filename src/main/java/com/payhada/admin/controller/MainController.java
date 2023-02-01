@@ -1,6 +1,6 @@
 package com.payhada.admin.controller;
 
-import com.payhada.admin.code.ErrorCode;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.common.util.MessageSourceUtils;
 import com.payhada.admin.exception.BusinessException;
@@ -30,7 +30,7 @@ public class MainController {
 
     @GetMapping("/test2")
     public String test() throws BusinessException {
-        throw new BusinessException(ErrorCode.API_BAD_REQUEST);
+        throw new BusinessException(ResponseCode.API_BAD_REQUEST);
 //        return "ok";
     }
 
@@ -39,10 +39,7 @@ public class MainController {
                                                  HttpSession session) {
         session.setAttribute("locale", new Locale(locale));
 
-        return ResponseEntity.ok(Response.builder()
-                        .resultCode(200)
-                        .resultMsg(MessageSourceUtils.getMessage("E0000", session))
-                .build());
+        return ResponseCode.API_STATUS_OK.toResponseEntity();
     }
 
 }

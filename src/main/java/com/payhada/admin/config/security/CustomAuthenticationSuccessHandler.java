@@ -1,5 +1,6 @@
 package com.payhada.admin.config.security;
 
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.Response;
 import com.payhada.admin.service.MailService;
@@ -69,10 +70,10 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 // 메일전송 기능 구현 전 까지 임시로 사용
                 responseData.put("otpCode", otpCode);
 
-                responseDTO = Response.create(200, getMessage("successful-1", request.getSession()), responseData);
+                responseDTO = Response.create(ResponseCode.SUCCESSFUL_LOGIN_1.getCode(), responseData);
             } else if (authenticateStep == 2) {
                 // 2차 인증 (OTP) 중 코드 미일치 일 경우 (authenticateStep == 2)
-                responseDTO = Response.create(400, getMessage("mismatch-otp", request.getSession()));
+                responseDTO = Response.create(ResponseCode.MISMATCH_OTP.getCode());
             } else {
                 // 2차 인증 성공
                 // 로그인 성공 시 데이터 업데이트
@@ -95,7 +96,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 responseData.put("loginId", loginDTO.getId());
                 responseData.put("roleGroupList", roleGroupList);
 
-                responseDTO = Response.create(200, getMessage("successful-2", request.getSession()), responseData);
+                responseDTO = Response.create(ResponseCode.SUCCESSFUL_LOGIN_2.getCode(), responseData);
             }
 
             SavedRequest savedRequest = requestCache.getRequest(request, response);
@@ -106,7 +107,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         } catch (Exception e) {
             log.error("CustomAuthenticationSuccessHandler Error :: {}", e.getMessage());
 
-            responseDTO = Response.create(500, getMessage("E9999", request.getSession()));
+            responseDTO = Response.create(ResponseCode.API_SERVER_ERROR.getCode());
         }
 
         // application/json

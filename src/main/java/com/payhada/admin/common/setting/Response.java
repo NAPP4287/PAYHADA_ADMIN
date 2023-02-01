@@ -1,81 +1,39 @@
 package com.payhada.admin.common.setting;
 
-import com.payhada.admin.code.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
+
 @Getter
 @NoArgsConstructor
 public class Response {
-    private Integer resultCode;
+    private String resultCode;
     private String resultMsg;
     private Map<String, Object> data;
-    private Error error;
 
     @Builder
-    public Response(Integer resultCode, String resultMsg, Map<String, Object> data, Error error) {
+    public Response(String resultCode, String resultMsg, Map<String, Object> data) {
         this.resultCode = resultCode;
         this.resultMsg = resultMsg;
         this.data = data;
-        this.error = error;
     }
 
-    @Getter
-    @NoArgsConstructor
-    public static class Error {
-        private String code;
-        private String message;
-
-        @Builder
-        public Error(String code, String message) {
-            this.code = code;
-            this.message = message;
-        }
-    }
-
-    public static Response create(Integer resultCode, String resultMsg) {
+    public static Response create(String responseCode) {
         return Response.builder()
-                .resultCode(resultCode)
-                .resultMsg(resultMsg)
+                .resultCode(responseCode)
+                .resultMsg(getMessage(responseCode))
                 .build();
     }
 
-    public static Response create(Integer resultCode, Map<String, Object> data) {
+    public static Response create(String responseCode, Map<String, Object> data) {
         return Response.builder()
-                .resultCode(resultCode)
+                .resultCode(responseCode)
+                .resultMsg(getMessage(responseCode))
                 .data(data)
-                .build();
-    }
-
-    public static Response create(Integer resultCode, ErrorCode errorCode) {
-        return Response.builder()
-                .resultCode(resultCode)
-                .error(Error.builder()
-                        .code(errorCode.getCode())
-                        .message(errorCode.getMessage())
-                        .build())
-                .build();
-    }
-
-    public static Response create(Integer resultCode, String resultMsg, Map<String, Object> data) {
-        return Response.builder()
-                .resultCode(resultCode)
-                .resultMsg(resultMsg)
-                .data(data)
-                .build();
-    }
-
-    public static Response create(Integer resultCode, String resultMsg, ErrorCode errorCode) {
-        return Response.builder()
-                .resultCode(resultCode)
-                .resultMsg(resultMsg)
-                .error(Error.builder()
-                        .code(errorCode.getCode())
-                        .message(errorCode.getMessage())
-                        .build())
                 .build();
     }
 }

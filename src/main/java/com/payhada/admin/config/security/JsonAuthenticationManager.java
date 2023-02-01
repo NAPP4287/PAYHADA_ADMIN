@@ -37,12 +37,12 @@ public class JsonAuthenticationManager implements AuthenticationManager {
 
         // 계정 존재여부 확인
         if (loginResult == null) {
-            throw new UsernameNotFoundException(getMessage("E2001", null));
+            throw new UsernameNotFoundException("USER NOT FOUND");
         }
 
         // 계정 잠김 상태 확인
         if (!loginResult.isAccountNonLocked()) {
-            throw new LockedException(getMessage("locked-account", null));
+            throw new LockedException("LOCKED ACCOUNT");
         }
 
         // 사용자가 입력한 OTP Code
@@ -63,7 +63,7 @@ public class JsonAuthenticationManager implements AuthenticationManager {
             // OTP 제한시간 확인
             LocalDateTime otpDate = LocalDateTime.parse(loginResult.getOtpDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             if (otpDate.isBefore(LocalDateTime.now())) {
-                throw new CredentialsExpiredException(getMessage("timeout-otp", null));
+                throw new CredentialsExpiredException("TIMEOUT OTP");
             }
             // OTP 코드 확인
             if (secret.equals(otpCode)) {

@@ -83,7 +83,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
                 sessionDto.setSecret(secret);
                 loginDto = sessionDto;
             } catch (Exception e) {
-                 throw new InsufficientAuthenticationException(getMessage("unauthenticated-1", request.getSession()));
+                 throw new InsufficientAuthenticationException("UNAUTHENTICATED 1ST AUTHENTICATE");
             }
         }
 
