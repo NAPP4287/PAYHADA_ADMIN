@@ -3,6 +3,8 @@ package com.payhada.admin.controller;
 import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.setting.CommonResponse;
 import com.payhada.admin.exception.BusinessException;
+import com.payhada.admin.model.LoginDTO;
+import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,12 @@ import java.util.Locale;
 @RequestMapping("/api/v2")
 public class MainController {
 
+    private final LoginService loginService;
+
+    public MainController(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
     @GetMapping(value="/test")
     public ResponseEntity<?> getTest(HttpServletRequest request) {
         log.debug("# # test api # # ");
@@ -34,12 +42,20 @@ public class MainController {
     }
 
     @GetMapping("/locale")
-    public ResponseEntity<CommonResponse> changeLocale(@RequestParam(defaultValue = "kr") String locale,
+    public ResponseEntity<CommonResponse> changeLocale(@RequestParam(defaultValue = "ko") String language,
+                                                       @RequestParam(required = false) String userNo,
                                                        HttpSession session) {
-        session.setAttribute("locale", new Locale(locale));
+        if (userNo != null) {
+            LoginDTO updateDTO = LoginDTO.builder()
+                    .userNo(userNo)
+                    .languageCd(language)
+                    .build();
+            loginService.updateEmployeeLanguage(updateDTO);
+        }
+
+        session.setAttribute("locale", new Locale(language));
 
         return ResponseCode.API_STATUS_OK.toResponseEntity();
     }
 
 }
-

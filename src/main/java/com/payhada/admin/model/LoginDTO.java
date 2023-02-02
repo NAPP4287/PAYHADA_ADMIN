@@ -37,11 +37,11 @@ public class LoginDTO implements UserDetails {
 
     private String lockStartTime;
 
+    private String languageCd;
+
     private String lastLoginDate;
 
     private List<EmployeeRoleMappDTO> employeeRoleMappDTOList = new ArrayList<>();
-
-    private String agentCode;
 
     private String secret; // 사용자가 입력한 OTP Code
 
@@ -95,8 +95,8 @@ public class LoginDTO implements UserDetails {
 
     @Builder
     public LoginDTO(String id, String pwd, String otpCode, String otpDate, String userNo, Integer pwdFailCnt,
-                    String lockStartTime, String lastLoginDate, List<EmployeeRoleMappDTO> employeeRoleMappDTOList,
-                    String agentCode, String secret, Integer authenticateStep) {
+                    String lockStartTime, String languageCd, String lastLoginDate, List<EmployeeRoleMappDTO> employeeRoleMappDTOList,
+                    String secret, Integer authenticateStep) {
         this.id = id;
         this.pwd = pwd;
         this.otpCode = otpCode;
@@ -104,9 +104,9 @@ public class LoginDTO implements UserDetails {
         this.userNo = userNo;
         this.pwdFailCnt = pwdFailCnt;
         this.lockStartTime = lockStartTime;
+        this.languageCd = languageCd;
         this.lastLoginDate = lastLoginDate;
         this.employeeRoleMappDTOList = employeeRoleMappDTOList;
-        this.agentCode = agentCode;
         this.secret = secret;
         this.authenticateStep = authenticateStep;
     }

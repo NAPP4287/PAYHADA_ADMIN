@@ -1,9 +1,6 @@
 package com.payhada.admin.config.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.payhada.admin.service.MailService;
 import com.payhada.admin.service.user.LoginService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,15 +15,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	};
 
 	private final LoginService loginService;
-	private final MailService mailService;
+	private final JsonUsernamePasswordAuthenticationFilter authenticationFilter;
 	private final CustomLogoutSuccessHandler logoutSuccessHandler;
 	private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 	private final CustomAccessDeniedHandler accessDeniedHandler;
 
-	public SecurityConfig(LoginService loginService, MailService mailService, CustomLogoutSuccessHandler logoutSuccessHandler,
-						  CustomAuthenticationEntryPoint authenticationEntryPoint, CustomAccessDeniedHandler accessDeniedHandler) {
+	public SecurityConfig(LoginService loginService, JsonUsernamePasswordAuthenticationFilter authenticationFilter,
+						  CustomLogoutSuccessHandler logoutSuccessHandler, CustomAuthenticationEntryPoint authenticationEntryPoint,
+						  CustomAccessDeniedHandler accessDeniedHandler) {
 		this.loginService = loginService;
-		this.mailService = mailService;
+		this.authenticationFilter = authenticationFilter;
 		this.logoutSuccessHandler = logoutSuccessHandler;
 		this.authenticationEntryPoint = authenticationEntryPoint;
 		this.accessDeniedHandler = accessDeniedHandler;
@@ -60,20 +58,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 				.logoutSuccessHandler(logoutSuccessHandler)
 				.invalidateHttpSession(true)
 			.and()
-			.addFilterBefore(jsonUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+			.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint)
 				.accessDeniedHandler(accessDeniedHandler)
 		;
 	}
 
-	@Bean
-	public JsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordAuthenticationFilter() {
-		return new JsonUsernamePasswordAuthenticationFilter(
-				new ObjectMapper(),
-				new JsonAuthenticationManager(loginService),
-				new CustomAuthenticationSuccessHandler(loginService, mailService),
-				new CustomAuthenticationFailureHandler(loginService)
-		);
-	}
 }

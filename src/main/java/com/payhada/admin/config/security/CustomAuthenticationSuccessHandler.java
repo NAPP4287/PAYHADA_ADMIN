@@ -82,7 +82,11 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 loginService.loginSuccessful(loginDTO.getUserNo());
 
                 // locale 설정
-//                setLocale(request);
+                String languageCd = loginDTO.getLanguageCd();
+                if (languageCd == null) {
+                    languageCd = "ko";
+                }
+                setLocale(request, languageCd);
 
                 // JsonAuthenticationManager 에서 넣어준 권한을 가져옴
                 List<Map<String, String>> roleGroupList = loginDTO.getEmployeeRoleMappDTOList().stream()
@@ -96,6 +100,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 data = new HashMap<>();
                 data.put("userNo", loginDTO.getUserNo());
                 data.put("loginId", loginDTO.getId());
+                data.put("languageCd", languageCd);
                 data.put("roleGroupList", roleGroupList);
 
                 responseCode = ResponseCode.SUCCESSFUL_LOGIN_2;
@@ -125,8 +130,8 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
     }
 
-    private void setLocale(HttpServletRequest request, String locale) {
+    private void setLocale(HttpServletRequest request, String languageCd) {
         HttpSession session = request.getSession();
-        session.setAttribute("locale", new Locale(locale));
+        session.setAttribute("locale", new Locale(languageCd));
     }
 }

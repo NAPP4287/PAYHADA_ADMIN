@@ -24,7 +24,7 @@ public class LoginService {
 
     private final LoginDAO loginDAO;
 
-    public LoginDTO login(LoginDTO loginDTO) {
+    public LoginDTO getLoginDTO(LoginDTO loginDTO) {
         return loginDAO.selectEmployeeWithLoginId(loginDTO);
     }
 
@@ -75,5 +75,9 @@ public class LoginService {
 
     public String[] getAllRoleGroupNames() {
         return loginDAO.selectAllGroupNames();
+    }
+
+    public void updateEmployeeLanguage(LoginDTO loginDTO) {
+        loginDAO.updateEmployeeLanguageCd(loginDTO);
     }
 }

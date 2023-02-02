@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -69,7 +68,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 if (exception.getMessage().equals("PASSWORD")) {
                     // 비밀번호 실패 카운트 변경
                     // 5회 이상 실패 시 계정 잠금
-                    LoginDTO failureDTO = loginService.login(loginDto);
+                    LoginDTO failureDTO = loginService.getLoginDTO(loginDto);
                     String userNo = failureDTO.getUserNo();
                     int pwdFailCnt = failureDTO.getPwdFailCnt() + 1;
                     String lockStartTime = null;
