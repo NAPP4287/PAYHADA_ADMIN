@@ -1,6 +1,6 @@
 package com.payhada.admin.controller.user;
 
-import com.payhada.admin.code.ErrorCode;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,11 +28,11 @@ public class LoginController {
         HttpSession session = request.getSession();
         Object userInfo = session.getAttribute("userInfo");
         if(userInfo == null) {
-            throw new BusinessException(ErrorCode.USER_SESSION_EXPIRED);
+            throw new BusinessException(ResponseCode.USER_SESSION_EXPIRED);
         }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("userInfo", userInfo);
-        resultMap.put("code", ErrorCode.API_STATUS_OK.getCode());
+        resultMap.put("code", ResponseCode.API_STATUS_OK.getCode());
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }

@@ -1,62 +1,35 @@
 package com.payhada.admin.exception;
 
-import com.payhada.admin.code.ErrorCode;
+import com.payhada.admin.code.ResponseCode;
+import com.payhada.admin.common.setting.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestControllerAdvice
 @Slf4j
 public class ExceptionController {
-	
-	@ExceptionHandler(MethodArgumentTypeMismatchException.class)	
-	protected ResponseEntity<ErrorResponse> handleNullPointerException(MethodArgumentTypeMismatchException e){
-		log.debug(getClass().getName() + "NullPointerException",e);
 
-		final ErrorResponse res = ErrorResponse.builder()
-				.errorCode("0001")
-				.errorMsg("MethodArgumentTypeMismatchException")
-				.build();
-
-		return new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
 	@ExceptionHandler(BusinessException.class)
-    protected ModelAndView handleBusinessException(BusinessException e) {
-        log.error(getClass().getName() + "handleBusinessException START");
+    protected ResponseEntity<CommonResponse> handleBusinessException(BusinessException e) {
+		log.error("OCCURRED BUSINESS EXCEPTION :: {}", e.getMessage());
 
-		ErrorCode code = e.getError();
-		ModelAndView mv = new ModelAndView();
+		ResponseCode responseCode = e.getResponseCode();
 
-		if(code == null) {
-			ErrorCode err=ErrorCode.API_SERVER_ERROR;
-			mv.addObject("errCode", err.getCode());
-			mv.addObject("errMsg", err.getMessage());
-		}else {
-			mv.addObject("errCode", code.getCode());
-			mv.addObject("errMsg", code.getMessage());
+		if (responseCode == null) {
+			responseCode = ResponseCode.API_SERVER_ERROR;
 		}
 
-		mv.setViewName("/error/500");
-		
-		return mv;
+		return responseCode.toResponseEntity();
     }
 
 	@ExceptionHandler(Exception.class)
-    protected ModelAndView handleException(Exception e) {
-        log.error(getClass().getName() + ":::: GLOBAL EXCEPTION", e);
-        
-		ErrorCode err = ErrorCode.API_PROCESS_ERROR;
+    protected ResponseEntity<CommonResponse> handleException(Exception e) {
+        log.error("OCCURRED EXCEPTION :: {}", e.getMessage());
 
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("errCode", err.getCode());
-		mv.addObject("errMsg", err.getMessage());
-		mv.setViewName("/error/500");
+		final ResponseCode responseCode = ResponseCode.API_SERVER_ERROR;
 
-		return mv;
-	}
+		return responseCode.toResponseEntity();
+    }
 }

@@ -2,7 +2,7 @@ package com.payhada.admin.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.payhada.admin.code.ErrorCode;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.connector.Connector;
 import com.payhada.admin.common.setting.NcpPropertiesDTO;
 import com.payhada.admin.common.util.NcpUtils;
@@ -47,7 +47,7 @@ public class MailService {
         } catch (Exception e) {
             log.error(e.getMessage());
 
-            throw new BusinessException(ErrorCode.NCP_FAIL_MAIL_SERVICE);
+            throw new BusinessException(ResponseCode.NCP_FAIL_MAIL_SERVICE);
         }
     }
 
@@ -72,7 +72,7 @@ public class MailService {
             log.error("MailService - sendAdminAuthMail Error");
             log.error(e.getMessage());
 
-            throw new BusinessException(ErrorCode.NCP_FAIL_MAIL_SERVICE);
+            throw new BusinessException(ResponseCode.NCP_FAIL_MAIL_SERVICE);
         }
     }
 }

@@ -21,6 +21,8 @@ public interface StatDAO {
 
     List<Map<String, Object>> selectMonthlyTxnCount();
 
+    List<Map<String, Object>> selectMonthlyRemittance();
+
     Integer selectLastMonthUserCount();
 
     Integer selectLastMonthCertUserCount();
@@ -60,6 +62,4 @@ public interface StatDAO {
     Integer selectLastDayTxnCount();
 
     String selectLastDayRemittance();
-
-    List<Map<String, Object>> selectMonthlyRemittance();
 }

@@ -3,41 +3,42 @@ package com.payhada.admin.code;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
-public enum ErrorCode {
-	/** 공통 오류 코드 */
-	// TODO 다국어처리
-	API_STATUS_OK("E0000", "정상"),
-	API_BAD_REQUEST("E1001","요청 데이터 입력이 유효하지 않습니다."),
-	API_DUP_REQUEST("E0019","이미 요청이 처리되었습니다."),
-	API_FAIL_SELECT("E1010","조회 요청 처리 중 오류가 발생했습니다."),
-	API_FAIL_INSERT("E1021","등록 요청 처리 중 오류가 발생했습니다."),
-	API_FAIL_UPDATE("E1031","수정 요청 처리 중 오류가 발생했습니다."),
-	API_FAIL_DELETE("E1041","삭제 요청 처리 중 오류가 발생했습니다."),
-	// 여기에 추가
-	API_PROCESS_ERROR("E1998", "해당 업무 처리 중 오류가 발생했습니다."),
-	API_SERVER_ERROR("E9999","서비스중 오류가 발생했습니다."),
+public enum ErrorCode_old {
+    /** 공통 오류 코드 */
+    // TODO 다국어처리
+    API_STATUS_OK("E0000", "정상"),
+    API_BAD_REQUEST("E1001","요청 데이터 입력이 유효하지 않습니다."),
+    API_DUP_REQUEST("E0019","이미 요청이 처리되었습니다."),
+    API_FAIL_SELECT("E1010","조회 요청 처리 중 오류가 발생했습니다."),
+    API_FAIL_INSERT("E1021","등록 요청 처리 중 오류가 발생했습니다."),
+    API_FAIL_UPDATE("E1031","수정 요청 처리 중 오류가 발생했습니다."),
+    API_FAIL_DELETE("E1041","삭제 요청 처리 중 오류가 발생했습니다."),
+    // 여기에 추가
+    API_PROCESS_ERROR("E1998", "해당 업무 처리 중 오류가 발생했습니다."),
+    API_SERVER_ERROR("E9999","서비스중 오류가 발생했습니다."),
 
-	/** 유저/직원 관련 오류 코드 */
-	USER_SESSION_EXPIRED("E2000", "세션이 만료 되었습니다."),
-	USER_NOT_FOUND("E2001", "등록되지 않은 사용자 입니다."),
-	USER_UNAUTHORIZED("E2002", "인증에 실패하였습니다."),
-	USER_AUTH_REQUIRED("E2003", "해당 요청에 대한 권한이 없습니다."),
+    /** 유저/직원 관련 오류 코드 */
+    USER_SESSION_EXPIRED("E2000", "세션이 만료 되었습니다."),
+    USER_NOT_FOUND("E2001", "등록되지 않은 사용자 입니다."),
+    USER_UNAUTHORIZED("E2002", "인증에 실패하였습니다."),
+    USER_AUTH_REQUIRED("E2003", "해당 요청에 대한 권한이 없습니다."),
 
-	/** NCP 관련 오류 코드 */
-	NCP_MAKE_SIGNATURE_ERR("E3000", "NCP Signature 생성 중 오류가 발생했습니다."),
-	NCP_GENERATE_HEADER_ERR("E3001", "NCP Header 생성 중 오류가 발생했습니다."),
-	NCP_FAIL_MAIL_SERVICE("E3002", "NCP Mail Service 요청 중 오류가 발생했습니다."),
-	;
+    /** NCP 관련 오류 코드 */
+    NCP_MAKE_SIGNATURE_ERR("E3000", "NCP Signature 생성 중 오류가 발생했습니다."),
+    NCP_GENERATE_HEADER_ERR("E3001", "NCP Header 생성 중 오류가 발생했습니다."),
+    NCP_FAIL_MAIL_SERVICE("E3002", "NCP Mail Service 요청 중 오류가 발생했습니다."),
+    ;
 
-	@Getter
-	private String code;
-	@Getter
-	private String message;
+    @Getter
+    private String code;
+    @Getter
+    private String message;
 
-	/** ############################### 여기부턴 사용 안함 (삭제 예정) ############################### */
+    /** ############################### 여기부턴 사용 안함 (삭제 예정) ############################### */
 
-	//공통 오류코드
+    //공통 오류코드
 //	SERVICE_OK("E0000","정상"),
 //	HAVE_NO_DATA("E0001","조회하신 데이터가 없습니다."),
 //	SESSION_DATA_SETTING_ERR("E0003","로그인 서비스작업중 오류가 발생했습니다."),
@@ -48,8 +49,8 @@ public enum ErrorCode {
 //	DATA_INSERT_ERR("E1021","요청하신 등록 처리 중 오류가 발생했습니다."),
 //	DATA_UPDATE_ERR("E1031","요청하신 수정 처리 중 오류가 발생했습니다."),
 //	DATA_DELETE_ERR("E1041","요청하신 삭제 처리 중 오류가 발생했습니다."),
-	
-	//유저 오류코드
+
+    //유저 오류코드
 //	USER_ALREAY_REGISTERED("E1001","기존에 등록되어있는 이메일입니다."),
 //	USER_NOT_DEFINED("E1002","조회하신 사용자를 찾을 수 없습니다."),
 //	LOGIN_DATA_MISMACH("E1003","아이디와 비밀번호가 맞지 않습니다."),
@@ -60,8 +61,8 @@ public enum ErrorCode {
 //	PWD_AUTH_FAILED_ERR("E1007","비밀번호 입력 횟수를 초과했습니다."),
 //    USER_DISABLED ("E1008","계정이 비활성화되었습니다."),
 //    TRADE_LIMIT_USER ("E1009","송금 서비스가 제한된 회원입니다."),
-	
-	//거래관련 오류코드
+
+    //거래관련 오류코드
 //	TRADE_NOT_FOUND("E1101","거래정보를 찾을 수 없습니다. 거래번호를 확인하세요."),
 //	BANK_TRADE_REJECTED("E1102","은행 이체조회 거절"),
 //	TRADE_AVAILABLE_CHECK_ERR("E1104","이체 거래 가능여부 조회 중 오류가 발생하였습니다."),

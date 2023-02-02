@@ -1,7 +1,7 @@
 package com.payhada.admin.config.security;
 
-import com.payhada.admin.code.ErrorCode;
-import com.payhada.admin.common.setting.Response;
+import com.payhada.admin.code.ResponseCode;
+import com.payhada.admin.common.setting.CommonResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -18,21 +18,17 @@ import java.io.IOException;
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        response.setStatus(HttpStatus.OK.value());
+        ResponseCode responseCode = ResponseCode.USER_UNAUTHORIZED;
 
-        Response responseDTO = Response.builder()
-                .resultCode(401)
-                .error(Response.Error.builder()
-                        .code(ErrorCode.USER_UNAUTHORIZED.getCode())
-                        .message(ErrorCode.USER_UNAUTHORIZED.getMessage())
-                        .build())
-                .build();
+        response.setStatus(responseCode.getStatus());
+
+        CommonResponse commonResponse = CommonResponse.create(responseCode.getCode());
 
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         MediaType jsonMimeType = MediaType.APPLICATION_JSON;
 
-        if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {
-            jsonConverter.write(responseDTO, jsonMimeType, new ServletServerHttpResponse(response));
+        if (jsonConverter.canWrite(commonResponse.getClass(), jsonMimeType)) {
+            jsonConverter.write(commonResponse, jsonMimeType, new ServletServerHttpResponse(response));
         }
     }
 }
