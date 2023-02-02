@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
+import RecoilNexus from "recoil-nexus";
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/css/index.css";
 
@@ -12,6 +13,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <RecoilRoot>
+    <RecoilNexus />
     <App />
   </RecoilRoot>,
 );

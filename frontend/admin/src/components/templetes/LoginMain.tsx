@@ -1,18 +1,14 @@
 import { Form, Button } from "reactstrap";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 // components
 import LabelInput from "components/atomic/atoms/LabelInput";
 // interface
 import { LoginMainProps } from "interface/InterfaceUser";
 import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
-import { BasicAlertType } from "interface/InterfaceCommonAlert";
 // utils
 import { invalidCheck } from "utils/utilInput";
 // apis
 import { callLogin } from "apis/loginApis";
-// recoil
-import { useRecoilState } from "recoil";
-import { commonAlertState } from "recoil/stateAlert";
 
 const LoginMain = (props: LoginMainProps) => {
   const { email, setEmail, password, setPassword, setIsLoginMain } = props;
@@ -20,27 +16,6 @@ const LoginMain = (props: LoginMainProps) => {
     email: true,
     password: true,
   });
-
-  const [commonAlertInfo, setCommonAlertInfo] =
-    useRecoilState<BasicAlertType>(commonAlertState);
-
-  const getLogin = async () => {
-    if (handleInvaildCheck()) {
-      const result = await callLogin({ id: email, pwd: password });
-
-      if (result.resultCode !== 200) {
-        setCommonAlertInfo({
-          ...commonAlertInfo,
-          isOpen: true,
-          title: "실패",
-          alertType: "error",
-          content: result.resultMsg,
-        });
-      } else {
-        setIsLoginMain(false);
-      }
-    }
-  };
 
   const handleInvaildCheck = () => {
     const invalid = {
@@ -55,9 +30,25 @@ const LoginMain = (props: LoginMainProps) => {
     return findValue === undefined;
   };
 
+  const getLogin = async () => {
+    const result = await callLogin({ id: email, pwd: password });
+
+    if (result.resultCode === 200) {
+      setIsLoginMain(false);
+    }
+  };
+
+  const onSubmitLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!handleInvaildCheck()) {
+      return;
+    }
+    getLogin();
+  };
+
   return (
     <div className="alginCenter">
-      <Form className="maxWidth">
+      <Form className="maxWidth" onSubmit={onSubmitLogin}>
         <LabelInput
           placeholder={"이메일을 입력해주세요"}
           type={"email"}
@@ -66,7 +57,6 @@ const LoginMain = (props: LoginMainProps) => {
           value={email}
           isFailed={invalidData.email}
           failedText={"이메일을 다시 확인해주세요"}
-          onEnter={getLogin}
         />
         <LabelInput
           placeholder={"비밀번호를 입력해주세요"}
@@ -76,14 +66,8 @@ const LoginMain = (props: LoginMainProps) => {
           value={password}
           isFailed={invalidData.password}
           failedText={"비밀번호를 다시 확인해주세요"}
-          onEnter={getLogin}
         />
-        <Button
-          block
-          color="primary"
-          type="button"
-          className="marginTop"
-          onClick={getLogin}>
+        <Button block color="primary" type="submit" className="marginTop">
           인증번호 받기
         </Button>
       </Form>

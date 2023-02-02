@@ -1,4 +1,7 @@
 import axios from "axios";
+// recoil
+import { commonAlertState } from "recoil/stateAlert";
+import { getRecoil, setRecoil } from "recoil-nexus";
 
 const instance = axios.create();
 
@@ -15,6 +18,15 @@ instance.interceptors.request.use(
 // 응답 인터셉터 추가
 instance.interceptors.response.use(
   (response) => {
+    const commonAlertInfo = getRecoil(commonAlertState);
+
+    setRecoil(commonAlertState, {
+      ...commonAlertInfo,
+      isOpen: true,
+      title: "실패",
+      alertType: "error",
+      content: "API 수정시 메세지를 변경해주세요",
+    });
     return response;
   },
   (error) => {

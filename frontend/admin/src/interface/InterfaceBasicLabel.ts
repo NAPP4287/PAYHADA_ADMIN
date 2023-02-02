@@ -7,7 +7,7 @@ export interface LabelInputProps {
   isFailed?: boolean;
   failedText?: string;
   maxLength?: number;
-  onEnter: Function;
+  // onEnter: Function;
 }
 
 export interface LabelSelectProps {
