@@ -3,16 +3,13 @@ package com.payhada.admin.config.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.model.LoginDTO;
-import com.payhada.admin.common.setting.Response;
+import com.payhada.admin.common.setting.CommonResponse;
 import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.CredentialsExpiredException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -48,16 +45,11 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
-            throws IOException, ServletException {
-        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
-        MediaType jsonMimeType = MediaType.APPLICATION_JSON;
-
-        int resultCode;
-        String resultMsg = exception.getMessage();
+            throws IOException {
+        CommonResponse commonResponse;
+        ResponseCode responseCode;
         Map<String, Object> data = null;
 
-        Response responseDTO;
-        ResponseCode responseCode;
         try {
             LoginDTO loginDto = objectMapper.readValue(StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8), LoginDTO.class);
 
@@ -108,19 +100,26 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 responseCode = ResponseCode.UNAUTHENTICATED_1;
             } else if (exception instanceof CredentialsExpiredException) {
                 responseCode = ResponseCode.TIMEOUT_OTP;
+            } else if (exception instanceof AuthenticationServiceException && "E1001".equals(exception.getMessage())) {
+                responseCode = ResponseCode.API_BAD_REQUEST;
             } else {
                 responseCode = ResponseCode.API_SERVER_ERROR;
             }
-
-            responseDTO = Response.create(responseCode.getCode(), data);
         } catch (Exception e) {
             log.error(e.getMessage());
 
-            responseDTO = Response.create(ResponseCode.API_SERVER_ERROR.getCode());
+            responseCode = ResponseCode.API_SERVER_ERROR;
         }
 
-        if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {
-            jsonConverter.write(responseDTO, jsonMimeType, new ServletServerHttpResponse(response));
+        commonResponse = CommonResponse.create(responseCode.getCode(), data);
+
+        response.setStatus(responseCode.getStatus());
+
+        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+        MediaType jsonMimeType = MediaType.APPLICATION_JSON;
+
+        if (jsonConverter.canWrite(commonResponse.getClass(), jsonMimeType)) {
+            jsonConverter.write(commonResponse, jsonMimeType, new ServletServerHttpResponse(response));
         }
     }
 }

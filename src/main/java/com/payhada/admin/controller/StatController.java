@@ -1,7 +1,7 @@
 package com.payhada.admin.controller;
 
 import com.payhada.admin.code.ResponseCode;
-import com.payhada.admin.common.setting.Response;
+import com.payhada.admin.common.setting.CommonResponse;
 import com.payhada.admin.service.StatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +30,9 @@ public class StatController {
     }
 
     @GetMapping("/daily")
-    public ResponseEntity<Response> getDailyData(HttpServletRequest request,
-                                                 @RequestParam(required = false) Integer year,
-                                                 @RequestParam(required = false) Integer month) {
+    public ResponseEntity<CommonResponse> getDailyData(HttpServletRequest request,
+                                                       @RequestParam(required = false) Integer year,
+                                                       @RequestParam(required = false) Integer month) {
         // year, month 가 null 일 경우 현재 년도와 월을 가져옴
         ZoneId zoneId = statService.getZoneId(request);
         LocalDate localDateNow = LocalDate.now(zoneId);
@@ -57,7 +57,7 @@ public class StatController {
     }
 
     @GetMapping("/monthly")
-    public ResponseEntity<Response> getMonthlyData(HttpServletRequest request) {
+    public ResponseEntity<CommonResponse> getMonthlyData(HttpServletRequest request) {
         List<Map<String, Object>> list = statService.getMonthlyData(request);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -67,7 +67,7 @@ public class StatController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Response> statisticAllData() {
+    public ResponseEntity<CommonResponse> statisticAllData() {
         // 지난달 데이터 조회
         Integer lastMonthUserCount = statService.getLastMonthUserCount();
         Integer lastMonthCertUserCount = statService.getLastMonthCertUserCount();

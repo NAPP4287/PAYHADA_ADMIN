@@ -1,7 +1,7 @@
 package com.payhada.admin.exception;
 
 import com.payhada.admin.code.ResponseCode;
-import com.payhada.admin.common.setting.Response;
+import com.payhada.admin.common.setting.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionController {
 
 	@ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<Response> handleBusinessException(BusinessException e) {
+    protected ResponseEntity<CommonResponse> handleBusinessException(BusinessException e) {
 		log.error("OCCURRED BUSINESS EXCEPTION :: {}", e.getMessage());
 
 		ResponseCode responseCode = e.getResponseCode();
@@ -25,7 +25,7 @@ public class ExceptionController {
     }
 
 	@ExceptionHandler(Exception.class)
-    protected ResponseEntity<Response> handleException(Exception e) {
+    protected ResponseEntity<CommonResponse> handleException(Exception e) {
         log.error("OCCURRED EXCEPTION :: {}", e.getMessage());
 
 		final ResponseCode responseCode = ResponseCode.API_SERVER_ERROR;

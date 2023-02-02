@@ -16,8 +16,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
-
 @Slf4j
 @Component
 public class JsonAuthenticationManager implements AuthenticationManager {

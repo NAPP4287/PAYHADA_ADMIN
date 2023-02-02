@@ -1,6 +1,6 @@
 package com.payhada.admin.code;
 
-import com.payhada.admin.common.setting.Response;
+import com.payhada.admin.common.setting.CommonResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpHeaders;
@@ -34,7 +34,7 @@ public enum ResponseCode {
 	MISMATCH_OTP("E2007", 400),
 	UNAUTHENTICATED_1("E2008", 401),
 	TIMEOUT_OTP("E2009", 400),
-	LOCKED_ACCOUNT("E2010", 500),
+	LOCKED_ACCOUNT("E2010", 401),
 	SUCCESSFUL_LOGOUT("E2011", 200),
 
 	/** NCP 관련 오류 코드 */
@@ -47,29 +47,42 @@ public enum ResponseCode {
 
 	private final int status;
 
-	public ResponseEntity<Response> toResponseEntity() {
+	/**
+	 * 선택된 ResponseCode Enum 의 값을 토대로 공통 포맷(CommonResponse) 의 resultCode 와 resultMsg 가 만들어지고
+	 * HttpStatusCode 또한 해당 값으로 ResponseEntity 객체가 리턴 됨
+	 */
+	public ResponseEntity<CommonResponse> toResponseEntity() {
 		return ResponseEntity
 				.status(this.getStatus())
-				.body(Response.create(this.getCode()));
+				.body(CommonResponse.create(this.getCode()));
 	}
 
-	public ResponseEntity<Response> toResponseEntity(HttpHeaders headers) {
+	/**
+	 * {@code toResponseEntity()} 에서 추가로 Header 를 이용할 때 사용
+	 */
+	public ResponseEntity<CommonResponse> toResponseEntity(HttpHeaders headers) {
 		return ResponseEntity
 				.status(this.getStatus())
 				.headers(headers)
-				.body(Response.create(this.getCode()));
+				.body(CommonResponse.create(this.getCode()));
 	}
 
-	public ResponseEntity<Response> toResponseEntity(Map<String, Object> data) {
+	/**
+	 * {@code toResponseEntity()} 에서 추가로 Body 를 이용할 때 사용
+	 */
+	public ResponseEntity<CommonResponse> toResponseEntity(Map<String, Object> data) {
 		return ResponseEntity
 				.status(this.getStatus())
-				.body(Response.create(this.getCode(), data));
+				.body(CommonResponse.create(this.getCode(), data));
 	}
 
-	public ResponseEntity<Response> toResponseEntity(HttpHeaders headers, Map<String, Object> data) {
+	/**
+	 * {@code toResponseEntity()} 에서 추가로 Body 와 Header 를 이용할 때 사용
+	 */
+	public ResponseEntity<CommonResponse> toResponseEntity(HttpHeaders headers, Map<String, Object> data) {
 		return ResponseEntity
 				.status(this.getStatus())
 				.headers(headers)
-				.body(Response.create(this.getCode(), data));
+				.body(CommonResponse.create(this.getCode(), data));
 	}
 }

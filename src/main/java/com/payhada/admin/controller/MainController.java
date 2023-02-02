@@ -1,8 +1,7 @@
 package com.payhada.admin.controller;
 
 import com.payhada.admin.code.ResponseCode;
-import com.payhada.admin.common.setting.Response;
-import com.payhada.admin.common.util.MessageSourceUtils;
+import com.payhada.admin.common.setting.CommonResponse;
 import com.payhada.admin.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,8 +34,8 @@ public class MainController {
     }
 
     @GetMapping("/locale")
-    public ResponseEntity<Response> changeLocale(@RequestParam(defaultValue = "kr") String locale,
-                                                 HttpSession session) {
+    public ResponseEntity<CommonResponse> changeLocale(@RequestParam(defaultValue = "kr") String locale,
+                                                       HttpSession session) {
         session.setAttribute("locale", new Locale(locale));
 
         return ResponseCode.API_STATUS_OK.toResponseEntity();
