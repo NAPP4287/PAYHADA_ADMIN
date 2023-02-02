@@ -41,8 +41,8 @@ public class MainController {
 //        return "ok";
     }
 
-    @GetMapping("/locale")
-    public ResponseEntity<CommonResponse> changeLocale(@RequestParam(defaultValue = "ko") String language,
+    @GetMapping("/language")
+    public ResponseEntity<CommonResponse> changeLanguage(@RequestParam(defaultValue = "ko") String language,
                                                        @RequestParam(required = false) String userNo,
                                                        HttpSession session) {
         if (userNo != null) {
