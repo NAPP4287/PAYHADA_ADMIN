@@ -8,10 +8,7 @@ import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -41,19 +38,16 @@ public class MainController {
 //        return "ok";
     }
 
-    @GetMapping("/language")
-    public ResponseEntity<CommonResponse> changeLanguage(@RequestParam(defaultValue = "ko") String language,
-                                                       @RequestParam(required = false) String userNo,
+    @PostMapping("/language")
+    public ResponseEntity<CommonResponse> changeLanguage(@RequestBody LoginDTO loginDTO,
                                                        HttpSession session) {
-        if (userNo != null) {
-            LoginDTO updateDTO = LoginDTO.builder()
-                    .userNo(userNo)
-                    .languageCd(language)
-                    .build();
-            loginService.updateEmployeeLanguage(updateDTO);
+        String languageCd = loginDTO.getLanguageCd();
+
+        if (loginDTO.getUserNo() != null) {
+            loginService.updateEmployeeLanguage(loginDTO);
         }
 
-        session.setAttribute("locale", new Locale(language));
+        session.setAttribute("locale", new Locale(languageCd));
 
         return ResponseCode.API_STATUS_OK.toResponseEntity();
     }
