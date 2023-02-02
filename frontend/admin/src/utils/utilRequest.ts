@@ -18,18 +18,19 @@ instance.interceptors.request.use(
 // 응답 인터셉터 추가
 instance.interceptors.response.use(
   (response) => {
+    return response;
+  },
+  (error) => {
     const commonAlertInfo = getRecoil(commonAlertState);
 
     setRecoil(commonAlertState, {
       ...commonAlertInfo,
       isOpen: true,
-      title: "실패",
+      title: "Error",
       alertType: "error",
-      content: "API 수정시 메세지를 변경해주세요",
+      content: error.response.data.resultMsg,
     });
-    return response;
-  },
-  (error) => {
+
     return Promise.reject(error);
   },
 );

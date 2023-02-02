@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { Form, Button } from "reactstrap";
 // components
 import InputTimer from "components/atomic/organisms/InputTimer";
 // interface
 import { LoginCertProps } from "interface/InterfaceUser";
-import { BasicAlertType } from "interface/InterfaceCommonAlert";
 // recoil
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
-import { commonAlertState } from "recoil/stateAlert";
 // apis
 import { callLogin } from "apis/loginApis";
 
@@ -19,8 +17,6 @@ const LoginCert = (props: LoginCertProps) => {
   const [seconds, setSeconds] = useState(300);
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const [commonAlertInfo, setCommonAlertInfo] =
-    useRecoilState<BasicAlertType>(commonAlertState);
 
   const onCheckOtp = () => {
     if (otpInput.length !== 6 || isEnd) {
@@ -29,27 +25,26 @@ const LoginCert = (props: LoginCertProps) => {
     return true;
   };
 
-  const onClickCert = async () => {
+  const getOtpChk = async () => {
     // OTP API 요청
-    if (onCheckOtp()) {
-      const result = await callLogin({ secret: otpInput });
-      if (result.resultCode !== 200) {
-        setCommonAlertInfo({
-          ...commonAlertInfo,
-          isOpen: true,
-          title: "실패",
-          alertType: "error",
-          content: result.resultMsg,
-        });
-      } else {
-        setUserInfo({ ...userInfo, userNo: result.data.userNo });
-      }
+    const result = await callLogin({ secret: otpInput });
+    console.log(result);
+    if (result.resultCode === "E2005") {
+      setUserInfo({ ...userInfo, userNo: result.data.userNo });
     }
+  };
+
+  const onSubmitOtp = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!onCheckOtp()) {
+      return;
+    }
+    getOtpChk();
   };
 
   return (
     <div className="alginCenter">
-      <Form className="maxWidth">
+      <Form className="maxWidth" onSubmit={onSubmitOtp}>
         <span>아래 이메일로 인증번호를 전송하였습니다.</span>
         <p className="primary" style={{ fontWeight: "bold" }}>
           {email}
@@ -66,14 +61,14 @@ const LoginCert = (props: LoginCertProps) => {
           value={otpInput}
           maxLength={6}
           isFailed={true}
-          onEnter={onClickCert}
           resetTime={300}
         />
         <Button
           className="marginTop"
           block
+          type="submit"
           color="primary"
-          onClick={onClickCert}>
+          disabled={otpInput.length < 6 || isEnd}>
           로그인
         </Button>
       </Form>

@@ -38,5 +38,4 @@ export interface InputTimerProps extends LabelInputProps {
   isEnd: boolean;
   setIsEnd: Function;
   resetTime: number;
-  onEnter: Function;
 }

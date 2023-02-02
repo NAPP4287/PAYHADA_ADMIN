@@ -33,7 +33,7 @@ const LoginMain = (props: LoginMainProps) => {
   const getLogin = async () => {
     const result = await callLogin({ id: email, pwd: password });
 
-    if (result.resultCode === 200) {
+    if (result.resultCode === "E2004") {
       setIsLoginMain(false);
     }
   };
