@@ -14,6 +14,7 @@ export interface UserInfoType {
   id: string;
   loginId: string;
   userNo: string;
+  languageCd: string;
   roleGroupList: Array<roleGroupType>;
 }
 

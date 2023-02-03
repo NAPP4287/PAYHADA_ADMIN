@@ -1,7 +1,7 @@
 import { useState } from "react";
 // components
 import LoginMain from "components/templetes/LoginMain";
-import LoginCert from "components/templetes/\bLoginCert";
+import LoginCert from "components/templetes/LoginCert";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -9,7 +9,7 @@ const Login = () => {
   const [isLoginMain, setIsLoginMain] = useState<boolean>(true);
 
   return (
-    <>
+    <div className="alginCenter">
       {isLoginMain ? (
         <LoginMain
           email={email}
@@ -21,7 +21,7 @@ const Login = () => {
       ) : (
         <LoginCert email={email} />
       )}
-    </>
+    </div>
   );
 };
 

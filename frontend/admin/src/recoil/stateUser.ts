@@ -13,6 +13,7 @@ export const userInfoState = atom<UserInfoType>({
     id: "",
     loginId: "",
     userNo: "",
+    languageCd: "",
     roleGroupList: [],
   },
   effects_UNSTABLE: [persistAtom],

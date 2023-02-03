@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { InputTimerProps } from "interface/InterfaceBasicLabel";
 import { Button, Label } from "reactstrap";
 import Timer from "components/atomic/atoms/Timer";
@@ -21,10 +20,18 @@ const InputTimer = (props: InputTimerProps) => {
     setIsEnd,
   } = props;
   const [minutes, setMinutes] = useState<number>(0);
-  // const [enterAble, setEnterAble] = useState<boolean>(false);
+
+  const calcTime = useCallback(
+    (seconds: number) => {
+      setSeconds(seconds % 60);
+      setMinutes(Math.floor(seconds / 60));
+    },
+    [setSeconds],
+  );
 
   useEffect(() => {
     calcTime(seconds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,11 +42,6 @@ const InputTimer = (props: InputTimerProps) => {
     calcTime(resetTime);
     setIsEnd(false);
     setChangeData("");
-  };
-
-  const calcTime = (seconds: number) => {
-    setSeconds(seconds % 60);
-    setMinutes(Math.floor(seconds / 60));
   };
 
   return (

@@ -2,6 +2,7 @@ import { Form, Button } from "reactstrap";
 import { FormEvent, useState } from "react";
 // components
 import LabelInput from "components/atomic/atoms/LabelInput";
+import RadioButtons from "components/atomic/organisms/RadioButtons";
 // interface
 import { LoginMainProps } from "interface/InterfaceUser";
 import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
@@ -9,6 +10,11 @@ import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
 import { invalidCheck } from "utils/utilInput";
 // apis
 import { callLogin } from "apis/loginApis";
+// data
+import { languageList } from "data/radioCheckList";
+// recoil
+import { useRecoilState } from "recoil";
+import { userInfoState } from "recoil/stateUser";
 
 const LoginMain = (props: LoginMainProps) => {
   const { email, setEmail, password, setPassword, setIsLoginMain } = props;
@@ -16,6 +22,8 @@ const LoginMain = (props: LoginMainProps) => {
     email: true,
     password: true,
   });
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const handleInvaildCheck = () => {
     const invalid = {
@@ -46,9 +54,18 @@ const LoginMain = (props: LoginMainProps) => {
     getLogin();
   };
 
+  const changeValue = (e: any) => {
+    setUserInfo({ ...userInfo, languageCd: e.target.value });
+  };
+
   return (
-    <div className="alginCenter">
-      <Form className="maxWidth" onSubmit={onSubmitLogin}>
+    <Form className="maxWidth" onSubmit={onSubmitLogin}>
+      <RadioButtons
+        radioList={languageList}
+        type={"row"}
+        changeValue={changeValue}
+      />
+      <div className="smarginTop">
         <LabelInput
           placeholder={"이메일을 입력해주세요"}
           type={"email"}
@@ -67,11 +84,11 @@ const LoginMain = (props: LoginMainProps) => {
           isFailed={invalidData.password}
           failedText={"비밀번호를 다시 확인해주세요"}
         />
-        <Button block color="primary" type="submit" className="marginTop">
-          인증번호 받기
-        </Button>
-      </Form>
-    </div>
+      </div>
+      <Button block color="primary" type="submit" className="marginTop">
+        인증번호 받기
+      </Button>
+    </Form>
   );
 };
 
