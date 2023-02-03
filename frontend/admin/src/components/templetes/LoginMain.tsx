@@ -64,6 +64,7 @@ const LoginMain = (props: LoginMainProps) => {
         radioList={languageList}
         type={"row"}
         changeValue={changeValue}
+        activeValue={userInfo.languageCd}
       />
       <div className="smarginTop">
         <LabelInput

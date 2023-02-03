@@ -1,7 +1,7 @@
 import { RadioButtonProps } from "interface/interfaceButton";
 
 const RadioButton = (props: RadioButtonProps) => {
-  const { label, value, changeValue, idx } = props;
+  const { label, value, changeValue, activeValue } = props;
 
   return (
     <div className="custom-control custom-radio" style={{ flex: 1 }}>
@@ -12,7 +12,7 @@ const RadioButton = (props: RadioButtonProps) => {
         id={label}
         value={value}
         onChange={(e) => changeValue(e)}
-        defaultChecked={idx === 0}
+        defaultChecked={activeValue === value}
       />
       <label className="custom-control-label" htmlFor={label}>
         {label}

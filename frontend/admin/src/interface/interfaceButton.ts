@@ -1,14 +1,15 @@
 export interface RadioButtonProps {
   label: string;
   value: string;
-  idx: number;
   changeValue: Function;
+  activeValue: string;
 }
 
 export interface RadioListProps {
   radioList: Array<RadioProps>;
   type: string;
   changeValue: Function;
+  activeValue: string;
 }
 
 interface RadioProps {
