@@ -42,6 +42,10 @@ public class MessageSourceUtils {
         return messageSourceStatic.getMessage(code, null, locale);
     }
 
+    public static String getMessage(String code, Locale locale) {
+        return messageSourceStatic.getMessage(code, null, locale);
+    }
+
     private static Locale getLocaleFromSession(HttpSession session) {
         Locale locale = DEFAULT_LOCALE;
 

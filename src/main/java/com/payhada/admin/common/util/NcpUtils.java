@@ -60,7 +60,7 @@ public class NcpUtils {
 
     public static Map<String, String> generateHeader(String method, String url) throws BusinessException {
         try {
-            String timestamp = String.valueOf(new Timestamp(System.currentTimeMillis()));
+            String timestamp = String.valueOf(new Timestamp(System.currentTimeMillis()).getTime());
             String signature = makeSignature(method, url, timestamp);
 
             Map<String, String> header = new HashMap<>();

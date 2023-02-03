@@ -31,7 +31,7 @@ public class JsonAuthenticationManager implements AuthenticationManager {
         log.debug("JsonAuthenticationManager is running...");
 
         LoginDTO loginParam = (LoginDTO) authentication.getPrincipal();
-        LoginDTO loginResult = loginService.login(loginParam);
+        LoginDTO loginResult = loginService.getLoginDTO(loginParam);
 
         // 계정 존재여부 확인
         if (loginResult == null) {
