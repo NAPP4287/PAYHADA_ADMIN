@@ -1,13 +1,13 @@
 package com.payhada.admin.common.util;
 
-import com.payhada.admin.code.ErrorCode;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.setting.NcpPropertiesDTO;
 import com.payhada.admin.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -15,20 +15,14 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 @Component
+@Slf4j
 public class NcpUtils {
 
-    public static NcpPropertiesDTO ncpPropertiesDTOStatic;
+    private static NcpPropertiesDTO ncpPropertiesDTOStatic;
 
-    private final NcpPropertiesDTO ncpPropertiesDTO;
-
-    public NcpUtils(NcpPropertiesDTO ncpPropertiesDTO) {
-        this.ncpPropertiesDTO = ncpPropertiesDTO;
-    }
-
-    @PostConstruct
-    private void init() {
+    @Autowired
+    public void setNcpPropertiesDTOStatic(NcpPropertiesDTO ncpPropertiesDTO) {
         NcpUtils.ncpPropertiesDTOStatic = ncpPropertiesDTO;
     }
 
@@ -60,13 +54,13 @@ public class NcpUtils {
             log.error("NcpUtils - makeSignature Error");
             log.error(e.getMessage());
 
-            throw new BusinessException(ErrorCode.NCP_MAKE_SIGNATURE_ERR);
+            throw new BusinessException(ResponseCode.NCP_MAKE_SIGNATURE_ERR);
         }
     }
 
     public static Map<String, String> generateHeader(String method, String url) throws BusinessException {
         try {
-            String timestamp = String.valueOf(new Timestamp(System.currentTimeMillis()));
+            String timestamp = String.valueOf(new Timestamp(System.currentTimeMillis()).getTime());
             String signature = makeSignature(method, url, timestamp);
 
             Map<String, String> header = new HashMap<>();
@@ -79,7 +73,7 @@ public class NcpUtils {
             log.error("NcpUtils - generateHeader Error");
             log.error(e.getMessage());
 
-            throw new BusinessException(ErrorCode.NCP_GENERATE_HEADER_ERR);
+            throw new BusinessException(ResponseCode.NCP_GENERATE_HEADER_ERR);
         }
     }
 }

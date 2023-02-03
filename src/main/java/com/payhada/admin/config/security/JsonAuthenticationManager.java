@@ -31,13 +31,17 @@ public class JsonAuthenticationManager implements AuthenticationManager {
         log.debug("JsonAuthenticationManager is running...");
 
         LoginDTO loginParam = (LoginDTO) authentication.getPrincipal();
-        LoginDTO loginResult = loginService.login(loginParam);
+        LoginDTO loginResult = loginService.getLoginDTO(loginParam);
 
         // 계정 존재여부 확인
-        if (loginResult == null) throw new UsernameNotFoundException("등록되지 않은 사용자 입니다.");
+        if (loginResult == null) {
+            throw new UsernameNotFoundException("USER NOT FOUND");
+        }
 
         // 계정 잠김 상태 확인
-        if (!loginResult.isAccountNonLocked()) throw new LockedException("계정이 잠김 상태 입니다.");
+        if (!loginResult.isAccountNonLocked()) {
+            throw new LockedException("LOCKED ACCOUNT");
+        }
 
         // 사용자가 입력한 OTP Code
         String secret = loginParam.getSecret();
@@ -57,11 +61,11 @@ public class JsonAuthenticationManager implements AuthenticationManager {
             // OTP 제한시간 확인
             LocalDateTime otpDate = LocalDateTime.parse(loginResult.getOtpDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             if (otpDate.isBefore(LocalDateTime.now())) {
-                throw new CredentialsExpiredException("OTP 시간이 만료 되었습니다.");
+                throw new CredentialsExpiredException("TIMEOUT OTP");
             }
             // OTP 코드 확인
             if (secret.equals(otpCode)) {
-                // 권한 조회
+                // 권한 조회 후 권한을 넣어줌
                 List<EmployeeRoleMappDTO> roles = loginService.getEmployeeRoles(loginResult);
                 loginResult.setEmployeeRoleMappDTOList(roles);
                 loginResult.setAuthenticateStep(3);

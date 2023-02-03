@@ -24,7 +24,7 @@ public class LoginService {
 
     private final LoginDAO loginDAO;
 
-    public LoginDTO login(LoginDTO loginDTO) {
+    public LoginDTO getLoginDTO(LoginDTO loginDTO) {
         return loginDAO.selectEmployeeWithLoginId(loginDTO);
     }
 
@@ -32,21 +32,8 @@ public class LoginService {
         return loginDAO.selectEmployeeRoles(loginDTO.getUserNo());
     }
 
-    public void resetLoginFailureData(String userNo) {
-        LoginDTO loginDTO = LoginDTO.builder()
-                .userNo(userNo)
-                .pwdFailCnt(0)
-                .lockStartTime(null)
-                .build();
-        loginDAO.updateEmployeeFailureData(loginDTO);
-    }
-
     public void updateLoginFailureData(LoginDTO failureDTO) {
         loginDAO.updateEmployeeFailureData(failureDTO);
-    }
-
-    public void updateLastLoginDate(String userNo) {
-        loginDAO.updateLastLoginDate(userNo);
     }
 
     public void loginSuccessful(String userNo) {
@@ -88,5 +75,9 @@ public class LoginService {
 
     public String[] getAllRoleGroupNames() {
         return loginDAO.selectAllGroupNames();
+    }
+
+    public void updateEmployeeLanguage(LoginDTO loginDTO) {
+        loginDAO.updateEmployeeLanguageCd(loginDTO);
     }
 }

@@ -1,23 +1,21 @@
 package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.model.LoginDTO;
-import com.payhada.admin.model.ResponseDTO;
+import com.payhada.admin.common.setting.CommonResponse;
 import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,6 +24,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
 
 @Slf4j
 @Component
@@ -44,15 +44,11 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
-            throws IOException, ServletException {
-        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
-        MediaType jsonMimeType = MediaType.APPLICATION_JSON;
-
-        int resultCode;
-        String resultMsg = exception.getMessage();
+            throws IOException {
+        CommonResponse commonResponse;
+        ResponseCode responseCode;
         Map<String, Object> data = null;
 
-        ResponseDTO responseDTO;
         try {
             LoginDTO loginDto = objectMapper.readValue(StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8), LoginDTO.class);
 
@@ -67,18 +63,17 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 - LockedException : 계정 잠김
             */
             if (exception instanceof UsernameNotFoundException) {
-                resultCode = 404;
+                responseCode = ResponseCode.USER_NOT_FOUND;
             } else if (exception instanceof BadCredentialsException) {
-                resultCode = 400;
                 if (exception.getMessage().equals("PASSWORD")) {
                     // 비밀번호 실패 카운트 변경
                     // 5회 이상 실패 시 계정 잠금
-                    LoginDTO failureDTO = loginService.login(loginDto);
+                    LoginDTO failureDTO = loginService.getLoginDTO(loginDto);
                     String userNo = failureDTO.getUserNo();
                     int pwdFailCnt = failureDTO.getPwdFailCnt() + 1;
                     String lockStartTime = null;
 
-                    resultMsg = "패스워드가 일치하지 않습니다.";
+                    responseCode = ResponseCode.MISMATCH_PASSWORD;
                     data = new HashMap<>();
                     data.put("pwdFailCnt", pwdFailCnt);
 
@@ -96,33 +91,34 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
                     loginService.updateLoginFailureData(failureDTO);
                 } else {
-                    resultMsg = "OTP 코드가 일치하지 않습니다.";
+                    responseCode = ResponseCode.MISMATCH_OTP;
                 }
             } else if (exception instanceof LockedException) {
-                resultCode = 400;
+                responseCode = ResponseCode.LOCKED_ACCOUNT;
             } else if (exception instanceof InsufficientAuthenticationException) {
-                resultCode = 400;
+                responseCode = ResponseCode.UNAUTHENTICATED_1;
+            } else if (exception instanceof CredentialsExpiredException) {
+                responseCode = ResponseCode.TIMEOUT_OTP;
+            } else if (exception instanceof AuthenticationServiceException && "E1001".equals(exception.getMessage())) {
+                responseCode = ResponseCode.API_BAD_REQUEST;
             } else {
-                resultCode = 500;
-                resultMsg = "서비스중 오류가 발생했습니다.";
+                responseCode = ResponseCode.API_SERVER_ERROR;
             }
-
-            responseDTO = ResponseDTO.builder()
-                    .resultCode(resultCode)
-                    .resultMsg(resultMsg)
-                    .data(data)
-                    .build();
         } catch (Exception e) {
             log.error(e.getMessage());
 
-            responseDTO = ResponseDTO.builder()
-                    .resultCode(500)
-                    .resultMsg("서비스중 오류가 발생했습니다.")
-                    .build();
+            responseCode = ResponseCode.API_SERVER_ERROR;
         }
 
-        if (jsonConverter.canWrite(responseDTO.getClass(), jsonMimeType)) {
-            jsonConverter.write(responseDTO, jsonMimeType, new ServletServerHttpResponse(response));
+        commonResponse = CommonResponse.create(responseCode.getCode(), data);
+
+        response.setStatus(responseCode.getStatus());
+
+        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+        MediaType jsonMimeType = MediaType.APPLICATION_JSON;
+
+        if (jsonConverter.canWrite(commonResponse.getClass(), jsonMimeType)) {
+            jsonConverter.write(commonResponse, jsonMimeType, new ServletServerHttpResponse(response));
         }
     }
 }

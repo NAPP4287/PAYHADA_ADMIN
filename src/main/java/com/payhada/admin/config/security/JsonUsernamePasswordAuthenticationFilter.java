@@ -31,6 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
+
 @Slf4j
 @Component
 public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
@@ -70,8 +72,8 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
         String password = loginDto.getPwd();
         String secret = loginDto.getSecret();
 
-        if ((StringUtils.isEmpty(username) && StringUtils.isEmpty(password)) && StringUtils.isEmpty(secret)) {
-            throw new AuthenticationServiceException("DATA IS MISS");
+        if ((StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) && StringUtils.isEmpty(secret)) {
+            throw new AuthenticationServiceException("E1001");
         }
 
         // 2차 인증 일 경우 session 에서 1차 로그인 때 저장된 객체를 찾아, 2차 인증시 사용자가 입력한 OTP CODE (secret) 을 세팅해줌
@@ -81,7 +83,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
                 sessionDto.setSecret(secret);
                 loginDto = sessionDto;
             } catch (Exception e) {
-                throw new InsufficientAuthenticationException("1차 인증부터 진행해 주세요.");
+                 throw new InsufficientAuthenticationException("UNAUTHENTICATED 1ST AUTHENTICATE");
             }
         }
 

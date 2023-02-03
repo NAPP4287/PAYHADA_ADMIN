@@ -1,5 +1,7 @@
 package com.payhada.admin.controller;
 
+import com.payhada.admin.code.ResponseCode;
+import com.payhada.admin.common.setting.CommonResponse;
 import com.payhada.admin.service.StatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,11 @@ import java.time.*;
 import java.time.format.TextStyle;
 import java.util.*;
 
+import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
+
 @RestController
 @Slf4j
-@RequestMapping("/stat")
+@RequestMapping("/api/v2/stat")
 public class StatController {
 
     private final StatService statService;
@@ -26,9 +30,9 @@ public class StatController {
     }
 
     @GetMapping("/daily")
-    public ResponseEntity<Map<String, Object>> getDailyData(HttpServletRequest request,
-                                                            @RequestParam(required = false) Integer year,
-                                                            @RequestParam(required = false) Integer month) {
+    public ResponseEntity<CommonResponse> getDailyData(HttpServletRequest request,
+                                                       @RequestParam(required = false) Integer year,
+                                                       @RequestParam(required = false) Integer month) {
         // year, month 가 null 일 경우 현재 년도와 월을 가져옴
         ZoneId zoneId = statService.getZoneId(request);
         LocalDate localDateNow = LocalDate.now(zoneId);
@@ -49,21 +53,21 @@ public class StatController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("list", list);
 
-        return ResponseEntity.ok(resultMap);
+        return ResponseCode.API_STATUS_OK.toResponseEntity(resultMap);
     }
 
     @GetMapping("/monthly")
-    public ResponseEntity<Map<String, Object>> getMonthlyData(HttpServletRequest request) {
+    public ResponseEntity<CommonResponse> getMonthlyData(HttpServletRequest request) {
         List<Map<String, Object>> list = statService.getMonthlyData(request);
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("list", list);
 
-        return ResponseEntity.ok(resultMap);
+        return ResponseCode.API_STATUS_OK.toResponseEntity(resultMap);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Map<String, Object>> statisticAllData() {
+    public ResponseEntity<CommonResponse> statisticAllData() {
         // 지난달 데이터 조회
         Integer lastMonthUserCount = statService.getLastMonthUserCount();
         Integer lastMonthCertUserCount = statService.getLastMonthCertUserCount();
@@ -131,18 +135,20 @@ public class StatController {
         for (Month month : Month.values()) {
             String monthName = month.getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ROOT).toUpperCase(Locale.ROOT);
             int monthIntValue = month.getValue();
-            int index = monthIntValue - 1;
-            Map<String, Object> map;
+
             BigDecimal krw;
             BigDecimal usd;
             Map<String, Object> amountMap = new HashMap<>();
-            try {
-                map = monthlyRemittance.get(index);
-                krw = new BigDecimal(map.get("KRW").toString());
-                usd = new BigDecimal(map.get("USD").toString());
-            } catch (IndexOutOfBoundsException e) {
+            Map<String, Object> map = monthlyRemittance.stream().filter(v -> {
+                Number monthValue = (Number) v.get("month");
+                return monthValue.intValue() == monthIntValue;
+            }).findFirst().orElse(new HashMap<>());
+            if (map.isEmpty()) {
                 krw = null;
                 usd = null;
+            } else {
+                krw = new BigDecimal(map.get("KRW").toString());
+                usd = new BigDecimal(map.get("USD").toString());
             }
 
             amountMap.put("KRW", krw);
@@ -160,6 +166,6 @@ public class StatController {
         resultMap.put("lastDay", lastDay);
         resultMap.put("monthlyRemittance", monthlyRemittanceMap);
 
-        return ResponseEntity.ok(resultMap);
+        return ResponseCode.API_STATUS_OK.toResponseEntity(resultMap);
     }
 }

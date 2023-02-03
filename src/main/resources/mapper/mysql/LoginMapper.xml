@@ -6,7 +6,7 @@
 <mapper namespace="com.payhada.admin.dao.LoginDAO">
 
 	<select id="selectEmployeeWithLoginId" parameterType="loginDTO" resultType="loginDTO">
-		SELECT login_id AS id, pwd, otp_code, otp_date, user_no, pwd_fail_cnt, lock_start_time, last_login_date
+		SELECT user_no, login_id AS id, pwd, otp_code, otp_date, pwd_fail_cnt, lock_start_time, language_cd, last_login_date
 		FROM employee 
 		WHERE login_id = #{id}
 	</select>
@@ -55,6 +55,10 @@
 		SELECT role_group_code
 		FROM role_group
 	</select>
+
+	<update id="updateEmployeeLanguageCd" parameterType="loginDTO">
+		UPDATE employee SET language_cd = #{languageCd} WHERE user_no = #{userNo}
+	</update>
 
 </mapper>
 
