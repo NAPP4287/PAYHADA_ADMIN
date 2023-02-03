@@ -8,6 +8,8 @@ import com.payhada.admin.common.setting.NcpPropertiesDTO;
 import com.payhada.admin.common.util.NcpUtils;
 import com.payhada.admin.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -30,20 +32,26 @@ public class MailService {
 
     public Map<String, Object> send(Map<String, Object> body) throws BusinessException {
         String method = "POST";
-        String url = ncpPropertiesDTO.getMailServiceUrl();
+        String endpoint = "/api/v1/mails";
+        String url = ncpPropertiesDTO.getMailServiceUrl() + endpoint;
 
         log.debug("Send NCP Mail Service");
         log.debug("[{}] {}", method, url);
         log.debug("Request Body :: {}", body);
 
         try {
-            Map<String, String> header = NcpUtils.generateHeader(method, url);
+            Map<String, String> header = NcpUtils.generateHeader(method, endpoint);
 
             log.debug("Request NCP - createMailRequest API");
-            String responseStr = httpConnector.postJson(url, header, body);
+            ResponseEntity<String> responseEntity = httpConnector.postJson(url, header, body);
+            HttpStatus httpStatus = responseEntity.getStatusCode();
+            String responseStr = responseEntity.getBody();
             log.debug("Response NCP - createMailRequest API :: {}", responseStr);
 
-            return objectMapper.readValue(responseStr, new TypeReference<Map<String, Object>>() {});
+            Map<String, Object> resultMap = objectMapper.readValue(responseStr, new TypeReference<Map<String, Object>>() {});
+            resultMap.put("httpStatusCode", httpStatus.value());
+
+            return resultMap;
         } catch (Exception e) {
             log.error(e.getMessage());
 

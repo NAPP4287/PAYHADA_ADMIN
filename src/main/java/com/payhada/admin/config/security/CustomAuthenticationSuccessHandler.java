@@ -1,11 +1,13 @@
 package com.payhada.admin.config.security;
 
 import com.payhada.admin.code.ResponseCode;
-import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.CommonResponse;
+import com.payhada.admin.model.EmployeeInfoDTO;
+import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.service.MailService;
 import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
@@ -26,8 +28,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
 
 @Slf4j
 @Component
@@ -61,18 +61,17 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 String otpDate = otpData.get("otpDate");
 
                 // 이메일 전송
-                ////////////
-//                EmployeeInfoDTO employeeInfoDTO = loginService.getEmployeeInfo(loginDTO.getUserNo());
-//                String email = employeeInfoDTO.getEmail();
+                EmployeeInfoDTO employeeInfoDTO = loginService.getEmployeeInfo(loginDTO.getUserNo());
+                String email = employeeInfoDTO.getEmail();
 
-//                mailService.sendAdminAuthMail(email, otpCode, otpDate);
-                ///////////
+                Map<String, Object> mailResult = mailService.sendAdminAuthMail(email, otpCode, otpDate);
+                int httpStatusCode = (int) mailResult.get("httpStatusCode");
+                if (HttpStatus.valueOf(httpStatusCode).is2xxSuccessful()) {
+                    responseCode = ResponseCode.SUCCESSFUL_LOGIN_1;
+                } else {
+                    responseCode = ResponseCode.NCP_FAIL_MAIL_SERVICE;
+                }
 
-                // 메일전송 기능 구현 전 까지 임시로 사용
-                data = new HashMap<>();
-                data.put("otpCode", otpCode);
-
-                responseCode = ResponseCode.SUCCESSFUL_LOGIN_1;
             } else if (authenticateStep == 2) {
                 // 2차 인증 (OTP) 중 코드 미일치 일 경우 (authenticateStep == 2)
                 responseCode = ResponseCode.MISMATCH_OTP;

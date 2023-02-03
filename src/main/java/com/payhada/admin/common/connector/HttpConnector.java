@@ -20,6 +20,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -163,7 +164,7 @@ public class HttpConnector implements Connector {
 	}
 
 	@Override
-	public String postJson(String url, Map<String, String> header, Map<String, Object> body) throws BusinessException {
+	public ResponseEntity<String> postJson(String url, Map<String, String> header, Map<String, Object> body) throws BusinessException {
 		log.debug("HTTP POST REQUEST");
 		log.debug("url :: {}", url);
 		log.debug("header :: {}", header);
@@ -195,7 +196,8 @@ public class HttpConnector implements Connector {
 			log.debug("Response Status :: {}", responseStatusCode);
 			log.debug("Response Body :: {}", responseStr);
 
-			return responseStr;
+			return ResponseEntity.status(responseStatusCode).body(responseStr);
+//			return responseStr;
 		} catch (Exception e) {
  			log.error("HTTP POST REQUEST 실패");
 			log.error(e.getMessage());

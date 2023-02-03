@@ -4,6 +4,7 @@ import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.setting.CommonResponse;
 import com.payhada.admin.exception.BusinessException;
 import com.payhada.admin.model.LoginDTO;
+import com.payhada.admin.service.MailService;
 import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,11 @@ public class MainController {
 
     private final LoginService loginService;
 
-    public MainController(LoginService loginService) {
+    private final MailService mailService;
+
+    public MainController(LoginService loginService, MailService mailService) {
         this.loginService = loginService;
+        this.mailService = mailService;
     }
 
     @GetMapping(value="/test")
@@ -32,10 +36,11 @@ public class MainController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @GetMapping("/test2")
+    @GetMapping("/test3")
     public String test() throws BusinessException {
-        throw new BusinessException(ResponseCode.API_BAD_REQUEST);
-//        return "ok";
+//        throw new BusinessException(ResponseCode.API_BAD_REQUEST);
+        mailService.sendAdminAuthMail("sw.jeon@payhada.com", "123123", "2023-02-03 12:00:00");
+        return "ok";
     }
 
     @PostMapping("/language")
