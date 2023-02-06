@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ErrorCode_old {
     /** 공통 오류 코드 */
     // TODO 다국어처리
-    API_STATUS_OK("E0000", "정상"),
+    API_STATUS_OK("S0000", "정상"),
     API_BAD_REQUEST("E1001","요청 데이터 입력이 유효하지 않습니다."),
     API_DUP_REQUEST("E0019","이미 요청이 처리되었습니다."),
     API_FAIL_SELECT("E1010","조회 요청 처리 중 오류가 발생했습니다."),
@@ -39,7 +39,7 @@ public enum ErrorCode_old {
     /** ############################### 여기부턴 사용 안함 (삭제 예정) ############################### */
 
     //공통 오류코드
-//	SERVICE_OK("E0000","정상"),
+//	SERVICE_OK("S0000","정상"),
 //	HAVE_NO_DATA("E0001","조회하신 데이터가 없습니다."),
 //	SESSION_DATA_SETTING_ERR("E0003","로그인 서비스작업중 오류가 발생했습니다."),
 //	DUPLICATE_KEY_ERR ("E0010","이미 존재하는 데이터 입니다."),

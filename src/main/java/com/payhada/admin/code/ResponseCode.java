@@ -12,7 +12,7 @@ import java.util.Map;
 @AllArgsConstructor
 public enum ResponseCode {
 	/** 공통 코드 */
-	API_STATUS_OK("E0000", 200),
+	API_STATUS_OK("S0000", 200),
 
 	API_BAD_REQUEST("E1001",400),
 	API_DUP_REQUEST("E0019",400),

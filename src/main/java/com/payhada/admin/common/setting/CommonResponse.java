@@ -23,7 +23,7 @@ public class CommonResponse {
     }
 
     /**
-     * 예시) 현재 Locale: en, {@code MessageSourceUtils.getMessage("E0000")} 실행시 "success" 리턴
+     * 예시) 현재 Locale: en, {@code MessageSourceUtils.getMessage("S0000")} 실행시 "success" 리턴
      * @param code 응답하고자 하는 code 값 (다국어처리를 위한 key 값 * resources/messages/message_{locale}.properties 에 정의되어 있어야 함)
      * @return CommonResponse 객체 리턴
      */
