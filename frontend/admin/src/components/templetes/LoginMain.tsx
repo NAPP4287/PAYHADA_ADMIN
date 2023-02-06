@@ -21,8 +21,6 @@ const LoginMain = (props: LoginMainProps) => {
     password: true,
   });
 
-  // const [t, i18n] = useTranslation();
-
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const handleInvaildCheck = () => {

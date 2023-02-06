@@ -57,15 +57,14 @@ const LoginCert = (props: LoginCertProps) => {
         seconds={seconds}
         setSeconds={setSeconds}
         setIsEnd={setIsEnd}
-        isEnd={isEnd}
         placeholder={t("Login.certPl")}
         type={"default"}
         label={t("Login.certNum")}
         setChangeData={setOtpInput}
         value={otpInput}
         maxLength={6}
-        isFailed={true}
         resetTime={300}
+        isEnd={isEnd}
         actionFunc={getLogin}
       />
       <Button

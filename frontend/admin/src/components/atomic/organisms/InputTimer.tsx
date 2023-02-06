@@ -13,8 +13,6 @@ const InputTimer = (props: InputTimerProps) => {
     value,
     maxLength,
     placeholder,
-    failedText,
-    isFailed,
     resetTime,
     seconds,
     setSeconds,
@@ -83,7 +81,6 @@ const InputTimer = (props: InputTimerProps) => {
           />
         )}
       </div>
-      {!isFailed && <span className="errorText">{failedText}</span>}
     </div>
   );
 };
