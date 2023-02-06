@@ -6,6 +6,7 @@ import PrivateRoute from "./PrivateRoute";
 import NavSide from "components/atomic/organisms/NavSide";
 import { userInfoState } from "recoil/stateUser";
 import { useRecoilValue } from "recoil";
+import ErrorBoundary from "components/layout/ErrorBoundary";
 
 const Router = () => {
   const userInfo = useRecoilValue(userInfoState);
@@ -22,6 +23,7 @@ const Router = () => {
           <Route path="/" element={<DashBoard />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
+        <Route path="*" element={<ErrorBoundary />} />
       </Routes>
     </BrowserRouter>
   );

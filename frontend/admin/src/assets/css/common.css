@@ -5,6 +5,10 @@
   height: 100vh;
 }
 
+.whiteBg {
+  background-color: white;
+}
+
 .maxWidth {
   width: 400px;
   background-color: white;
