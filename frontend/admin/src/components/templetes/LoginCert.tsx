@@ -11,10 +11,10 @@ import { userInfoState } from "recoil/stateUser";
 import { callLogin } from "apis/loginApis";
 
 const LoginCert = (props: LoginCertProps) => {
-  const { email } = props;
+  const { email, getLogin } = props;
   const [otpInput, setOtpInput] = useState<string>("");
   const [isEnd, setIsEnd] = useState<boolean>(false);
-  const [seconds, setSeconds] = useState(300);
+  const [seconds, setSeconds] = useState(5);
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
@@ -28,7 +28,6 @@ const LoginCert = (props: LoginCertProps) => {
   const getOtpChk = async () => {
     // OTP API 요청
     const result = await callLogin({ secret: otpInput });
-    console.log(result);
     if (result.resultCode === "E2005") {
       setUserInfo({ ...userInfo, userNo: result.data.userNo });
     }
@@ -61,6 +60,7 @@ const LoginCert = (props: LoginCertProps) => {
         maxLength={6}
         isFailed={true}
         resetTime={300}
+        actionFunc={getLogin}
       />
       <Button
         className="marginTop"

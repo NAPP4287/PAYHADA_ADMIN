@@ -3,6 +3,11 @@ import axios from "axios";
 import { commonAlertState } from "recoil/stateAlert";
 import { getRecoil, setRecoil } from "recoil-nexus";
 
+axios.defaults.baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:8005"
+    : "https://api.payhada.com/";
+
 const instance = axios.create();
 
 // 요청 인터셉터 추가
@@ -23,13 +28,25 @@ instance.interceptors.response.use(
   (error) => {
     const commonAlertInfo = getRecoil(commonAlertState);
 
-    setRecoil(commonAlertState, {
-      ...commonAlertInfo,
-      isOpen: true,
-      title: "Error",
-      alertType: "error",
-      content: error.response.data.resultMsg,
-    });
+    console.log(error.response);
+
+    if (error.response.status === 500) {
+      setRecoil(commonAlertState, {
+        ...commonAlertInfo,
+        isOpen: true,
+        title: "Error",
+        alertType: "error",
+        content: error.response.statusText,
+      });
+    } else {
+      setRecoil(commonAlertState, {
+        ...commonAlertInfo,
+        isOpen: true,
+        title: "Error",
+        alertType: "error",
+        content: error.response.data.resultMsg,
+      });
+    }
 
     return Promise.reject(error);
   },

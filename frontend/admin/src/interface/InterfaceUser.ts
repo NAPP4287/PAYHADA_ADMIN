@@ -3,11 +3,12 @@ export interface LoginMainProps {
   setEmail: Function;
   password: string;
   setPassword: Function;
-  setIsLoginMain: Function;
+  getLogin: Function;
 }
 
 export interface LoginCertProps {
   email: string;
+  getLogin: Function;
 }
 
 export interface UserInfoType {

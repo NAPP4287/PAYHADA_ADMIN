@@ -1,0 +1,16 @@
+{
+  "Login": {
+    "email": "Email",
+    "emailPl": "Please enter your email",
+    "invalidEmail": "Please check your email again",
+    "pwd": "Password",
+    "pwdPl": "Please enter password",
+    "invalidPwd": "Please check password again",
+    "certButton": "Get OTP Number",
+    "certText": "We sent the OTP number to the email below",
+    "certNum": "OTP Number",
+    "certPl": "Plear enter OTP number",
+    "login": "Login",
+    "retry": "Retry"
+  }
+}

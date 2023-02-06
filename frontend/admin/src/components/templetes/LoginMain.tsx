@@ -1,5 +1,5 @@
 import { Form, Button } from "reactstrap";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 // components
 import LabelInput from "components/atomic/atoms/LabelInput";
 import RadioButtons from "components/atomic/organisms/RadioButtons";
@@ -8,20 +8,22 @@ import { LoginMainProps } from "interface/InterfaceUser";
 import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
 // utils
 import { invalidCheck } from "utils/utilInput";
-// apis
-import { callLogin } from "apis/loginApis";
 // data
 import { languageList } from "data/radioCheckList";
 // recoil
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
+// i18n
+import { useTranslation } from "react-i18next";
 
 const LoginMain = (props: LoginMainProps) => {
-  const { email, setEmail, password, setPassword, setIsLoginMain } = props;
+  const { email, setEmail, password, setPassword, getLogin } = props;
   const [invalidData, setInvalidData] = useState<ObjectBracketBooleanType>({
     email: true,
     password: true,
   });
+
+  const [t, i18n] = useTranslation();
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
@@ -38,13 +40,9 @@ const LoginMain = (props: LoginMainProps) => {
     return findValue === undefined;
   };
 
-  const getLogin = async () => {
-    const result = await callLogin({ id: email, pwd: password });
-
-    if (result.resultCode === "E2004") {
-      setIsLoginMain(false);
-    }
-  };
+  useEffect(() => {
+    i18n.changeLanguage(userInfo.languageCd);
+  }, [i18n, userInfo.languageCd]);
 
   const onSubmitLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,26 +66,26 @@ const LoginMain = (props: LoginMainProps) => {
       />
       <div className="smarginTop">
         <LabelInput
-          placeholder={"이메일을 입력해주세요"}
+          placeholder={t("Login.emailPl")}
           type={"email"}
-          label={"이메일"}
+          label={t("Login.email")}
           setChangeData={setEmail}
           value={email}
           isFailed={invalidData.email}
-          failedText={"이메일을 다시 확인해주세요"}
+          failedText={t("Login.invalidEmail")}
         />
         <LabelInput
-          placeholder={"비밀번호를 입력해주세요"}
+          placeholder={t("Login.pwdPl")}
           type={"password"}
-          label={"비밀번호"}
+          label={t("Login.pwd")}
           setChangeData={setPassword}
           value={password}
           isFailed={invalidData.password}
-          failedText={"비밀번호를 다시 확인해주세요"}
+          failedText={t("Login.invalidPwd")}
         />
       </div>
       <Button block color="primary" type="submit" className="marginTop">
-        인증번호 받기
+        {t("Login.certButton")}
       </Button>
     </Form>
   );

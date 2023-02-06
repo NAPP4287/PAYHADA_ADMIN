@@ -18,6 +18,7 @@ const InputTimer = (props: InputTimerProps) => {
     setSeconds,
     isEnd,
     setIsEnd,
+    actionFunc,
   } = props;
   const [minutes, setMinutes] = useState<number>(0);
 
@@ -39,6 +40,7 @@ const InputTimer = (props: InputTimerProps) => {
   };
 
   const resetTimer = () => {
+    actionFunc();
     calcTime(resetTime);
     setIsEnd(false);
     setChangeData("");
