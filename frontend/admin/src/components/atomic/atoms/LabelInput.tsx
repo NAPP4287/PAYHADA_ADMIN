@@ -1,6 +1,5 @@
 import { Input, Label } from "reactstrap";
 import { LabelInputProps } from "interface/InterfaceBasicLabel";
-import { onKeyPressEnter } from "utils/utilInput";
 import React from "react";
 
 const LabelInput = (props: LabelInputProps) => {
@@ -13,7 +12,7 @@ const LabelInput = (props: LabelInputProps) => {
     isFailed,
     failedText,
     maxLength,
-    onEnter,
+    // onEnter,
   } = props;
 
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +30,7 @@ const LabelInput = (props: LabelInputProps) => {
         onChange={(e) => inputChange(e)}
         value={value}
         maxLength={maxLength}
-        onKeyPress={(e) => onKeyPressEnter(e, onEnter)}
+        // onKeyPress={(e) => onKeyPressEnter(e, onEnter)}
       />
       {!isFailed && <span className="errorText">{failedText}</span>}
     </div>

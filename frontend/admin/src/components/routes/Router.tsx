@@ -12,7 +12,7 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      {userInfo.userToken !== "" && <NavSide />}
+      {userInfo.userNo !== "" && <NavSide />}
 
       <Routes>
         <Route element={<PrivateRoute authentication={false} />}>

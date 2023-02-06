@@ -1,13 +1,13 @@
 export interface LabelInputProps {
   label: string;
   type: any;
-  placeholder?: string;
+  placeholder: string;
   setChangeData?: Function | any;
   value: string;
   isFailed?: boolean;
-  failedText?: string;
+  failedText?: string | null;
   maxLength?: number;
-  onEnter: Function;
+  // onEnter: Function;
 }
 
 export interface LabelSelectProps {
@@ -38,5 +38,5 @@ export interface InputTimerProps extends LabelInputProps {
   isEnd: boolean;
   setIsEnd: Function;
   resetTime: number;
-  onEnter: Function;
+  actionFunc: Function;
 }

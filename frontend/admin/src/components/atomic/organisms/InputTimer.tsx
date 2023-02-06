@@ -1,9 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { InputTimerProps } from "interface/InterfaceBasicLabel";
 import { Button, Label } from "reactstrap";
 import Timer from "components/atomic/atoms/Timer";
-import { onKeyPressEnter } from "utils/utilInput";
 
 const InputTimer = (props: InputTimerProps) => {
   const {
@@ -20,40 +18,32 @@ const InputTimer = (props: InputTimerProps) => {
     setSeconds,
     isEnd,
     setIsEnd,
-    onEnter,
+    actionFunc,
   } = props;
   const [minutes, setMinutes] = useState<number>(0);
-  const [enterAble, setEnterAble] = useState<boolean>(false);
+
+  const calcTime = useCallback(
+    (seconds: number) => {
+      setSeconds(seconds % 60);
+      setMinutes(Math.floor(seconds / 60));
+    },
+    [setSeconds],
+  );
 
   useEffect(() => {
     calcTime(seconds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length === 6) {
-      setEnterAble(true);
-    }
     setChangeData(e.target.value);
   };
 
   const resetTimer = () => {
+    actionFunc();
     calcTime(resetTime);
     setIsEnd(false);
     setChangeData("");
-  };
-
-  const calcTime = (seconds: number) => {
-    setSeconds(seconds % 60);
-    setMinutes(Math.floor(seconds / 60));
-  };
-
-  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isEnd && e.key === "Enter") {
-      return e.preventDefault();
-    }
-    if (!isEnd) {
-      return onKeyPressEnter(e, onEnter, enterAble);
-    }
   };
 
   return (
@@ -69,7 +59,6 @@ const InputTimer = (props: InputTimerProps) => {
           onChange={(e) => inputChange(e)}
           value={value}
           maxLength={maxLength}
-          onKeyPress={(e) => handleEnterPress(e)}
         />
         {isEnd ? (
           <Button
