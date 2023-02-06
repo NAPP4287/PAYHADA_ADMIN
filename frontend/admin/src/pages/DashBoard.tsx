@@ -8,8 +8,14 @@ import InfoCard from "components/atomic/atoms/InfoCard";
 import DashboardDailyChart from "components/templetes/DashboardDailyChart";
 import DashboardRemStatus from "components/templetes/DashboardRemStatus";
 import DashboardExRateInfo from "components/templetes/DashboardExRateInfo";
+// i18n
+import { useTranslation } from "react-i18next";
 
 const DashBoard = () => {
+  const [t, i18n] = useTranslation();
+
+  console.log(i18n.language, t);
+
   return (
     <div className={`main-content ${styles.dashWrap}`}>
       <div className={styles.dashboardLeft}>

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { InputTimerProps } from "interface/InterfaceBasicLabel";
 import { Button, Label } from "reactstrap";
 import Timer from "components/atomic/atoms/Timer";
+// i18n
+import { useTranslation } from "react-i18next";
 
 const InputTimer = (props: InputTimerProps) => {
   const {
@@ -21,6 +23,8 @@ const InputTimer = (props: InputTimerProps) => {
     actionFunc,
   } = props;
   const [minutes, setMinutes] = useState<number>(0);
+
+  const [t] = useTranslation();
 
   const calcTime = useCallback(
     (seconds: number) => {
@@ -66,7 +70,7 @@ const InputTimer = (props: InputTimerProps) => {
             type="button"
             className="label"
             onClick={resetTimer}>
-            재요청
+            {t("Login.retry")}
           </Button>
         ) : (
           <Timer
