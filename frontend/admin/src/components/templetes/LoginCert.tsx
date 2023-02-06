@@ -14,7 +14,7 @@ const LoginCert = (props: LoginCertProps) => {
   const { email, getLogin } = props;
   const [otpInput, setOtpInput] = useState<string>("");
   const [isEnd, setIsEnd] = useState<boolean>(false);
-  const [seconds, setSeconds] = useState(5);
+  const [seconds, setSeconds] = useState(300);
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 

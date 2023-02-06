@@ -3,11 +3,6 @@ import axios from "axios";
 import { commonAlertState } from "recoil/stateAlert";
 import { getRecoil, setRecoil } from "recoil-nexus";
 
-axios.defaults.baseURL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:8005"
-    : "https://api.payhada.com/";
-
 const instance = axios.create();
 
 // 요청 인터셉터 추가
