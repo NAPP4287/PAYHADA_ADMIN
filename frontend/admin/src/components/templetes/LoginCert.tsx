@@ -9,14 +9,18 @@ import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
 // apis
 import { callLogin } from "apis/loginApis";
+// router
+import { useNavigate } from "react-router-dom";
 
 const LoginCert = (props: LoginCertProps) => {
-  const { email, getLogin } = props;
+  const { email, getLogin, t, i18n } = props;
   const [otpInput, setOtpInput] = useState<string>("");
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [seconds, setSeconds] = useState(300);
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  const navigate = useNavigate();
 
   const onCheckOtp = () => {
     if (otpInput.length !== 6 || isEnd) {
@@ -30,6 +34,8 @@ const LoginCert = (props: LoginCertProps) => {
     const result = await callLogin({ secret: otpInput });
     if (result.resultCode === "E2005") {
       setUserInfo({ ...userInfo, userNo: result.data.userNo });
+      navigate("/");
+      i18n.changeLanguage(result.data.languageCd);
     }
   };
 
@@ -43,7 +49,7 @@ const LoginCert = (props: LoginCertProps) => {
 
   return (
     <Form className="maxWidth" onSubmit={onSubmitOtp}>
-      <span>아래 이메일로 인증번호를 전송하였습니다.</span>
+      <span>{t("Login.certText")}</span>
       <p className="primary" style={{ fontWeight: "bold" }}>
         {email}
       </p>
@@ -52,9 +58,9 @@ const LoginCert = (props: LoginCertProps) => {
         setSeconds={setSeconds}
         setIsEnd={setIsEnd}
         isEnd={isEnd}
-        placeholder={"인증번호를 입력해주세요"}
+        placeholder={t("Login.certPl")}
         type={"default"}
-        label={"인증번호"}
+        label={t("Login.certNum")}
         setChangeData={setOtpInput}
         value={otpInput}
         maxLength={6}
@@ -68,7 +74,7 @@ const LoginCert = (props: LoginCertProps) => {
         type="submit"
         color="primary"
         disabled={otpInput.length < 6 || isEnd}>
-        로그인
+        {t("Login.login")}
       </Button>
     </Form>
   );

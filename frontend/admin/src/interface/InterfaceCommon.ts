@@ -1,3 +1,6 @@
+// i18n
+import { TFunction, i18n } from "i18next";
+
 export interface ObjectBracketStringType {
   [key: string]: string;
 }
@@ -12,4 +15,9 @@ export interface ObjectBracketNumberType {
 
 export interface ObjectBracketObjectType {
   [key: string]: object;
+}
+
+export interface ITranslation {
+  t: TFunction;
+  i18n: i18n;
 }

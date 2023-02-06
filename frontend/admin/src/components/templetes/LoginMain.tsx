@@ -13,17 +13,15 @@ import { languageList } from "data/radioCheckList";
 // recoil
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
-// i18n
-import { useTranslation } from "react-i18next";
 
 const LoginMain = (props: LoginMainProps) => {
-  const { email, setEmail, password, setPassword, getLogin } = props;
+  const { email, setEmail, password, setPassword, getLogin, t, i18n } = props;
   const [invalidData, setInvalidData] = useState<ObjectBracketBooleanType>({
     email: true,
     password: true,
   });
 
-  const [t, i18n] = useTranslation();
+  // const [t, i18n] = useTranslation();
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 

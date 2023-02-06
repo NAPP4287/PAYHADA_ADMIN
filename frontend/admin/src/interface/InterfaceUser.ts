@@ -1,4 +1,5 @@
-export interface LoginMainProps {
+import { ITranslation } from "./InterfaceCommon";
+export interface LoginMainProps extends ITranslation {
   email: string;
   setEmail: Function;
   password: string;
@@ -6,7 +7,7 @@ export interface LoginMainProps {
   getLogin: Function;
 }
 
-export interface LoginCertProps {
+export interface LoginCertProps extends ITranslation {
   email: string;
   getLogin: Function;
 }
