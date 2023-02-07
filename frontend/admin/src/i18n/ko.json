@@ -12,5 +12,35 @@
     "certPl": "인증번호를 입력해주세요",
     "login": "로그인",
     "retry": "재요청"
+  },
+  "Dashboard": {
+    "day": "일",
+    "cumallUser": "누적 유저명수",
+    "cumalCert": "누적 인증완료",
+    "cumalRem": "누적 송금완료",
+    "cumalRemSum": "누적 송금액",
+    "joinUserNum": "가입명수",
+    "certUserNum": "인증명수",
+    "txnCount": "송금완료 건수",
+    "remittance": "송금액수",
+    "year": "연도",
+    "month": "월",
+    "graphButton1": "회원 / 인증",
+    "graphButton2": "송금건수",
+    "graphButton3": "송금액",
+    "outwradEx": "당발",
+    "inwardEx": "타발",
+    "nation": "국가",
+    "mto": "MTO",
+    "currency": "통화",
+    "aplidExRate": "적용환율",
+    "compareExRate": "전율대비"
+  },
+  "Common": {
+    "remStatus": "송금현황",
+    "all": "전체",
+    "onGoing": "진행중",
+    "complete": "완료",
+    "cancel": "취소"
   }
 }

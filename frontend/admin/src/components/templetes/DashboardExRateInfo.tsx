@@ -3,8 +3,10 @@ import { Card, CardBody, Table, Badge } from "reactstrap";
 import styles from "assets/css/Dashboard.module.css";
 // data
 import { exchangeRateData } from "data/dashBoardData";
+// interfaces
+import { ITranslation } from "interface/InterfaceCommon";
 
-const DashboardExRateInfo = () => {
+const DashboardExRateInfo = ({ t }: ITranslation) => {
   return (
     <Card>
       <CardBody>
@@ -16,11 +18,11 @@ const DashboardExRateInfo = () => {
           <Table className="align-items-center smarginTop" responsive>
             <thead className="thead-light">
               <tr>
-                <th scope="col">국가</th>
-                <th scope="col">MTO</th>
-                <th scope="col">통화</th>
-                <th scope="col">적용환율</th>
-                <th scope="col">전율대비</th>
+                <th scope="col">{t("Dashboard.nation")}</th>
+                <th scope="col">{t("Dashboard.mto")}</th>
+                <th scope="col">{t("Dashboard.currency")}</th>
+                <th scope="col">{t("Dashboard.aplidExRate")}</th>
+                <th scope="col">{t("Dashboard.compareExRate")}</th>
               </tr>
             </thead>
             <tbody>

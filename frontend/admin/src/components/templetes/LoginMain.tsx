@@ -37,7 +37,7 @@ const LoginMain = (props: LoginMainProps) => {
   };
 
   useEffect(() => {
-    i18n.changeLanguage(userInfo.languageCd);
+    i18n?.changeLanguage(userInfo.languageCd);
   }, [i18n, userInfo.languageCd]);
 
   const onSubmitLogin = (e: FormEvent<HTMLFormElement>) => {
@@ -48,7 +48,7 @@ const LoginMain = (props: LoginMainProps) => {
     getLogin();
   };
 
-  const changeValue = (e: any) => {
+  const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({ ...userInfo, languageCd: e.target.value });
   };
 

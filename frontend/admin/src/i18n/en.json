@@ -12,5 +12,35 @@
     "certPl": "Plear enter OTP number",
     "login": "Login",
     "retry": "Retry"
+  },
+  "Dashboard": {
+    "day": "D",
+    "cumallUser": "Cumulative number of users",
+    "cumalCert": "Cumulative certifications count",
+    "cumalRem": "Cumulative remittance count",
+    "cumalRemSum": "Cumulative remittance amount",
+    "joinUserNum": "Number of join",
+    "certUserNum": "Number of certifications",
+    "txnCount": "Number of remittance completed",
+    "remittance": "Remittance amount",
+    "year": "Year",
+    "month": "Month",
+    "graphButton1": "Users / Certification",
+    "graphButton2": "Remittance count",
+    "graphButton3": "remittance amount",
+    "outwradEx": "Outward Remittance",
+    "inwardEx": "Inward Remittance",
+    "nation": "nation",
+    "mto": "MTO",
+    "currency": "currency",
+    "aplidExRate": "aplied",
+    "compareExRate": "compared"
+  },
+  "Common": {
+    "remStatus": "Remittance Status",
+    "all": "all",
+    "onGoing": "on-going",
+    "complete": "complete",
+    "cancel": "cancel"
   }
 }

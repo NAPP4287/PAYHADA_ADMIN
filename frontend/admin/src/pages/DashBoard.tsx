@@ -12,9 +12,7 @@ import DashboardExRateInfo from "components/templetes/DashboardExRateInfo";
 import { useTranslation } from "react-i18next";
 
 const DashBoard = () => {
-  const [t, i18n] = useTranslation();
-
-  console.log(i18n.language, t);
+  const [t] = useTranslation();
 
   return (
     <div className={`main-content ${styles.dashWrap}`}>
@@ -25,18 +23,18 @@ const DashBoard = () => {
               key={idx}
               idx={idx}
               count={el.count}
-              title={el.title}
+              title={t(`Dashboard.${el.title}`)}
               icon={el.icon}
             />
           ))}
         </div>
 
         <div className={`smarginTop ${styles.leftChartWrap}`}>
-          <DashboardDailyChart />
+          <DashboardDailyChart t={t} />
         </div>
 
         <div className={styles.bottomLeftCardWrap}>
-          <DashboardRemStatus />
+          <DashboardRemStatus t={t} />
 
           <Card>
             <CardBody>차트 미정 - 회의 필요</CardBody>
@@ -45,7 +43,7 @@ const DashBoard = () => {
       </div>
       <div className={styles.dashRight}>
         <div>
-          <DashboardExRateInfo />
+          <DashboardExRateInfo t={t} />
         </div>
         <div className={styles.rightBottomCard}>
           <Card style={{ height: "100%" }}>

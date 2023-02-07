@@ -5,8 +5,10 @@ import styles from "assets/css/Dashboard.module.css";
 import { remStatusData } from "data/dashBoardData";
 // util
 import { addComma } from "utils/utilCommon";
+// interfaces
+import { ITranslation } from "interface/InterfaceCommon";
 
-const DashboardRemStatus = () => {
+const DashboardRemStatus = ({ t }: ITranslation) => {
   return (
     <Card>
       <CardBody>
@@ -18,18 +20,20 @@ const DashboardRemStatus = () => {
           <Table className="align-items-center smarginTop" responsive>
             <thead className="thead-light">
               <tr>
-                <th scope="col">송금현황</th>
-                <th scope="col">전체</th>
-                <th scope="col">진행중</th>
-                <th scope="col">완료</th>
-                <th scope="col">취소</th>
+                <th scope="col">{t("Common.remStatus")}</th>
+                <th scope="col">{t("Common.all")}</th>
+                <th scope="col">{t("Common.onGoing")}</th>
+                <th scope="col">{t("Common.complete")}</th>
+                <th scope="col">{t("Common.cancel")}</th>
               </tr>
             </thead>
             <tbody>
               {remStatusData.map((el, idx) => (
                 <tr key={idx}>
                   <th scope="row">
-                    <span className="mb-0 text-sm">{el.title}</span>
+                    <span className="mb-0 text-sm">
+                      {t(`Dashboard.${el.title}`)}
+                    </span>
                   </th>
 
                   <td>{addComma(el.all)}</td>

@@ -12,12 +12,17 @@ import ApexCharts from "react-apexcharts";
 import { dummyChart } from "data/dummyData";
 // interface
 import { DailyChartProps } from "interface/interfaceDashboard";
+import { ITranslation } from "interface/InterfaceCommon";
 
-const DashboardDailyChart = () => {
+const DashboardDailyChart = ({ t }: ITranslation) => {
   const [thisMonthArr, setThisMonthArr] = useState<Array<DailyChartProps>>([]);
   const [selectDate, setSelectDate] = useState({ year: 0, month: 0 });
   const [selectChart, setSelectChart] = useState<number>(0);
-  const buttonArr = ["회원 / 인증", "송금건수", "송금액"];
+  const buttonArr = [
+    t("Dashboard.graphButton1"),
+    t("Dashboard.graphButton2"),
+    t("Dashboard.graphButton3"),
+  ];
   const getLatestDate = new Date(
     selectDate.year,
     selectDate.month,
@@ -60,7 +65,7 @@ const DashboardDailyChart = () => {
     }
   };
 
-  const thisMonthDate = arrChartData("day", "일");
+  const thisMonthDate = arrChartData("day", t("Dashboard.day"));
 
   const onClickChart = (value: number) => {
     setSelectChart(value);
@@ -80,13 +85,16 @@ const DashboardDailyChart = () => {
   const chartData: any = () => {
     if (selectChart === 0) {
       return chartOption(thisMonthDate, [
-        { name: "가입명수", data: arrChartData("userCount") },
-        { name: "인증명수", data: arrChartData("certUserCount") },
+        { name: t("Dashboard.joinUserNum"), data: arrChartData("userCount") },
+        {
+          name: t("Dashboard.certUserNum"),
+          data: arrChartData("certUserCount"),
+        },
       ]);
     } else if (selectChart === 1) {
       return chartOption(thisMonthDate, [
         {
-          name: "송금완료건수",
+          name: t("Dashboard.txnCount"),
           data: arrChartData("txnCount"),
         },
       ]);
@@ -95,7 +103,7 @@ const DashboardDailyChart = () => {
         thisMonthDate,
         [
           {
-            name: "송금액수",
+            name: t("Dashboard.remittance"),
             data: arrChartData("remittance"),
           },
         ],
@@ -116,7 +124,6 @@ const DashboardDailyChart = () => {
                   color="primary"
                   outline={selectChart !== idx}
                   type="button"
-                  className="textHidden"
                   key={idx}
                   onClick={() => onClickChart(idx)}>
                   {el}

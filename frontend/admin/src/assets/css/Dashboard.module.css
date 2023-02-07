@@ -1,5 +1,5 @@
 .dashWrap {
-  padding: 30px;
+  padding: 10px 30px 20px 30px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -23,6 +23,11 @@
 .topCard {
   width: 18rem;
   margin-left: 15px;
+}
+
+.infoCardTop {
+  display: flex;
+  justify-content: space-between;
 }
 
 .dashRight {
