@@ -2,7 +2,7 @@ export interface LabelInputProps {
   label: string;
   type: any;
   placeholder: string;
-  setChangeData?: Function | any;
+  setChangeData: Function;
   value: string;
   isFailed?: boolean;
   failedText?: string | null;
@@ -13,7 +13,7 @@ export interface LabelInputProps {
 export interface LabelSelectProps {
   label: string;
   type: any;
-  setChangeData?: Function | any;
+  setChangeData: Function;
   value: string;
   dataArray: Array<string>;
   isFailed?: boolean;

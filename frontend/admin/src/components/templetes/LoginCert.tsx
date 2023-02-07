@@ -33,9 +33,17 @@ const LoginCert = (props: LoginCertProps) => {
     // OTP API 요청
     const result = await callLogin({ secret: otpInput });
     if (result.resultCode === "E2005") {
-      setUserInfo({ ...userInfo, userNo: result.data.userNo });
+      const data = result.data;
+      setUserInfo({
+        ...userInfo,
+        id: data.id,
+        userNo: data.userNo,
+        loginId: data.loginId,
+        languageCd: data.languageCd,
+        roleGroupList: data.roleGroupList,
+      });
       navigate("/");
-      i18n.changeLanguage(result.data.languageCd);
+      i18n?.changeLanguage(result.data.languageCd);
     }
   };
 

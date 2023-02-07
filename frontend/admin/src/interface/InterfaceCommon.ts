@@ -19,5 +19,5 @@ export interface ObjectBracketObjectType {
 
 export interface ITranslation {
   t: TFunction;
-  i18n: i18n;
+  i18n?: i18n;
 }

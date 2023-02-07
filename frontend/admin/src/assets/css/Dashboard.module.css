@@ -25,6 +25,11 @@
   margin-left: 15px;
 }
 
+.infoCardTop {
+  display: flex;
+  justify-content: space-between;
+}
+
 .dashRight {
   flex: 1;
   margin-left: 15px;
