@@ -29,7 +29,9 @@ const Header = () => {
       userNo: userInfo.userNo,
     });
 
-    console.log(result);
+    if (result.resultCode === "S0000") {
+      setUserInfo({ ...userInfo, languageCd: lang });
+    }
   };
 
   return (
@@ -52,13 +54,17 @@ const Header = () => {
                 <i className="ni ni-single-02" />
                 <span>My profile</span>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile">
+              <DropdownItem
+                to="/admin/user-profile"
+                onClick={() => reqChangeLang("ko")}>
                 <i className="ni ni-settings-gear-65" />
-                <span onClick={() => reqChangeLang("ko")}>한국어</span>
+                <span>한국어</span>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile">
+              <DropdownItem
+                to="/admin/user-profile"
+                onClick={() => reqChangeLang("en")}>
                 <i className="ni ni-settings-gear-65" />
-                <span onClick={() => reqChangeLang("en")}>English</span>
+                <span>English</span>
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
