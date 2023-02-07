@@ -31,3 +31,8 @@ interface roleGroupType {
 export interface InvalidCheckType {
   [key: string]: RegExp;
 }
+
+export interface ChangeLangDataType {
+  languageCd: string;
+  userNo?: string;
+}

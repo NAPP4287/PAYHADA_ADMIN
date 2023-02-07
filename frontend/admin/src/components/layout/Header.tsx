@@ -7,18 +7,29 @@ import {
   DropdownItem,
   UncontrolledDropdown,
 } from "reactstrap";
-// recoil
-import { useRecoilValue } from "recoil";
-import { userInfoState } from "recoil/stateUser";
 // css
 import styles from "assets/css/Header.module.css";
+// apis
+import { changeLanguage } from "apis/settingApis";
+// recoil
+import { useRecoilState } from "recoil";
+import { userInfoState } from "recoil/stateUser";
 
 const Header = () => {
-  const userInfo = useRecoilValue(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [dropDownOpen, setDropDownOpen] = useState<boolean>(false);
 
   const onToggle = () => {
     setDropDownOpen(!dropDownOpen);
+  };
+
+  const reqChangeLang = async (lang: string) => {
+    const result = await changeLanguage({
+      languageCd: lang,
+      userNo: userInfo.userNo,
+    });
+
+    console.log(result);
   };
 
   return (
@@ -43,11 +54,11 @@ const Header = () => {
               </DropdownItem>
               <DropdownItem to="/admin/user-profile">
                 <i className="ni ni-settings-gear-65" />
-                <span>한국어</span>
+                <span onClick={() => reqChangeLang("ko")}>한국어</span>
               </DropdownItem>
               <DropdownItem to="/admin/user-profile">
                 <i className="ni ni-settings-gear-65" />
-                <span>English</span>
+                <span onClick={() => reqChangeLang("en")}>English</span>
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>

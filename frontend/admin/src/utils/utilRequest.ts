@@ -51,7 +51,7 @@ export const createGetRequest = () => {};
 
 export const createPostRequest = async (
   url: string,
-  body: string | null,
+  body: object | null,
   params?: string | null,
   headers?: object | null,
 ) => {
@@ -63,5 +63,18 @@ export const createPostRequest = async (
     },
     withCredentials: true,
   });
+  return result;
+};
+
+export const createPutRequest = async (
+  url: string,
+  body: object,
+  params?: string | null,
+) => {
+  const result = await instance.put(url, body, {
+    headers: {},
+    params: params,
+  });
+
   return result;
 };
