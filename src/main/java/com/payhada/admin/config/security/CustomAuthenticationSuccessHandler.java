@@ -83,9 +83,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
                 // locale 설정
                 String languageCd = loginDTO.getLanguageCd();
-                if (languageCd == null) {
-                    languageCd = "ko";
-                }
                 setLocale(request, languageCd);
 
                 // 로그인 성공 시 응답값 세팅
