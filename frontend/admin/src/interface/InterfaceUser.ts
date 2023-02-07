@@ -18,6 +18,7 @@ export interface UserInfoType {
   userNo: string;
   languageCd: string;
   roleGroupList: Array<roleGroupType>;
+  sessionChk: boolean;
 }
 
 export interface FailCntType {

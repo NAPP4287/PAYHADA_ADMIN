@@ -11,19 +11,15 @@ interface PrivateRouteProps {
 const PrivateRoute = ({ authentication }: PrivateRouteProps) => {
   const userInfo = useRecoilValue(userInfoState);
 
-  const changeUserInfo =
-    sessionStorage.length !== 0
-      ? JSON.parse(sessionStorage.importantState)?.userInfoState
-      : userInfo;
+  // const changeUserInfo =
+  //   sessionStorage.length !== 0
+  //     ? JSON.parse(sessionStorage.importantState)?.userInfoState
+  //     : userInfo;
 
   if (authentication) {
-    return changeUserInfo.userNo === "" ? (
-      <Navigate to={"/login"} />
-    ) : (
-      <Outlet />
-    );
+    return userInfo.userNo === "" ? <Navigate to={"/login"} /> : <Outlet />;
   } else {
-    return changeUserInfo.userNo === "" ? <Outlet /> : <Navigate to="/" />;
+    return userInfo.userNo === "" ? <Outlet /> : <Navigate to="/" />;
   }
 };
 

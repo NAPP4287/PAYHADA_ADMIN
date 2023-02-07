@@ -11,13 +11,15 @@ import {
 import styles from "assets/css/Header.module.css";
 // apis
 import { changeLanguage } from "apis/settingApis";
+import { callLogout } from "apis/loginApis";
 // recoil
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
 
 const Header = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [dropDownOpen, setDropDownOpen] = useState<boolean>(false);
+  const resetUserInfo = useResetRecoilState(userInfoState);
 
   const onToggle = () => {
     setDropDownOpen(!dropDownOpen);
@@ -32,6 +34,16 @@ const Header = () => {
     if (result.resultCode === "S0000") {
       setUserInfo({ ...userInfo, languageCd: lang });
     }
+  };
+
+  const reqLogout = async () => {
+    const result = await callLogout();
+
+    if ((result.resultCode = "E2011")) {
+      resetUserInfo();
+    }
+
+    console.log(result);
   };
 
   return (
@@ -67,7 +79,7 @@ const Header = () => {
                 <span>English</span>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem href="#pablo" onClick={reqLogout}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>

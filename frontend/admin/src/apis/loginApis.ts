@@ -13,3 +13,9 @@ export const callLogin = async (data: any) => {
 
   return response.data;
 };
+
+export const callLogout = async () => {
+  const response = await createPostRequest(`${baseUrl}/logout`, null);
+
+  return response.data;
+};

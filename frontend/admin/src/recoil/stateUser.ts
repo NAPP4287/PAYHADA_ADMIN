@@ -15,6 +15,7 @@ export const userInfoState = atom<UserInfoType>({
     userNo: "",
     languageCd: "ko",
     roleGroupList: [],
+    sessionChk: false,
   },
   effects_UNSTABLE: [persistAtom],
 });
