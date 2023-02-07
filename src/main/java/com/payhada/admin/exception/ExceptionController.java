@@ -13,7 +13,7 @@ public class ExceptionController {
 
 	@ExceptionHandler(BusinessException.class)
     protected ResponseEntity<CommonResponse> handleBusinessException(BusinessException e) {
-		log.error("OCCURRED BUSINESS EXCEPTION :: [{}] {}", e.getClass().getName(), e.getMessage());
+		log.error("OCCURRED BUSINESS EXCEPTION :: {}", e.getResponseCode().getCode());
 
 		ResponseCode responseCode = e.getResponseCode();
 

@@ -29,7 +29,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        ResponseCode responseCode = ResponseCode.SUCCESSFUL_LOGOUT;
+        ResponseCode responseCode = ResponseCode.API_STATUS_OK;
 
         response.setStatus(responseCode.getStatus());
 
