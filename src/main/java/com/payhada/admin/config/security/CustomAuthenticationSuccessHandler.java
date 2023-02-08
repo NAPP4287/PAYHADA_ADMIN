@@ -17,6 +17,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +68,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 Map<String, Object> mailResult = mailService.sendAdminAuthMail(email, otpCode, otpDate);
                 int httpStatusCode = (int) mailResult.get("httpStatusCode");
                 if (HttpStatus.valueOf(httpStatusCode).is2xxSuccessful()) {
-                    responseCode = ResponseCode.SUCCESSFUL_LOGIN_1;
+                    responseCode = ResponseCode.API_STATUS_OK;
                 } else {
                     responseCode = ResponseCode.NCP_FAIL_MAIL_SERVICE;
                 }
@@ -82,27 +83,12 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
                 // locale 설정
                 String languageCd = loginDTO.getLanguageCd();
-                if (languageCd == null) {
-                    languageCd = "ko";
-                }
                 setLocale(request, languageCd);
 
-                // JsonAuthenticationManager 에서 넣어준 권한을 가져옴
-                List<Map<String, String>> roleGroupList = loginDTO.getEmployeeRoleMappDTOList().stream()
-                        .map(dto -> {
-                            Map<String, String> map = new HashMap<>();
-                            map.put("roleGroupCode", dto.getRoleGroupCode());
-                            map.put("roleGroupName", dto.getRoleGroupName());
-                            return map;
-                        }).collect(Collectors.toList());
+                // 로그인 성공 시 응답값 세팅
+                data = loginService.getLoginInfoJson(loginDTO);
 
-                data = new HashMap<>();
-                data.put("userNo", loginDTO.getUserNo());
-                data.put("loginId", loginDTO.getId());
-                data.put("languageCd", languageCd);
-                data.put("roleGroupList", roleGroupList);
-
-                responseCode = ResponseCode.SUCCESSFUL_LOGIN_2;
+                responseCode = ResponseCode.API_STATUS_OK;
             }
 
             SavedRequest savedRequest = requestCache.getRequest(request, response);
@@ -130,6 +116,10 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     }
 
     private void setLocale(HttpServletRequest request, String languageCd) {
+        if (StringUtils.isEmpty(languageCd)) {
+            languageCd = "ko";
+        }
+
         HttpSession session = request.getSession();
         session.setAttribute("locale", new Locale(languageCd));
     }

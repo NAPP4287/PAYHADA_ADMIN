@@ -80,4 +80,21 @@ public class LoginService {
     public void updateEmployeeLanguage(LoginDTO loginDTO) {
         loginDAO.updateEmployeeLanguageCd(loginDTO);
     }
+
+    public Map<String, Object> getLoginInfoJson(LoginDTO loginDTO) {
+        List<Map<String, String>> roleGroupList = loginDTO.getRoleGroupJson();
+
+        String languageCd = loginDTO.getLanguageCd();
+        if (org.springframework.util.StringUtils.isEmpty(languageCd)) {
+            languageCd = "ko";
+        }
+
+        Map<String, Object> loginInfo = new HashMap<>();
+        loginInfo.put("userNo", loginDTO.getUserNo());
+        loginInfo.put("loginId", loginDTO.getId());
+        loginInfo.put("languageCd", languageCd);
+        loginInfo.put("roleGroupList", roleGroupList);
+
+        return loginInfo;
+    }
 }

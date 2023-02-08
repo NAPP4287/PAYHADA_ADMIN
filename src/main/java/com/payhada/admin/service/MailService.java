@@ -3,8 +3,8 @@ package com.payhada.admin.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.payhada.admin.code.ResponseCode;
-import com.payhada.admin.common.connector.Connector;
 import com.payhada.admin.common.setting.NcpPropertiesDTO;
+import com.payhada.admin.common.util.HttpUtils;
 import com.payhada.admin.common.util.NcpUtils;
 import com.payhada.admin.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,21 +12,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
 public class MailService {
 
+    private static final String ERROR_LOG = "[MailService - {}] :: {} - {}";
     private static final String ADMIN_AUTH_SID = "4333";
 
     private final NcpPropertiesDTO ncpPropertiesDTO;
-    private final Connector httpConnector;
     private final ObjectMapper objectMapper;
 
-    public MailService(NcpPropertiesDTO ncpPropertiesDTO, Connector httpConnector, ObjectMapper objectMapper) {
+    public MailService(NcpPropertiesDTO ncpPropertiesDTO, ObjectMapper objectMapper) {
         this.ncpPropertiesDTO = ncpPropertiesDTO;
-        this.httpConnector = httpConnector;
         this.objectMapper = objectMapper;
     }
 
@@ -35,15 +37,11 @@ public class MailService {
         String endpoint = "/api/v1/mails";
         String url = ncpPropertiesDTO.getMailServiceUrl() + endpoint;
 
-        log.debug("Send NCP Mail Service");
-        log.debug("[{}] {}", method, url);
-        log.debug("Request Body :: {}", body);
-
         try {
             Map<String, String> header = NcpUtils.generateHeader(method, endpoint);
 
             log.debug("Request NCP - createMailRequest API");
-            ResponseEntity<String> responseEntity = httpConnector.postJson(url, header, body);
+            ResponseEntity<String> responseEntity = HttpUtils.sendHttpPost(url, header, body, null);
             HttpStatus httpStatus = responseEntity.getStatusCode();
             String responseStr = responseEntity.getBody();
             log.debug("Response NCP - createMailRequest API :: {}", responseStr);
@@ -53,7 +51,7 @@ public class MailService {
 
             return resultMap;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(ERROR_LOG, "send()", e.getClass().getName(), e.getMessage());
 
             throw new BusinessException(ResponseCode.NCP_FAIL_MAIL_SERVICE);
         }
@@ -77,8 +75,7 @@ public class MailService {
         try {
             return send(mailBody);
         } catch (Exception e) {
-            log.error("MailService - sendAdminAuthMail Error");
-            log.error(e.getMessage());
+            log.error(ERROR_LOG, "sendAdminAuthMail()", e.getClass().getName(), e.getMessage());
 
             throw new BusinessException(ResponseCode.NCP_FAIL_MAIL_SERVICE);
         }

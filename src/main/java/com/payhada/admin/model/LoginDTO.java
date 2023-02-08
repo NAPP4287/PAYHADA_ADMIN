@@ -11,9 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @ToString
 @Data
@@ -113,5 +112,15 @@ public class LoginDTO implements UserDetails {
 
     public void setAuthenticateStep(Integer authenticateStep) {
         this.authenticateStep = authenticateStep;
+    }
+
+    public List<Map<String, String>> getRoleGroupJson() {
+        return this.employeeRoleMappDTOList.stream()
+                .map(dto -> {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("roleGroupCode", dto.getRoleGroupCode());
+                    map.put("roleGroupName", dto.getRoleGroupName());
+                    return map;
+                }).collect(Collectors.toList());
     }
 }
