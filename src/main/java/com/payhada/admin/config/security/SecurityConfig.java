@@ -1,6 +1,6 @@
 package com.payhada.admin.config.security;
 
-import com.payhada.admin.service.user.LoginService;
+import com.payhada.admin.config.filter.ExceptionHandlerFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,15 +19,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	private final CustomLogoutSuccessHandler logoutSuccessHandler;
 	private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 	private final CustomAccessDeniedHandler accessDeniedHandler;
+	private final ExceptionHandlerFilter exceptionHandlerFilter;
 
 	public SecurityConfig(LoginService loginService, JsonUsernamePasswordAuthenticationFilter authenticationFilter,
 						  CustomLogoutSuccessHandler logoutSuccessHandler, CustomAuthenticationEntryPoint authenticationEntryPoint,
-						  CustomAccessDeniedHandler accessDeniedHandler) {
-		this.loginService = loginService;
+						  CustomAccessDeniedHandler accessDeniedHandler, ExceptionHandlerFilter exceptionHandlerFilter) {
 		this.authenticationFilter = authenticationFilter;
 		this.logoutSuccessHandler = logoutSuccessHandler;
 		this.authenticationEntryPoint = authenticationEntryPoint;
 		this.accessDeniedHandler = accessDeniedHandler;
+		this.exceptionHandlerFilter = exceptionHandlerFilter;
 	}
 
 
@@ -57,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 				.logoutUrl("/api/v2/logout")
 				.logoutSuccessHandler(logoutSuccessHandler)
 				.invalidateHttpSession(true)
-			.and()
+		.and()
+			.addFilterBefore(exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint)
