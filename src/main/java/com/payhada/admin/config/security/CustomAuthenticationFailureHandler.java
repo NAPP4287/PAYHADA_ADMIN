@@ -99,7 +99,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 responseCode = ResponseCode.UNAUTHENTICATED_1;
             } else if (exception instanceof CredentialsExpiredException) {
                 responseCode = ResponseCode.TIMEOUT_OTP;
-            } else if (exception instanceof AuthenticationServiceException && "E1001".equals(exception.getMessage())) {
+            } else if (exception instanceof AuthenticationServiceException && ResponseCode.API_BAD_REQUEST.getCode().equals(exception.getMessage())) {
                 responseCode = ResponseCode.API_BAD_REQUEST;
             } else {
                 responseCode = ResponseCode.API_SERVER_ERROR;

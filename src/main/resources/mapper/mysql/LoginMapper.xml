@@ -51,11 +51,6 @@
 		WHERE user_no = #{userNo}
 	</select>
 
-	<select id="selectAllGroupNames" resultType="String">
-		SELECT role_group_code
-		FROM role_group
-	</select>
-
 	<update id="updateEmployeeLanguageCd" parameterType="loginDTO">
 		UPDATE employee SET language_cd = #{languageCd} WHERE user_no = #{userNo}
 	</update>

@@ -14,14 +14,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			"/api/v2/locale", "/api/v2/loginCheck", "/api/v2/test", "/api/v2/test3"
 	};
 
-	private final LoginService loginService;
 	private final JsonUsernamePasswordAuthenticationFilter authenticationFilter;
 	private final CustomLogoutSuccessHandler logoutSuccessHandler;
 	private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 	private final CustomAccessDeniedHandler accessDeniedHandler;
 	private final ExceptionHandlerFilter exceptionHandlerFilter;
 
-	public SecurityConfig(LoginService loginService, JsonUsernamePasswordAuthenticationFilter authenticationFilter,
+	public SecurityConfig(JsonUsernamePasswordAuthenticationFilter authenticationFilter,
 						  CustomLogoutSuccessHandler logoutSuccessHandler, CustomAuthenticationEntryPoint authenticationEntryPoint,
 						  CustomAccessDeniedHandler accessDeniedHandler, ExceptionHandlerFilter exceptionHandlerFilter) {
 		this.authenticationFilter = authenticationFilter;
@@ -41,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	 * @apiNote
 	 * {@code .anyRequest().authenticated()} 사용 시 ID/PW 를 통한 1차 인증만 하여도
 	 * 접근이 가능하기 때문에 2차 인증 후 최소 한개 이상의 권한이 있는 사람만 접근가능 하도록
-	 * {@code .anyRequest().hasAnyAuthority(loginService.getAllRoleGroupNames())} 를 사용함.
+	 * {@code .anyRequest().access("@loginService.isFullAuthenticated(principal)")} 를 사용함
+	 * 해당 메서드를 통해 인증&인가 확인
 	 */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		  	.authorizeRequests()
 		  		.antMatchers(PERMIT_ALL).permitAll()
 				.antMatchers("/api/v2/test2").hasAnyAuthority("0000", "4100000102")
-				.anyRequest().hasAnyAuthority(loginService.getAllRoleGroupNames());
+				.anyRequest().access("@loginService.isFullAuthenticated(principal)");
 //				.anyRequest().authenticated();
 		http.csrf().disable();
 		http
