@@ -51,8 +51,7 @@ public class NcpUtils {
 
             return Base64.encodeBase64String(rawHmac);
         } catch (Exception e) {
-            log.error("NcpUtils - makeSignature Error");
-            log.error(e.getMessage());
+            log.error("[{}] :: {} - {}", "makeSignature()", e.getClass().getName(), e.getMessage());
 
             throw new BusinessException(ResponseCode.NCP_MAKE_SIGNATURE_ERR);
         }
@@ -70,7 +69,7 @@ public class NcpUtils {
 
             return header;
         } catch (Exception e) {
-            log.error("NcpUtils - generateHeader Error");
+            log.error("[{}] :: {} - {}", "generateHeader()", e.getClass().getName(), e.getMessage());
             log.error(e.getMessage());
 
             throw new BusinessException(ResponseCode.NCP_GENERATE_HEADER_ERR);

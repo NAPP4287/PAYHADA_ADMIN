@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 public class MailService {
 
-    private static final String ERROR_LOG = "[MailService - {}] :: {} - {}";
+    private static final String ERROR_LOG = "[{}] :: {} - {}";
     private static final String ADMIN_AUTH_SID = "4333";
 
     private final NcpPropertiesDTO ncpPropertiesDTO;

@@ -55,7 +55,7 @@ public class MessageSourceUtils {
                 return DEFAULT_LOCALE;
             }
         } catch (Exception e) {
-            log.error("Occurred From MessageSourceUtils.getLocaleFromSession() :: {}", e.getMessage());
+            log.error("[{}] :: {} - {}", "getLocaleFromSession()", e.getClass().getName(), e.getMessage());
         }
 
         return locale;

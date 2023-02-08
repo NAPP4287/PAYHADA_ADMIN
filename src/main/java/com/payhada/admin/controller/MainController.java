@@ -39,9 +39,8 @@ public class MainController {
         return "ok";
     }
 
-    @PostMapping("/language")
-    public ResponseEntity<CommonResponse> changeLanguage(@RequestBody LoginDTO loginDTO,
-                                                       HttpSession session) {
+    @PutMapping("/language")
+    public ResponseEntity<CommonResponse> changeLanguage(@RequestBody LoginDTO loginDTO, HttpSession session) {
         String languageCd = loginDTO.getLanguageCd();
 
         if (loginDTO.getUserNo() != null) {
