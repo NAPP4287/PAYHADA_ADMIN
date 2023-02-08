@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // components
 import LoginMain from "components/templetes/LoginMain";
 import LoginCert from "components/templetes/LoginCert";
 // apis
-import { callLogin } from "apis/loginApis";
+import { callLogin, callLoginCheck } from "apis/loginApis";
 // i18n
 import { useTranslation } from "react-i18next";
 import Loading from "components/atomic/atoms/Loading";
+// interfaces
+import { LoginMainDataType, LoginCertDataType } from "interface/InterfaceUser";
+// recoil
+import { useResetRecoilState, useRecoilState } from "recoil";
+import { userInfoState } from "recoil/stateUser";
 
 const Login = () => {
+  const location = window.location;
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoginMain, setIsLoginMain] = useState<boolean>(true);
@@ -16,14 +22,43 @@ const Login = () => {
 
   const [t, i18n] = useTranslation();
 
-  const getLogin = async () => {
+  const resetUserInfo = useResetRecoilState(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  const getLogin = async (data: LoginMainDataType | LoginCertDataType) => {
     setIsLoading(true);
-    const result = await callLogin({ id: email, pwd: password });
-    if (result.resultCode === "E2004") {
+    const result = await callLogin(data);
+    if (result.resultCode === "S0000") {
       setIsLoginMain(false);
       setIsLoading(false);
     }
   };
+
+  const loginCheck = async () => {
+    const result = await callLoginCheck();
+
+    if (result.resultCode === "S0000") {
+      const data = result.data;
+      setUserInfo({
+        ...userInfo,
+        id: data.id,
+        userNo: data.userNo,
+        loginId: data.loginId,
+        languageCd: data.languageCd,
+        roleGroupList: data.roleGroupList,
+        sessionChk: true,
+      });
+    } else {
+      resetUserInfo();
+    }
+  };
+
+  useEffect(() => {
+    if (location.pathname !== "/login") {
+      loginCheck();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

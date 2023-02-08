@@ -11,13 +11,18 @@ import {
 import styles from "assets/css/Header.module.css";
 // apis
 import { changeLanguage } from "apis/settingApis";
+import { callLogout } from "apis/loginApis";
 // recoil
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
+import { commonAlertState } from "recoil/stateAlert";
 
 const Header = () => {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [dropDownOpen, setDropDownOpen] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [commonAlertInfo, setCommonAlertInfo] =
+    useRecoilState(commonAlertState);
+  const resetUserInfo = useResetRecoilState(userInfoState);
 
   const onToggle = () => {
     setDropDownOpen(!dropDownOpen);
@@ -32,6 +37,25 @@ const Header = () => {
     if (result.resultCode === "S0000") {
       setUserInfo({ ...userInfo, languageCd: lang });
     }
+  };
+
+  const reqLogout = async () => {
+    const result = await callLogout();
+
+    if ((result.resultCode = "E2011")) {
+      resetUserInfo();
+    }
+  };
+
+  const handleLogoutModal = () => {
+    setCommonAlertInfo({
+      ...commonAlertInfo,
+      isOpen: true,
+      title: "Warning",
+      alertType: "error",
+      content: "로그아웃 하시겠습니까?",
+      action: reqLogout,
+    });
   };
 
   return (
@@ -67,7 +91,7 @@ const Header = () => {
                 <span>English</span>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem href="#pablo" onClick={handleLogoutModal}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>

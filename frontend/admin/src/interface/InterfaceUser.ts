@@ -18,6 +18,7 @@ export interface UserInfoType {
   userNo: string;
   languageCd: string;
   roleGroupList: Array<roleGroupType>;
+  sessionChk: boolean;
 }
 
 export interface FailCntType {
@@ -35,4 +36,13 @@ export interface InvalidCheckType {
 export interface ChangeLangDataType {
   languageCd: string;
   userNo?: string;
+}
+
+export interface LoginMainDataType {
+  id: string;
+  pwd: string;
+}
+
+export interface LoginCertDataType {
+  secret: string;
 }
