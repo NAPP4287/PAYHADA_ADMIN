@@ -14,6 +14,7 @@ import { useResetRecoilState, useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
 
 const Login = () => {
+  const location = window.location;
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoginMain, setIsLoginMain] = useState<boolean>(true);
@@ -50,11 +51,12 @@ const Login = () => {
     } else {
       resetUserInfo();
     }
-    console.log(result);
   };
 
   useEffect(() => {
-    loginCheck();
+    if (location.pathname !== "/login") {
+      loginCheck();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

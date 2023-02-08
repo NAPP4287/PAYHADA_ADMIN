@@ -15,10 +15,13 @@ import { callLogout } from "apis/loginApis";
 // recoil
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
+import { commonAlertState } from "recoil/stateAlert";
 
 const Header = () => {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [dropDownOpen, setDropDownOpen] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [commonAlertInfo, setCommonAlertInfo] =
+    useRecoilState(commonAlertState);
   const resetUserInfo = useResetRecoilState(userInfoState);
 
   const onToggle = () => {
@@ -42,8 +45,17 @@ const Header = () => {
     if ((result.resultCode = "E2011")) {
       resetUserInfo();
     }
+  };
 
-    console.log(result);
+  const handleLogoutModal = () => {
+    setCommonAlertInfo({
+      ...commonAlertInfo,
+      isOpen: true,
+      title: "Warning",
+      alertType: "error",
+      content: "로그아웃 하시겠습니까?",
+      action: reqLogout,
+    });
   };
 
   return (
@@ -79,7 +91,7 @@ const Header = () => {
                 <span>English</span>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={reqLogout}>
+              <DropdownItem href="#pablo" onClick={handleLogoutModal}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>
