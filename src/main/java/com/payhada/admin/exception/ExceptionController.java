@@ -26,7 +26,7 @@ public class ExceptionController {
 
 	@ExceptionHandler(Exception.class)
     protected ResponseEntity<CommonResponse> handleException(Exception e) {
-        log.error("OCCURRED EXCEPTION :: [{}] {}", e.getClass().getName(), e.getMessage());
+        log.error("OCCURRED EXCEPTION :: {} - {}", e.getClass().getName(), e.getMessage());
 
 		final ResponseCode responseCode = ResponseCode.API_SERVER_ERROR;
 

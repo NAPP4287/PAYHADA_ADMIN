@@ -35,7 +35,7 @@ import java.util.Map;
 @Slf4j
 public class HttpUtils {
 
-    private static final String ERROR_LOG = "[HttpUtils - {}] :: {} - {}";
+    private static final String ERROR_LOG = "[{}] :: {} - {}";
 
     /**
      * 응답 Http Status Code 가 200번대가 아닐 경우에도 바디 값을 받기 위해 ResponseHandler 설정
@@ -91,7 +91,7 @@ public class HttpUtils {
             header.forEach(httpGet::setHeader);
 
             // 요청 전 로깅
-            log.debug("Request Method :: {}", "GET");
+            log.debug("Request Method :: {}", HttpGet.METHOD_NAME);
             log.debug("Request URI :: {}", uri.toString());
             log.debug("Request Header :: {}", header);
 
@@ -136,7 +136,7 @@ public class HttpUtils {
             httpPost.setEntity(stringEntity);
 
             // 요청 전 로깅
-            log.debug("Request Method :: {}", "POST");
+            log.debug("Request Method :: {}", HttpPost.METHOD_NAME);
             log.debug("Request URI :: {}", uri);
             log.debug("Request Header :: {}", header);
             log.debug("Request Body :: {}", body.toString());
@@ -182,7 +182,7 @@ public class HttpUtils {
             httpPut.setEntity(stringEntity);
 
             // 요청 전 로깅
-            log.debug("Request Method :: {}", "PUT");
+            log.debug("Request Method :: {}", HttpPut.METHOD_NAME);
             log.debug("Request URI :: {}", uri);
             log.debug("Request Header :: {}", header);
             log.debug("Request Body :: {}", body.toString());
@@ -220,7 +220,7 @@ public class HttpUtils {
             header.forEach(httpDelete::setHeader);
 
             // 요청 전 로깅
-            log.debug("Request Method :: {}", "DELETE");
+            log.debug("Request Method :: {}", HttpDelete.METHOD_NAME);
             log.debug("Request URI :: {}", uri);
             log.debug("Request Header :: {}", header);
 
