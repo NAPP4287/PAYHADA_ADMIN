@@ -14,8 +14,8 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      {userInfo.userNo !== "" && <Header />}
-      {userInfo.userNo !== "" && <NavSide />}
+      {userInfo.sessionChk && <Header />}
+      {userInfo.sessionChk && <NavSide />}
 
       <Routes>
         <Route element={<PrivateRoute authentication={false} />}>

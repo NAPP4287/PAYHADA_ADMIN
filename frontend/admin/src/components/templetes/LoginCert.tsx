@@ -13,7 +13,7 @@ import { callLogin } from "apis/loginApis";
 import { useNavigate } from "react-router-dom";
 
 const LoginCert = (props: LoginCertProps) => {
-  const { email, getLogin, t, i18n } = props;
+  const { email, t, i18n, getLogin } = props;
   const [otpInput, setOtpInput] = useState<string>("");
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [seconds, setSeconds] = useState(300);
@@ -32,7 +32,7 @@ const LoginCert = (props: LoginCertProps) => {
   const getOtpChk = async () => {
     // OTP API 요청
     const result = await callLogin({ secret: otpInput });
-    if (result.resultCode === "E2005") {
+    if (result.resultCode === "S0000") {
       const data = result.data;
       setUserInfo({
         ...userInfo,

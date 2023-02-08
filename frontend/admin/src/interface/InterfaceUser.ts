@@ -37,3 +37,12 @@ export interface ChangeLangDataType {
   languageCd: string;
   userNo?: string;
 }
+
+export interface LoginMainDataType {
+  id: string;
+  pwd: string;
+}
+
+export interface LoginCertDataType {
+  secret: string;
+}

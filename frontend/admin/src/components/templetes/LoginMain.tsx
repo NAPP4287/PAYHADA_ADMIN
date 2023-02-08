@@ -45,7 +45,7 @@ const LoginMain = (props: LoginMainProps) => {
     if (!handleInvaildCheck()) {
       return;
     }
-    getLogin();
+    getLogin({ id: email, pwd: password });
   };
 
   const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
