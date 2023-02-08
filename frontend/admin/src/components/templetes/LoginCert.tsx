@@ -41,6 +41,7 @@ const LoginCert = (props: LoginCertProps) => {
         loginId: data.loginId,
         languageCd: data.languageCd,
         roleGroupList: data.roleGroupList,
+        sessionChk: true,
       });
       navigate("/");
       i18n?.changeLanguage(result.data.languageCd);
