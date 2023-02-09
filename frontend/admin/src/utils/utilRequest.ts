@@ -5,6 +5,10 @@ import { getRecoil, setRecoil } from "recoil-nexus";
 
 const instance = axios.create();
 
+const returnToLogin = () => {
+  window.location.replace("/");
+};
+
 // 요청 인터셉터 추가
 instance.interceptors.request.use(
   (config) => {
@@ -23,17 +27,20 @@ instance.interceptors.response.use(
   (error) => {
     const commonAlertInfo = getRecoil(commonAlertState);
 
-    console.log(error.response);
-
-    if (error.response.status === 500) {
+    if (error.response.data.resultCode === "E2000") {
       setRecoil(commonAlertState, {
         ...commonAlertInfo,
         isOpen: true,
         title: "Error",
         alertType: "error",
-        content: error.response.statusText,
+        content: error.response.data.resultMsg,
+        action: returnToLogin,
       });
-    } else {
+
+      return localStorage.setItem("session", "logout");
+    }
+
+    if (error.response.data.resultMsg !== undefined) {
       setRecoil(commonAlertState, {
         ...commonAlertInfo,
         isOpen: true,
@@ -41,9 +48,15 @@ instance.interceptors.response.use(
         alertType: "error",
         content: error.response.data.resultMsg,
       });
+    } else {
+      setRecoil(commonAlertState, {
+        ...commonAlertInfo,
+        isOpen: true,
+        title: "Error",
+        alertType: "error",
+        content: error.response.statusText,
+      });
     }
-
-    return Promise.reject(error);
   },
 );
 

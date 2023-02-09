@@ -15,6 +15,8 @@ import { userInfoState } from "recoil/stateUser";
 
 const Login = () => {
   const location = window.location;
+  const localCheck = localStorage.getItem("session");
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoginMain, setIsLoginMain] = useState<boolean>(true);
@@ -28,10 +30,10 @@ const Login = () => {
   const getLogin = async (data: LoginMainDataType | LoginCertDataType) => {
     setIsLoading(true);
     const result = await callLogin(data);
-    if (result.resultCode === "S0000") {
+    if (result?.resultCode === "S0000") {
       setIsLoginMain(false);
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   const loginCheck = async () => {
@@ -54,7 +56,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (location.pathname !== "/login") {
+    if (location.pathname === "/login" && localCheck === "login") {
       loginCheck();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

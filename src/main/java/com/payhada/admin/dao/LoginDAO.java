@@ -21,7 +21,5 @@ public interface LoginDAO {
 
     EmployeeInfoDTO selectEmployeeInfo(String userNo);
 
-	String[] selectAllGroupNames();
-
 	void updateEmployeeLanguageCd(LoginDTO loginDTO);
 }

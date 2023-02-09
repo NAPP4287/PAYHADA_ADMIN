@@ -45,6 +45,7 @@ const LoginCert = (props: LoginCertProps) => {
       });
       navigate("/");
       i18n?.changeLanguage(result.data.languageCd);
+      localStorage.setItem("session", "login");
     }
   };
 

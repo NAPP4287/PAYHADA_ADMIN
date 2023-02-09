@@ -17,7 +17,7 @@ export const callLogin = async (data: any) => {
     headers,
   );
 
-  return response.data;
+  return response?.data;
 };
 
 export const callLogout = async () => {
