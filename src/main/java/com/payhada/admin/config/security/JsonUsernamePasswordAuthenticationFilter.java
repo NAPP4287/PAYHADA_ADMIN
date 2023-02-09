@@ -5,6 +5,7 @@
 package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.config.CachedBodyHttpServletRequest;
 import com.payhada.admin.model.LoginDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +74,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
         String secret = loginDto.getSecret();
 
         if ((StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) && StringUtils.isEmpty(secret)) {
-            throw new AuthenticationServiceException("E1001");
+            throw new AuthenticationServiceException(ResponseCode.API_BAD_REQUEST.getCode());
         }
 
         // 2차 인증 일 경우 session 에서 1차 로그인 때 저장된 객체를 찾아, 2차 인증시 사용자가 입력한 OTP CODE (secret) 을 세팅해줌

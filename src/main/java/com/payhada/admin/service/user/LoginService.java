@@ -73,10 +73,6 @@ public class LoginService {
         return loginDAO.selectEmployeeInfo(userNo);
     }
 
-    public String[] getAllRoleGroupNames() {
-        return loginDAO.selectAllGroupNames();
-    }
-
     public void updateEmployeeLanguage(LoginDTO loginDTO) {
         loginDAO.updateEmployeeLanguageCd(loginDTO);
     }
@@ -96,5 +92,9 @@ public class LoginService {
         loginInfo.put("roleGroupList", roleGroupList);
 
         return loginInfo;
+    }
+
+    public boolean isFullAuthenticated(Object principal) {
+        return principal instanceof LoginDTO && ((LoginDTO) principal).getAuthenticateStep() == 3;
     }
 }

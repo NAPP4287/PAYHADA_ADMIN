@@ -2,7 +2,6 @@ package com.payhada.admin.config.security;
 
 import com.payhada.admin.code.ResponseCode;
 import com.payhada.admin.common.setting.CommonResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
@@ -14,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Spring Server 에 요청 시 권한이 없는 경우 핸들링 하여 응답 포맷 지정
+ */
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
