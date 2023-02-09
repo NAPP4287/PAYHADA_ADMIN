@@ -44,6 +44,7 @@ const Header = () => {
 
     if ((result.resultCode = "E2011")) {
       resetUserInfo();
+      localStorage.setItem("session", "logout");
     }
   };
 
