@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.3.0.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
-	//id 'war'
 	id 'com.palantir.docker' version '0.22.1'
 	id "com.moowork.node" version "1.3.1"
 }
@@ -21,7 +20,7 @@ def defaultEncoding = 'UTF8'
 compileJava.options.encoding = 'UTF-8'
 
 
-gradle.startParameter.showStacktrace = org.gradle.api.logging.configuration.ShowStacktrace.ALWAYS
+gradle.startParameter.showStacktrace = ShowStacktrace.ALWAYS
 
 repositories {
 	mavenCentral()
@@ -29,7 +28,7 @@ repositories {
 
 dependencies {
 	// EMBEDDED TOMCAT
-	compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.31'
+	compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.69'
 
 
 	// Springboot Config
@@ -88,6 +87,9 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/commons-codec/commons-codec
 	implementation group: 'commons-codec', name: 'commons-codec', version: '1.13'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.4.RELEASE'
 }
 
 def webappDir = "$projectDir/frontend/admin"
