@@ -1,22 +1,18 @@
 package com.payhada.admin;
 
-import java.util.TimeZone;
-
-import javax.annotation.PostConstruct;
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.servlet.support.ErrorPageFilter;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
+
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
 
 
 @SpringBootApplication
-@MapperScan(basePackages = "mapper")
+@MapperScan(basePackages = "com.payhada.admin.dao")
 @ServletComponentScan
 public class PayhadaAdminApplication extends SpringBootServletInitializer {
 
@@ -33,20 +29,4 @@ public class PayhadaAdminApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(PayhadaAdminApplication.class, args);
 	}
-
-   @Bean
-   public ErrorPageFilter errorPageFilter() {
-
-      return new ErrorPageFilter();
-   }
-
-
-    @Bean public FilterRegistrationBean<ErrorPageFilter> disableSpringBootErrorFilter(ErrorPageFilter filter) {
-	    FilterRegistrationBean<ErrorPageFilter> filterRegistrationBean = new FilterRegistrationBean<ErrorPageFilter>();
-		filterRegistrationBean.setFilter(filter);
-		filterRegistrationBean.setEnabled(false);
-		return filterRegistrationBean;
-	}
-
-
 }
