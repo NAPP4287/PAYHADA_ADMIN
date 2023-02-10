@@ -1,46 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="10 seconds">
+    <property name="LOG_PATTERN" value="%d [%thread] %-5level %logger{5} - %msg %n"/>
+    <property name="DIR_PATH" value="logs"/>
     <property name="FILE_NAME" value="payhada-admin"/>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-3level %logger{5} - %msg %n</pattern>
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
-    <appender name="STDOUT_JSON" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-    </appender>
-
-    <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>logs/${FILE_NAME}-json.log</File>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>logs/${FILE_NAME}_%d{yyyy-MM-dd}.%i.json</FileNamePattern>
-            <maxFileSize>50MB</maxFileSize>
+    <appender name="FILE-JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${DIR_PATH}/${FILE_NAME}-json.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${DIR_PATH}/${FILE_NAME}_%d{yyyy-MM-dd}.json</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
+        <encoder>
+            <Pattern>${LOG_PATTERN}</Pattern>
+        </encoder>
     </appender>
 
-    <logger name="jdbc" level="OFF"/>
-    <logger name="jdbc.sqlonly" level="ERROR" additivity="false">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-    <logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-    <logger name="jdbc.resultsettable" level="INFO" additivity="false">
-        <appender-ref ref="STDOUT"/>
+    <!-- RollingFileAppender를 AsyncAppender가 참조하도록 한다 -->
+    <appender name="ASYNC-STDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="STDOUT" />
+        <queueSize>256</queueSize> <!-- BlockingQueue 사이즈 -->
+        <discardingThreshold>0</discardingThreshold> <!-- 큐 사이즈 몇 % 남았을 때 log들을 drop 시킬지 -->
+        <includeCallerData>false</includeCallerData> <!-- 로그 호출한 곳에 대한 정보를 표시할지 여부 -->
+        <maxFlushTime>10</maxFlushTime> <!-- 서버가 멈출때 maxFlushTime 만큼 큐에 남아있던 것들을 처리하고 끝냄 -->
+        <neverBlock>true</neverBlock> <!-- 큐가 다 찼을 때, 메시지를 넣을지 말지 결정 (true : 메시지를 날려버리지만 속도가 빨라짐) -->
+    </appender>
+
+    <appender name="ASYNC-JSON" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE-JSON" />
+        <queueSize>256</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <includeCallerData>false</includeCallerData>
+        <maxFlushTime>10</maxFlushTime>
+        <neverBlock>true</neverBlock>
+    </appender>
+
+    <!-- log4jdbc -->
+    <logger name="jdbc.connection" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="ASYNC-STDOUT"/>
+        <appender-ref ref="ASYNC-JSON"/>
     </logger>
 
+    <logger name="jdbc.audit" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="ASYNC-STDOUT"/>
+        <appender-ref ref="ASYNC-JSON"/>
+    </logger>
+
+    <logger name="jdbc.sqlonly" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="ASYNC-STDOUT"/>
+        <appender-ref ref="ASYNC-JSON"/>
+    </logger>
+
+    <logger name="jdbc.sqltiming" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="ASYNC-STDOUT"/>
+        <appender-ref ref="ASYNC-JSON"/>
+    </logger>
+
+    <logger name="jdbc.resultset" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="ASYNC-STDOUT"/>
+        <appender-ref ref="ASYNC-JSON"/>
+    </logger>
+
+    <logger name="jdbc.resultsettable" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="ASYNC-STDOUT"/>
+        <appender-ref ref="ASYNC-JSON"/>
+    </logger>
+
+    <!-- Root Logger -->
     <springProfile name="dev">
         <root level="INFO">
-            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="ASYNC-STDOUT"/>
+            <appender-ref ref="ASYNC-JSON"/>
         </root>
     </springProfile>
     <springProfile name="test">
         <root level="INFO">
-            <appender-ref ref="STDOUT_JSON"/>
+            <appender-ref ref="ASYNC-STDOUT"/>
+            <appender-ref ref="ASYNC-JSON"/>
         </root>
     </springProfile>
-
 </configuration>
