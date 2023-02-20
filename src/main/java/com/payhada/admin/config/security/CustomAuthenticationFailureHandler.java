@@ -2,8 +2,8 @@ package com.payhada.admin.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.payhada.admin.code.ResponseCode;
-import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.common.setting.CommonResponse;
+import com.payhada.admin.model.LoginDTO;
 import com.payhada.admin.service.user.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -24,8 +24,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
 
 @Slf4j
 @Component
@@ -56,6 +54,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             스프링 시큐리티 AuthenticationException 종류
             - UsernameNotFoundException : 계정 없음
             - BadCredentialsException : 비밀번호 미일치
+            - AuthenticationCredentialsNotFoundException : 시큐리티 인증객체가 존재하지 않음
             - AccountStatusException
                 - AccountExpiredException : 계정만료
                 - CredentialsExpiredException : 비밀번호 만료
@@ -95,7 +94,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 }
             } else if (exception instanceof LockedException) {
                 responseCode = ResponseCode.LOCKED_ACCOUNT;
-            } else if (exception instanceof InsufficientAuthenticationException) {
+            } else if (exception instanceof AuthenticationCredentialsNotFoundException) {
                 responseCode = ResponseCode.UNAUTHENTICATED_1;
             } else if (exception instanceof CredentialsExpiredException) {
                 responseCode = ResponseCode.TIMEOUT_OTP;

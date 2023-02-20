@@ -10,9 +10,9 @@ import com.payhada.admin.config.CachedBodyHttpServletRequest;
 import com.payhada.admin.model.LoginDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -31,8 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-
-import static com.payhada.admin.common.util.MessageSourceUtils.getMessage;
 
 @Slf4j
 @Component
@@ -84,7 +82,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
                 sessionDto.setSecret(secret);
                 loginDto = sessionDto;
             } catch (Exception e) {
-                 throw new InsufficientAuthenticationException("UNAUTHENTICATED 1ST AUTHENTICATE");
+                 throw new AuthenticationCredentialsNotFoundException("UNAUTHENTICATED 1ST AUTHENTICATE");
             }
         }
 
