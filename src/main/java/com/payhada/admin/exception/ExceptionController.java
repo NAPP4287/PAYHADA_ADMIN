@@ -21,7 +21,7 @@ public class ExceptionController {
 			responseCode = ResponseCode.API_SERVER_ERROR;
 		}
 
-		return responseCode.toResponseEntity();
+		return responseCode.toResponseEntity(e.getData());
     }
 
 	@ExceptionHandler(Exception.class)
