@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @ToString
 @Data
 @NoArgsConstructor
-@Alias("loginDTO")
 public class LoginDTO implements UserDetails {
 
     private static final long LOCK_MIN = 30;
@@ -35,6 +34,10 @@ public class LoginDTO implements UserDetails {
     private Integer pwdFailCnt;
 
     private String lockStartTime;
+
+    private String nationCd;
+
+    private String agentCode;
 
     private String languageCd;
 

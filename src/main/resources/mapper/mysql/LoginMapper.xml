@@ -5,20 +5,41 @@
 
 <mapper namespace="com.payhada.admin.dao.LoginDAO">
 
-	<select id="selectEmployeeWithLoginId" parameterType="loginDTO" resultType="loginDTO">
+	<select id="selectEmployeeWithLoginId" parameterType="LoginDTO" resultType="LoginDTO">
 		SELECT user_no, login_id AS id, pwd, otp_code, otp_date, pwd_fail_cnt, lock_start_time, language_cd, last_login_date
 		FROM employee 
 		WHERE login_id = #{id}
 	</select>
 
-	<select id="selectEmployeeRoles" parameterType="loginDTO" resultType="EmployeeRoleMappDTO">
+	<resultMap id="loginResultMap" type="LoginDTO">
+		<result property="id" column="login_id" />
+		<result property="userNo" column="user_no"/>
+		<result property="nationCd" column="nation_cd"/>
+		<result property="agentCode" column="agent_code"/>
+		<result property="languageCd" column="language_cd"/>
+		<collection property="employeeRoleMappDTOList" column="user_no" ofType= "EmployeeRoleMappDTO" select="selectEmployeeRoles"/>
+	</resultMap>
+	<select id="selectEmployeeLoginInfo" parameterType="String" resultMap="loginResultMap">
+		SELECT e.login_id
+			 , e.user_no
+			 , na.nation_cd
+			 , eam.agent_code
+			 , e.language_cd
+		FROM employee e
+				 LEFT JOIN employee_agent_mapp eam ON e.user_no = eam.user_no
+				 LEFT JOIN new_agent na ON eam.agent_code = na.agent_cd
+		WHERE e.user_no = #{value}
+		ORDER BY eam.regist_date DESC LIMIT 1
+	</select>
+
+	<select id="selectEmployeeRoles" parameterType="String" resultType="EmployeeRoleMappDTO">
 		SELECT erm.user_no, erm.role_group_code, erm.role_level, r.role_group_name
 		FROM employee_role_mapp erm
 		JOIN role_group r ON erm.role_group_code = r.role_group_code AND r.use_yn = 'Y'
-		WHERE erm.user_no = #{userNo}
+		WHERE erm.user_no = #{value}
 	</select>
 
-	<update id="updateEmployeeFailureData" parameterType="loginDTO">
+	<update id="updateEmployeeFailureData" parameterType="LoginDTO">
 		UPDATE employee
 		<set>
 			lock_start_time = #{lockStartTime},
@@ -35,7 +56,7 @@
 		WHERE user_no = #{userNo}
 	</update>
 
-	<update id="generateOTPCode" parameterType="loginDTO">
+	<update id="generateOTPCode" parameterType="LoginDTO">
 		UPDATE employee
 		SET otp_code = #{otpCode}, otp_date = #{otpDate}
 		WHERE user_no = #{userNo}
@@ -51,7 +72,7 @@
 		WHERE user_no = #{userNo}
 	</select>
 
-	<update id="updateEmployeeLanguageCd" parameterType="loginDTO">
+	<update id="updateEmployeeLanguageCd" parameterType="LoginDTO">
 		UPDATE employee SET language_cd = #{languageCd} WHERE user_no = #{userNo}
 	</update>
 

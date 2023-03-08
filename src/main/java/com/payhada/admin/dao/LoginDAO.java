@@ -11,6 +11,8 @@ import java.util.List;
 public interface LoginDAO {
 	LoginDTO selectEmployeeWithLoginId(LoginDTO loginDTO);
 
+	LoginDTO selectEmployeeLoginInfo(String userNo);
+
 	List<EmployeeRoleMappDTO> selectEmployeeRoles(String userNo);
 
 	void updateEmployeeFailureData(LoginDTO loginDTO);

@@ -28,6 +28,10 @@ public class LoginService {
         return loginDAO.selectEmployeeWithLoginId(loginDTO);
     }
 
+    public LoginDTO getEmployeeLoginInfo(String userNo) {
+        return loginDAO.selectEmployeeLoginInfo(userNo);
+    }
+
     public List<EmployeeRoleMappDTO> getEmployeeRoles(LoginDTO loginDTO) {
         return loginDAO.selectEmployeeRoles(loginDTO.getUserNo());
     }
@@ -88,6 +92,8 @@ public class LoginService {
         Map<String, Object> loginInfo = new HashMap<>();
         loginInfo.put("userNo", loginDTO.getUserNo());
         loginInfo.put("loginId", loginDTO.getId());
+        loginInfo.put("nationCd", loginDTO.getNationCd());
+        loginInfo.put("agentCd", loginDTO.getAgentCode());
         loginInfo.put("languageCd", languageCd);
         loginInfo.put("roleGroupList", roleGroupList);
 

@@ -65,9 +65,10 @@ public class JsonAuthenticationManager implements AuthenticationManager {
             }
             // OTP 코드 확인
             if (secret.equals(otpCode)) {
+                loginResult = loginService.getEmployeeLoginInfo(loginResult.getUserNo());
                 // 권한 조회 후 권한을 넣어줌
-                List<EmployeeRoleMappDTO> roles = loginService.getEmployeeRoles(loginResult);
-                loginResult.setEmployeeRoleMappDTOList(roles);
+//                List<EmployeeRoleMappDTO> roles = loginService.getEmployeeRoles(loginResult);
+//                loginResult.setEmployeeRoleMappDTOList(roles);
                 loginResult.setAuthenticateStep(3);
             } else {
                 loginResult.setAuthenticateStep(2);
