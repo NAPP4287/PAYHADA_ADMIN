@@ -11,31 +11,15 @@
 		WHERE login_id = #{id}
 	</select>
 
-	<resultMap id="loginResultMap" type="LoginDTO">
-		<result property="id" column="login_id" />
-		<result property="userNo" column="user_no"/>
-		<result property="nationCd" column="nation_cd"/>
-		<result property="agentCode" column="agent_code"/>
-		<result property="languageCd" column="language_cd"/>
-		<collection property="employeeRoleMappDTOList" column="user_no" ofType= "EmployeeRoleMappDTO" select="selectEmployeeRoles"/>
-	</resultMap>
-	<select id="selectEmployeeLoginInfo" parameterType="String" resultMap="loginResultMap">
-		SELECT e.login_id
-			 , e.user_no
-			 , na.nation_cd
-			 , eam.agent_code
-			 , e.language_cd
-		FROM employee e
-				 LEFT JOIN employee_agent_mapp eam ON e.user_no = eam.user_no
-				 LEFT JOIN new_agent na ON eam.agent_code = na.agent_cd
-		WHERE e.user_no = #{value}
-		ORDER BY eam.regist_date DESC LIMIT 1
-	</select>
-
-	<select id="selectEmployeeRoles" parameterType="String" resultType="EmployeeRoleMappDTO">
-		SELECT erm.user_no, erm.role_group_code, erm.role_level, r.role_group_name
-		FROM employee_role_mapp erm
-		JOIN role_group r ON erm.role_group_code = r.role_group_code AND r.use_yn = 'Y'
+	<select id="selectEmployeeRoles" parameterType="String" resultType="EmployeeAgentRoleMappDTO">
+		SELECT erm.user_no
+			 , erm.role_group_code
+			 , rg.role_group_name
+			 , a.agent_code
+			 , a.nation_code
+		FROM employee_agent_role_mapp erm
+		LEFT JOIN role_group rg ON erm.role_group_code = rg.role_group_code AND rg.use_yn = 'Y'
+		LEFT JOIN agent a ON erm.agent_code = a.agent_code
 		WHERE erm.user_no = #{value}
 	</select>
 

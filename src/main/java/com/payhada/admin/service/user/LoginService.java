@@ -3,7 +3,7 @@ package com.payhada.admin.service.user;
 import com.payhada.admin.common.util.StringUtils;
 import com.payhada.admin.dao.LoginDAO;
 import com.payhada.admin.model.EmployeeInfoDTO;
-import com.payhada.admin.model.EmployeeRoleMappDTO;
+import com.payhada.admin.model.EmployeeAgentRoleMappDTO;
 import com.payhada.admin.model.LoginDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +28,7 @@ public class LoginService {
         return loginDAO.selectEmployeeWithLoginId(loginDTO);
     }
 
-    public LoginDTO getEmployeeLoginInfo(String userNo) {
-        return loginDAO.selectEmployeeLoginInfo(userNo);
-    }
-
-    public List<EmployeeRoleMappDTO> getEmployeeRoles(LoginDTO loginDTO) {
+    public List<EmployeeAgentRoleMappDTO> getEmployeeRoles(LoginDTO loginDTO) {
         return loginDAO.selectEmployeeRoles(loginDTO.getUserNo());
     }
 
@@ -84,6 +80,7 @@ public class LoginService {
     public Map<String, Object> getLoginInfoJson(LoginDTO loginDTO) {
         List<Map<String, String>> roleGroupList = loginDTO.getRoleGroupJson();
 
+        // 디폴트 언어설정: 한국어
         String languageCd = loginDTO.getLanguageCd();
         if (org.springframework.util.StringUtils.isEmpty(languageCd)) {
             languageCd = "ko";
@@ -91,11 +88,9 @@ public class LoginService {
 
         Map<String, Object> loginInfo = new HashMap<>();
         loginInfo.put("userNo", loginDTO.getUserNo());
-        loginInfo.put("loginId", loginDTO.getId());
-        loginInfo.put("nationCd", loginDTO.getNationCd());
-        loginInfo.put("agentCd", loginDTO.getAgentCode());
+        loginInfo.put("id", loginDTO.getId());
         loginInfo.put("languageCd", languageCd);
-        loginInfo.put("roleGroupList", roleGroupList);
+        loginInfo.put("roleList", roleGroupList);
 
         return loginInfo;
     }
