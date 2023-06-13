@@ -36,4 +36,5 @@ th,
 td,
 tr {
   text-align: center;
+  padding: 12px 8px !important;
 }

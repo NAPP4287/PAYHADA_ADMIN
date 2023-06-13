@@ -17,6 +17,10 @@
   border-radius: 10px;
 }
 
+.paddingZero {
+  padding: 0 !important;
+}
+
 .textBold {
   font-weight: bold !important;
 }

@@ -161,4 +161,11 @@ th {
   .dashWrap {
     padding: 20px 30px;
   }
+  .btnWrap {
+    flex-direction: column;
+    > button {
+      width: 100%;
+      margin: 5px 0 !important;
+    }
+  }
 }
