@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardBody, Input, Button } from "reactstrap";
+// data
+import { topAllData } from "data/dashBoardData";
 // util
 import { selectYear, selectMonth } from "utils/utilDate";
 import { addZero } from "utils/utilCommon";
@@ -13,6 +15,8 @@ import { dummyChart } from "data/dummyData";
 // interface
 import { DailyChartProps } from "interface/interfaceDashboard";
 import { ITranslation } from "interface/InterfaceCommon";
+// components
+import InfoCard from "components/atomic/atoms/InfoCard";
 
 const DashboardDailyChart = ({ t }: ITranslation) => {
   const [thisMonthArr, setThisMonthArr] = useState<Array<DailyChartProps>>([]);
@@ -160,6 +164,23 @@ const DashboardDailyChart = ({ t }: ITranslation) => {
           type="bar"
           height={windowHeight / 2}
         />
+
+        <div>
+          <span className={`boxTitle ${styles.chartTitle} marginBottom`}>
+            Total
+          </span>
+          <div className={styles.leftTopCard}>
+            {topAllData.map((el, idx) => (
+              <InfoCard
+                key={idx}
+                idx={idx}
+                count={el.count}
+                title={t(`Dashboard.${el.title}`)}
+                icon={el.icon}
+              />
+            ))}
+          </div>
+        </div>
       </CardBody>
     </Card>
   );

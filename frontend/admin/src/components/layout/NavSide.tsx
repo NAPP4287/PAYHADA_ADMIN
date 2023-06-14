@@ -10,6 +10,8 @@ import {
   Nav,
 } from "reactstrap";
 import Logo from "assets/images/payhada_logo_1.png";
+// components
+import Header from "./Profile";
 // interfaces
 import { SubMenuType, NavType } from "interface/interfaceNav";
 import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
@@ -130,6 +132,7 @@ const NavSide = () => {
           ))}
         </Nav>
       </Collapse>
+      <Header />
     </Navbar>
   );
 };

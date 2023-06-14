@@ -180,6 +180,11 @@
   color: #009efd !important;
 }
 
+.dropdown-menu {
+  box-shadow: none !important;
+  transform: translate3d(0px, -60px, 0px) !important;
+}
+
 .scrollBar::-webkit-scrollbar {
   width: 5px;
 }

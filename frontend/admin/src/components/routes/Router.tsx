@@ -4,7 +4,6 @@ import DashBoard from "pages/DashBoard";
 import Settings from "pages/Settings";
 import PrivateRoute from "./PrivateRoute";
 import NavSide from "components/layout/NavSide";
-import Header from "components/layout/Header";
 import { userInfoState } from "recoil/stateUser";
 import { useRecoilValue } from "recoil";
 import ErrorBoundary from "components/layout/ErrorBoundary";
@@ -14,7 +13,6 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      {userInfo.sessionChk && <Header />}
       {userInfo.sessionChk && <NavSide />}
 
       <Routes>

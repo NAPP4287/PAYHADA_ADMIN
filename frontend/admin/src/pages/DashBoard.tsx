@@ -1,13 +1,11 @@
 import { Card, CardBody } from "reactstrap";
-// data
-import { topAllData } from "data/dashBoardData";
 // css
 import styles from "assets/css/Dashboard.module.css";
 // components
-import InfoCard from "components/atomic/atoms/InfoCard";
 import DashboardDailyChart from "components/templetes/DashboardDailyChart";
 import DashboardRemStatus from "components/templetes/DashboardRemStatus";
 import DashboardExRateInfo from "components/templetes/DashboardExRateInfo";
+import SelectCountry from "components/layout/SelectCountry";
 // i18n
 import { useTranslation } from "react-i18next";
 
@@ -16,20 +14,10 @@ const DashBoard = () => {
 
   return (
     <div className={`main-content ${styles.dashWrap}`}>
-      <div className={styles.dashboardLeft}>
-        <div className={styles.leftTopCard}>
-          {topAllData.map((el, idx) => (
-            <InfoCard
-              key={idx}
-              idx={idx}
-              count={el.count}
-              title={t(`Dashboard.${el.title}`)}
-              icon={el.icon}
-            />
-          ))}
-        </div>
+      <SelectCountry />
 
-        <div className={`smarginTop ${styles.leftChartWrap}`}>
+      <div className={styles.dashboardLeft}>
+        <div className={styles.leftChartWrap}>
           <DashboardDailyChart t={t} />
         </div>
 
