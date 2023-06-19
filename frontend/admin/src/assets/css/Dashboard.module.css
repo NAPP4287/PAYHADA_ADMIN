@@ -1,5 +1,4 @@
 .dashWrap {
-  padding: 0 30px 20px 30px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -158,9 +157,6 @@ th {
 }
 
 @media (max-width: 768px) {
-  .dashWrap {
-    padding: 20px 30px;
-  }
   .btnWrap {
     flex-direction: column;
     > button {

@@ -20,6 +20,10 @@ li {
   padding: 0;
 }
 
+button {
+  height: 100%;
+}
+
 ul,
 li,
 div,
@@ -37,4 +41,8 @@ td,
 tr {
   text-align: center;
   padding: 12px 8px !important;
+}
+
+input[type="checkbox"] {
+  vertical-align: middle;
 }

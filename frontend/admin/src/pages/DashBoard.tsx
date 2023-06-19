@@ -2,9 +2,9 @@ import { Card, CardBody } from "reactstrap";
 // css
 import styles from "assets/css/Dashboard.module.css";
 // components
-import DashboardDailyChart from "components/templetes/DashboardDailyChart";
-import DashboardRemStatus from "components/templetes/DashboardRemStatus";
-import DashboardExRateInfo from "components/templetes/DashboardExRateInfo";
+import DashboardDailyChart from "components/templetes/Dashboard/DashboardDailyChart";
+import DashboardRemStatus from "components/templetes/Dashboard/DashboardRemStatus";
+import DashboardExRateInfo from "components/templetes/Dashboard/DashboardExRateInfo";
 import SelectCountry from "components/layout/SelectCountry";
 // i18n
 import { useTranslation } from "react-i18next";
@@ -13,7 +13,7 @@ const DashBoard = () => {
   const [t] = useTranslation();
 
   return (
-    <div className={`main-content ${styles.dashWrap}`}>
+    <div className={`main-content ${styles.dashWrap} contentWrap`}>
       <SelectCountry />
 
       <div className={styles.dashboardLeft}>

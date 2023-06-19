@@ -266,3 +266,63 @@ export const dummyChart = [
     remittance: 23841602,
   },
 ];
+
+export const tableList = [
+  {
+    trade_seq: "202312222",
+    nation_cd: "410",
+    fee: "0",
+    str_status: "정상",
+    payment_type: "계좌",
+    send_amt: "234546",
+  },
+  {
+    trade_seq: "202312222",
+    nation_cd: "410",
+    fee: "0",
+    str_status: "정상",
+    payment_type: "계좌",
+    send_amt: "234546",
+  },
+  {
+    trade_seq: "202312221",
+    nation_cd: "410",
+    fee: "0",
+    str_status: "정상",
+    payment_type: "계좌",
+    send_amt: "234546",
+  },
+  {
+    trade_seq: "202312223",
+    nation_cd: "410",
+    fee: "0",
+    str_status: "정상",
+    payment_type: "계좌",
+    send_amt: "234546",
+  },
+  {
+    trade_seq: "202312224",
+    nation_cd: "036",
+    fee: "0",
+    str_status: "정상",
+    payment_type: "페이월렛",
+    send_amt: "234546",
+  },
+];
+
+export const paginationList = {
+  totalCount: "1290",
+  startPage: "1",
+  endPage: "10",
+  prev: true,
+  next: true,
+  displayPageNum: "10",
+  nextPage: "11",
+  prevPage: "0",
+  page: "1",
+  perPageNum: "10",
+  pageList: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+  pageViewCnt: "0",
+  startIdx: "0",
+  pageNum: "0",
+};

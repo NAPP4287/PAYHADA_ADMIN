@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // components
-import LoginMain from "components/templetes/LoginMain";
-import LoginCert from "components/templetes/LoginCert";
+import LoginMain from "components/templetes/Login/LoginMain";
+import LoginCert from "components/templetes/Login/LoginCert";
 // apis
 import { callLogin, callLoginCheck } from "apis/loginApis";
 // i18n

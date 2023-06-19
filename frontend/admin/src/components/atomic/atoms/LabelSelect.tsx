@@ -1,11 +1,4 @@
-import {
-  Label,
-  FormGroup,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import { Label, Input } from "reactstrap";
 import { LabelSelectProps } from "interface/InterfaceBasicLabel";
 
 const SelectOption = (
@@ -14,28 +7,15 @@ const SelectOption = (
   dataArray: Array<string>,
 ) => {
   return (
-    <UncontrolledDropdown group className="fullWidth">
-      <DropdownToggle
-        outline
-        caret
-        style={{
-          textAlign: "left",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ced4da",
-          height: "43px",
-        }}>
-        {value === "" ? "국가를 선택해주세요" : value}
-      </DropdownToggle>
-      <DropdownMenu className="fullWidth">
+    <div>
+      <Input type="select" name="select">
         {dataArray.map((el, idx) => (
-          <DropdownItem key={idx} onClick={() => setChangeData(el)}>
+          <option key={idx} onClick={() => setChangeData(el)}>
             {el}
-          </DropdownItem>
+          </option>
         ))}
-      </DropdownMenu>
-    </UncontrolledDropdown>
+      </Input>
+    </div>
   );
 };
 
@@ -44,13 +24,15 @@ const LabelSelect = (props: LabelSelectProps) => {
     props;
 
   return (
-    <FormGroup>
-      <Label for={type} style={{ fontSize: "13px" }}>
-        {label}
-      </Label>
+    <>
+      {label && (
+        <Label for={type} style={{ fontSize: "13px" }}>
+          {label}
+        </Label>
+      )}
       {SelectOption(value, setChangeData, dataArray)}
       {isFailed && <span className="errorText">{failedText}</span>}
-    </FormGroup>
+    </>
   );
 };
 

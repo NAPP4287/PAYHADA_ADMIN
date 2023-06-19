@@ -11,7 +11,7 @@ export interface LabelInputProps {
 }
 
 export interface LabelSelectProps {
-  label: string;
+  label?: string;
   type: any;
   setChangeData: Function;
   value: string;

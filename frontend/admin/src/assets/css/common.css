@@ -1,3 +1,7 @@
+.contentWrap {
+  padding: 30px 30px 60px 30px;
+}
+
 .alginCenter {
   display: flex;
   justify-content: center;
@@ -123,11 +127,11 @@
 }
 
 .secondary {
-  color: #172b4d;
+  color: #24447b;
 }
 
 .warning {
-  color: #f5365c;
+  color: #ff7f99;
 }
 
 .lightGray {

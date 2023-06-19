@@ -1,4 +1,4 @@
-import RadioButton from "../atoms/RadioButton";
+import RadioButton from "components/atomic/atoms/RadioButton";
 // interfaces
 import { RadioListProps } from "interface/interfaceButton";
 
