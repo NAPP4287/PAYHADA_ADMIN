@@ -2,15 +2,18 @@
   padding: 30px 30px 60px 30px;
 }
 
-.alginCenter {
+.alignCenter {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .whiteBg {
   background-color: white;
+}
+
+.transBg {
+  background-color: transparent;
 }
 
 .maxWidth {
@@ -196,4 +199,58 @@
 .scrollBar::-webkit-scrollbar-thumb {
   height: 10%;
   border-radius: 10px;
+}
+
+/* date picker */
+.rdtMonths .rdtMonth,
+.rdtMonths .rdtYear,
+.rdtYears .rdtMonth,
+.rdtYears .rdtYear {
+  flex: 1;
+}
+
+.rdtDays td {
+  padding: 3px !important;
+}
+
+/* radio button */
+.labelStyle {
+  display: flex;
+  align-items: center;
+
+  :hover {
+    cursor: pointer;
+  }
+
+  > span {
+    min-width: fit-content;
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+  }
+}
+
+.checkbox {
+  appearance: none;
+  margin: 0 10px 0 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #dcdcdc;
+  border-radius: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:checked {
+    background: center url("../images/check_on.png") no-repeat;
+    border: none;
+    background-size: cover;
+  }
+
+  &:checked ~ span {
+    color: #000000;
+  }
 }

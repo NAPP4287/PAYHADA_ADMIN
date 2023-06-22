@@ -1,0 +1,14 @@
+.datePickerWrap {
+  display: flex;
+  align-items: center;
+  /* border-bottom: 1px solid black; */
+}
+
+.calendarWrap {
+  width: 100%;
+  > input {
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+  }
+}

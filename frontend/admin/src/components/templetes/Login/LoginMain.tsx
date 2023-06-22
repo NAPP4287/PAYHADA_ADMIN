@@ -9,7 +9,7 @@ import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
 // utils
 import { invalidCheck } from "utils/utilInput";
 // data
-import { languageList } from "data/radioCheckList";
+import { languageList } from "data/radioCheckListData";
 // recoil
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";

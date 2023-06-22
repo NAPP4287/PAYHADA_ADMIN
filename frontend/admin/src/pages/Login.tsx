@@ -67,7 +67,7 @@ const Login = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="alginCenter">
+        <div className="alignCenter" style={{ height: "100vh" }}>
           {isLoginMain ? (
             <LoginMain
               email={email}

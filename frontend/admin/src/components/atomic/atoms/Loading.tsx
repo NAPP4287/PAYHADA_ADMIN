@@ -2,7 +2,7 @@ import { ThreeDots } from "react-loader-spinner";
 
 const Loading = () => {
   return (
-    <div className="alginCenter">
+    <div className="alignCenter" style={{ height: "100vh" }}>
       <ThreeDots
         color="black"
         height="50"
