@@ -24,6 +24,10 @@
   border-radius: 10px;
 }
 
+.borderNone {
+  border: none !important;
+}
+
 .paddingZero {
   padding: 0 !important;
 }
@@ -124,6 +128,11 @@
   height: 32px;
 }
 
+/* datshboard */
+td {
+  padding: 15px 0 !important;
+}
+
 /* font */
 .primary {
   color: #5e72e4;
@@ -213,6 +222,19 @@
   padding: 3px !important;
 }
 
+.rdtPicker::after,
+.rdtPicker::before {
+  display: none !important;
+}
+
+.form-control {
+  background-color: transparent !important;
+}
+
+.form-select {
+  width: 80px !important;
+}
+
 /* radio button */
 .labelStyle {
   display: flex;
@@ -252,5 +274,69 @@
 
   &:checked ~ span {
     color: #000000;
+  }
+}
+
+/* filter table */
+.tableList {
+  display: flex;
+  flex: 1;
+  border-bottom: 1px solid #c9c9c9;
+  > .title {
+    font-weight: bold;
+    width: 20vw;
+    max-width: 150px;
+    background-color: #f6f9fc;
+    color: #8898aa;
+    padding: 0 10px;
+    height: 50px;
+    line-height: 50px;
+  }
+  > .content {
+    background-color: white;
+    flex: 1;
+    padding-left: 10px;
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    align-items: "center";
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 8px;
+  }
+  .page-item {
+    > button {
+      width: 20px !important;
+      height: 20px !important;
+      font-size: 8px !important;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .rdtPicker {
+    position: fixed !important;
+    left: 0;
+    right: 0;
+  }
+  .filterWrap {
+    overflow-x: scroll;
+    > div {
+      min-width: 768px;
+    }
+  }
+
+  .title {
+    font-size: 12px;
+  }
+  .page-item {
+    > button {
+      width: 20px !important;
+      height: 20px !important;
+      font-size: 8px !important;
+    }
   }
 }

@@ -6,7 +6,11 @@ const AtomButton = (props: any) => {
   return (
     <Button
       block={block}
-      style={buttonStyle}
+      style={
+        size === "md"
+          ? { ...buttonStyle, paddingLeft: "30px", paddingRight: "30px" }
+          : { ...buttonStyle }
+      }
       size={size}
       color={type}
       type="button"

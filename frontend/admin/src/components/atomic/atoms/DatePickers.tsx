@@ -53,7 +53,11 @@ const DatePickers = () => {
 
     return (
       <td key={props.key}>
-        <button {...props} className={classes} disabled={disableClick}>
+        <button
+          {...props}
+          style={{ lineHeight: "36px" }}
+          className={classes}
+          disabled={disableClick}>
           {currentDate.date()}
         </button>
       </td>
@@ -75,6 +79,7 @@ const DatePickers = () => {
             placeholder: "Date Picker Here",
             onClick: () => setPickerType("start"),
             style: { fontSize: "14px" },
+            readOnly: true,
           }}
           timeFormat={false}
           renderDay={(props, currentDate) =>
@@ -92,6 +97,7 @@ const DatePickers = () => {
             placeholder: "Date Picker Here",
             onClick: () => setPickerType("end"),
             style: { fontSize: "14px" },
+            readOnly: true,
           }}
           timeFormat={false}
           renderDay={(props, currentDate) =>

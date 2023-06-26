@@ -136,7 +136,7 @@ th {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
   .topCard {
     width: 100%;
     margin-left: 0;

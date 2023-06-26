@@ -5,10 +5,14 @@ const SelectOption = (
   value: string,
   setChangeData: Function,
   dataArray: Array<string>,
+  border?: string | null,
 ) => {
   return (
     <div>
-      <Input type="select" name="select">
+      <Input
+        type="select"
+        name="select"
+        className={border === "none" ? "borderNone" : ""}>
         {dataArray.map((el, idx) => (
           <option key={idx} onClick={() => setChangeData(el)}>
             {el}
@@ -20,19 +24,27 @@ const SelectOption = (
 };
 
 const LabelSelect = (props: LabelSelectProps) => {
-  const { label, type, setChangeData, value, dataArray, isFailed, failedText } =
-    props;
+  const {
+    label,
+    type,
+    setChangeData,
+    value,
+    dataArray,
+    isFailed,
+    failedText,
+    border,
+  } = props;
 
   return (
-    <>
+    <div>
       {label && (
         <Label for={type} style={{ fontSize: "13px" }}>
           {label}
         </Label>
       )}
-      {SelectOption(value, setChangeData, dataArray)}
+      {SelectOption(value, setChangeData, dataArray, border)}
       {isFailed && <span className="errorText">{failedText}</span>}
-    </>
+    </div>
   );
 };
 

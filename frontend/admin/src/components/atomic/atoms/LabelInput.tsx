@@ -12,6 +12,7 @@ const LabelInput = (props: LabelInputProps) => {
     isFailed,
     failedText,
     maxLength,
+    border,
     // onEnter,
   } = props;
 
@@ -20,16 +21,22 @@ const LabelInput = (props: LabelInputProps) => {
   };
 
   return (
-    <div className="marginBottom">
-      <Label for={type} className="label">
-        {label}
-      </Label>
+    <div
+      className={`${border === "none" ? "alignCenter" : "marginBottom"}`}
+      style={{ width: "100%" }}>
+      {label && (
+        <Label for={type} className="label">
+          {label}
+        </Label>
+      )}
       <Input
         type={type}
         placeholder={placeholder}
         onChange={(e) => inputChange(e)}
         value={value}
-        maxLength={maxLength}
+        maxLength={maxLength || undefined}
+        className={border === "none" ? "borderNone" : ""}
+        id="exampleFormControlInput1"
         // onKeyPress={(e) => onKeyPressEnter(e, onEnter)}
       />
       {!isFailed && <span className="errorText">{failedText}</span>}

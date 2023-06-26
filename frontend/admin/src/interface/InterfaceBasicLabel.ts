@@ -1,5 +1,5 @@
 export interface LabelInputProps {
-  label: string;
+  label?: string | null;
   type: any;
   placeholder: string;
   setChangeData: Function;
@@ -7,17 +7,19 @@ export interface LabelInputProps {
   isFailed?: boolean;
   failedText?: string | null;
   maxLength?: number;
+  border?: string | null;
   // onEnter: Function;
 }
 
 export interface LabelSelectProps {
-  label?: string;
+  label?: string | null;
   type: any;
   setChangeData: Function;
   value: string;
   dataArray: Array<string>;
   isFailed?: boolean;
   failedText?: string;
+  border?: string | null;
 }
 
 // Timer

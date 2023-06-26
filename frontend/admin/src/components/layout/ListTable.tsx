@@ -21,12 +21,7 @@ const ListTable = (props: any) => {
             dataArray={["10", "30", "50"]}
           />
           <div>
-            <AtomButton
-              type="primary"
-              size="sm"
-              title={"등록"}
-              buttonStyle={{ padding: "0 30px" }}
-            />
+            <AtomButton type="primary" size="md" title={"등록"} />
           </div>
         </div>
         <Table className="align-items-center smarginTop" responsive>

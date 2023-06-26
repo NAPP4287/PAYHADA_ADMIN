@@ -11,7 +11,7 @@ const PaginationBtn = () => {
           listClassName="justify-content-center pagination-sm">
           {paginationList.prev && (
             <PaginationItem className="disabled">
-              <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
+              <PaginationLink onClick={(e) => e.preventDefault()}>
                 <i className="ni ni-bold-left" />
               </PaginationLink>
             </PaginationItem>
@@ -19,19 +19,18 @@ const PaginationBtn = () => {
 
           {paginationList.pageList.map((el, idx) => (
             <PaginationItem
+              style={{ padding: 0 }}
               key={idx}
               className={
                 Number(paginationList.page) === idx + 1 ? "active" : ""
               }>
-              <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
-                {el}
-              </PaginationLink>
+              <PaginationLink>{el}</PaginationLink>
             </PaginationItem>
           ))}
 
           {paginationList.next && (
             <PaginationItem>
-              <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
+              <PaginationLink>
                 <i className="ni ni-bold-right" />
               </PaginationLink>
             </PaginationItem>

@@ -1,29 +1,26 @@
-import { useState } from "react";
 import { Card, CardBody } from "reactstrap";
 // components
-import LabelSelect from "components/atomic/atoms/LabelSelect";
-import DatePickers from "components/atomic/atoms/DatePickers";
-// data
-import { CALENDAR_DATE_LIST } from "data/selectData";
+import FilterRow from "components/atomic/atoms/FilterRow";
+import AtomButton from "components/atomic/atoms/AtomButton";
 
-const ListFilter = () => {
-  const [changeDate, setChangeDate] = useState("");
+const ListFilter = (props: any) => {
+  const { filterTableList } = props;
 
   return (
-    <Card>
-      <CardBody
-        className="alignCenter"
-        style={{
-          justifyContent: "flex-start",
-        }}>
-        <LabelSelect
-          type={"select"}
-          setChangeData={setChangeDate}
-          value={changeDate}
-          dataArray={CALENDAR_DATE_LIST}
-        />
-        <div className="marginLeft">
-          <DatePickers />
+    <Card className="filterWrap">
+      <CardBody>
+        <div
+          className="marginBottom"
+          style={{ display: "flex", justifyContent: "flex-end" }}>
+          <AtomButton type="primary" size="md" title={"조회"} />
+        </div>
+        <div
+          style={{
+            borderTop: "1px solid #c9c9c9",
+          }}>
+          {filterTableList.map((el: any, idx: number) => (
+            <FilterRow rowList={el} key={idx} />
+          ))}
         </div>
       </CardBody>
     </Card>

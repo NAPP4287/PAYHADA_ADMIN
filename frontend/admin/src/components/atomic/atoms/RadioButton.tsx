@@ -4,11 +4,11 @@ const RadioButton = (props: RadioButtonProps) => {
   const { label, value, changeValue, activeValue } = props;
 
   return (
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1 }} className="marginRight">
       <label htmlFor={value}>
         <input
-          className="checkbox"
           type="checkbox"
+          className="checkbox"
           id={value}
           value={value}
           onChange={(e) => changeValue(e)}

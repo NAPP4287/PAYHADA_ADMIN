@@ -35,6 +35,7 @@ const NavSide = () => {
 
   const onClickMovePage = (url: string) => {
     navigate(url);
+    setCollapseOpen(false);
   };
 
   const handleMenu = (name: string, url: string, mainIdx: number) => {
@@ -74,11 +75,11 @@ const NavSide = () => {
       expand="md"
       id="sidenav-main">
       <div
+        className="alignRow"
         style={{
-          display: "flex",
-          justifyContent: "space-between",
           width: "100%",
           padding: "0 30px",
+          alignItems: "center",
         }}>
         <button
           className="navbar-toggler paddingZero"
