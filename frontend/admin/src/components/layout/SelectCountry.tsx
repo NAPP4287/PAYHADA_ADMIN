@@ -5,8 +5,6 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-// css
-import styles from "assets/css/Header.module.css";
 // data
 import { availableCountryData } from "data/countryData";
 
@@ -18,12 +16,12 @@ const SelectCountry = () => {
   };
 
   return (
-    <UncontrolledDropdown setActiveFromChild className={styles.dropdownWrap}>
-      <DropdownToggle tag="a" className={`${styles.dropdownToggle}`} caret>
+    <UncontrolledDropdown setActiveFromChild className={"dropdownWrap"}>
+      <DropdownToggle tag="a" className={`dropdownToggle`} caret>
         <i className={"ni ni-world-2"} />
         <span style={{ marginLeft: "5px" }}>{country}</span>
       </DropdownToggle>
-      <DropdownMenu className={styles.dropdownMenu}>
+      <DropdownMenu className={"dropdownMenu"}>
         {availableCountryData.map((el, idx) => (
           <DropdownItem key={idx} onClick={() => changeCountry(el.country)}>
             {el.country}

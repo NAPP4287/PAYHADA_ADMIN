@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 export interface RadioButtonProps {
   label: string;
   value: string;
@@ -10,6 +12,15 @@ export interface RadioListProps {
   type: string;
   changeValue: Function;
   activeValue: string;
+}
+
+export interface AtomButtonProps {
+  title: string;
+  size: string;
+  buttonStyle?: CSSProperties;
+  type: string;
+  block?: boolean;
+  action(): void;
 }
 
 interface RadioProps {

@@ -1,7 +1,5 @@
 import { useState } from "react";
 import ReactDatetime from "react-datetime";
-// css
-import styles from "assets/css/List.module.css";
 
 const DatePickers = () => {
   const [selectDate, setSelectDate] = useState<any>({
@@ -10,7 +8,11 @@ const DatePickers = () => {
   });
   const [pickerType, setPickerType] = useState<string>("");
 
-  const handleRenderDay = (props: any, currentDate: any, type: string) => {
+  const handleRenderDay = (
+    props: any,
+    currentDate: moment.Moment | any,
+    type: string,
+  ) => {
     let classes = props.className;
     let disableClick: boolean = false;
 
@@ -70,11 +72,11 @@ const DatePickers = () => {
       style={{
         justifyContent: "flex-start",
       }}>
-      <div className={styles.datePickerWrap}>
+      <div className={"datePickerWrap"}>
         <i className="ni ni-calendar-grid-58" style={{ padding: "0 10px" }} />
 
         <ReactDatetime
-          className={styles.calendarWrap}
+          className={"calendarWrap"}
           inputProps={{
             placeholder: "Date Picker Here",
             onClick: () => setPickerType("start"),
@@ -88,11 +90,11 @@ const DatePickers = () => {
           onChange={(e) => setSelectDate({ ...selectDate, startDate: e })}
         />
       </div>
-      <div className={styles.datePickerWrap}>
+      <div className={"datePickerWrap"}>
         <i className="ni ni-calendar-grid-58" style={{ padding: "0 10px" }} />
 
         <ReactDatetime
-          className={styles.calendarWrap}
+          className={"calendarWrap"}
           inputProps={{
             placeholder: "Date Picker Here",
             onClick: () => setPickerType("end"),

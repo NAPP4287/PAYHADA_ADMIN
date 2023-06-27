@@ -25,24 +25,10 @@ export interface FailCntType {
   failCnt: number;
 }
 
-interface roleGroupType {
+export interface roleGroupType {
   roleGroupName: string;
   roleGroupCode: string;
 }
 export interface InvalidCheckType {
   [key: string]: RegExp;
-}
-
-export interface ChangeLangDataType {
-  languageCd: string;
-  userNo?: string;
-}
-
-export interface LoginMainDataType {
-  id: string;
-  pwd: string;
-}
-
-export interface LoginCertDataType {
-  secret: string;
 }

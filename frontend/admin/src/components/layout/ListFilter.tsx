@@ -4,7 +4,7 @@ import FilterRow from "components/atomic/atoms/FilterRow";
 import AtomButton from "components/atomic/atoms/AtomButton";
 
 const ListFilter = (props: any) => {
-  const { filterTableList } = props;
+  const { filterTableList, action } = props;
 
   return (
     <Card className="filterWrap">
@@ -12,7 +12,7 @@ const ListFilter = (props: any) => {
         <div
           className="marginBottom"
           style={{ display: "flex", justifyContent: "flex-end" }}>
-          <AtomButton type="primary" size="md" title={"조회"} />
+          <AtomButton title={"조회"} type="primary" size="md" action={action} />
         </div>
         <div
           style={{

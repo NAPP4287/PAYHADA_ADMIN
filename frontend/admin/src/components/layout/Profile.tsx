@@ -7,8 +7,6 @@ import {
   DropdownItem,
   UncontrolledDropdown,
 } from "reactstrap";
-// css
-import styles from "assets/css/Header.module.css";
 // apis
 import { changeLanguage } from "apis/settingApis";
 import { callLogout } from "apis/loginApis";
@@ -16,6 +14,8 @@ import { callLogout } from "apis/loginApis";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
 import { commonAlertState } from "recoil/stateAlert";
+// interface
+import { ResultStatusResType } from "interface/apiType/InterfaceSetting";
 
 const Profile = () => {
   const [dropDownOpen, setDropDownOpen] = useState<boolean>(false);
@@ -29,7 +29,7 @@ const Profile = () => {
   };
 
   const reqChangeLang = async (lang: string) => {
-    const result = await changeLanguage({
+    const result: ResultStatusResType = await changeLanguage({
       languageCd: lang,
       userNo: userInfo.userNo,
     });
@@ -61,7 +61,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className={styles.containerWrap}>
+      <div className={"containerWrap"}>
         <Nav navbar>
           <UncontrolledDropdown isOpen={dropDownOpen} onClick={onToggle}>
             <DropdownToggle nav>
@@ -74,7 +74,7 @@ const Profile = () => {
                 </Media>
               </Media>
             </DropdownToggle>
-            <DropdownMenu className={styles.headerContain}>
+            <DropdownMenu className={"headerContain"}>
               <DropdownItem to="/admin/user-profile">
                 <i className="ni ni-single-02" />
                 <span>My profile</span>

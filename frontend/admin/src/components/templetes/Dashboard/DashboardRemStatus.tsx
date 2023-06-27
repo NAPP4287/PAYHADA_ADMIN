@@ -1,6 +1,4 @@
 import { Table, Card, CardBody } from "reactstrap";
-// css
-import styles from "assets/css/Dashboard.module.css";
 // data
 import { remStatusData } from "data/dashBoardData";
 // util
@@ -12,9 +10,7 @@ const DashboardRemStatus = ({ t }: ITranslation) => {
   return (
     <Card>
       <CardBody>
-        <span className={`boxTitle ${styles.chartTitle}`}>
-          Remittance status
-        </span>
+        <span className={`boxTitle chartTitle`}>Remittance status</span>
         <Table className="align-items-center smarginTop" responsive>
           <thead className="thead-light">
             <tr>

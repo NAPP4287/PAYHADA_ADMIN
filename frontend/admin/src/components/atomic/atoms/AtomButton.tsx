@@ -1,6 +1,8 @@
 import { Button } from "reactstrap";
+// interface
+import { AtomButtonProps } from "interface/interfaceButton";
 
-const AtomButton = (props: any) => {
+const AtomButton = (props: AtomButtonProps) => {
   const { title, size, buttonStyle, type, block, action } = props;
 
   return (

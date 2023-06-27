@@ -6,7 +6,7 @@ import AtomButton from "components/atomic/atoms/AtomButton";
 import LabelSelect from "components/atomic/atoms/LabelSelect";
 
 const ListTable = (props: any) => {
-  const { isCheck, list, info } = props;
+  const { isCheck, list, info, action } = props;
 
   const [selectList, setSelectList] = useState<string>("10");
 
@@ -21,7 +21,12 @@ const ListTable = (props: any) => {
             dataArray={["10", "30", "50"]}
           />
           <div>
-            <AtomButton type="primary" size="md" title={"등록"} />
+            <AtomButton
+              type="primary"
+              size="md"
+              title={"등록"}
+              action={action}
+            />
           </div>
         </div>
         <Table className="align-items-center smarginTop" responsive>

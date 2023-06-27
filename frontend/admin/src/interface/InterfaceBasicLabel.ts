@@ -8,7 +8,6 @@ export interface LabelInputProps {
   failedText?: string | null;
   maxLength?: number;
   border?: string | null;
-  // onEnter: Function;
 }
 
 export interface LabelSelectProps {
@@ -31,8 +30,6 @@ export interface TimerProps {
   setIsEnd: Function;
   isEnd: boolean;
 }
-
-// export interface
 
 export interface InputTimerProps extends LabelInputProps {
   seconds: number;

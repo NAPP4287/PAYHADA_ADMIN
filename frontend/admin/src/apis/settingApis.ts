@@ -1,10 +1,10 @@
 import { createPostRequest } from "utils/utilRequest";
-import { ChangeLangDataType } from "interface/InterfaceUser";
+import { ChangeLangReqType } from "interface/apiType/InterfaceSetting";
 
 const baseUrl = "/api/v2";
 
-export const changeLanguage = async (data: ChangeLangDataType) => {
+export const changeLanguage = async (data: ChangeLangReqType) => {
   const response = await createPostRequest(`${baseUrl}/language`, data);
 
-  return response.data;
+  return response;
 };

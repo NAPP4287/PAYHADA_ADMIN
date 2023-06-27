@@ -19,6 +19,14 @@ const RemitList = (props: any) => {
     setChangeRadio(e.target.value);
   };
 
+  const getFilter = () => {
+    console.log("filter 조회");
+  };
+
+  const testFunction = () => {
+    console.log("언제든 바뀔 수 있는 버튼");
+  };
+
   const columnArr = [
     [{ title: "조회기간", content: <FilterCalendar /> }],
     [
@@ -53,9 +61,9 @@ const RemitList = (props: any) => {
 
   return (
     <>
-      <ListFilter filterTableList={columnArr} />
+      <ListFilter filterTableList={columnArr} action={getFilter} />
       <div className="marginTop">
-        <ListTable info={TXN_TABLE_INFO} list={list} />
+        <ListTable info={TXN_TABLE_INFO} list={list} action={testFunction} />
       </div>
     </>
   );

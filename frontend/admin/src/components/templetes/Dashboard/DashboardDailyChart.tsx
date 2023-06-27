@@ -6,14 +6,12 @@ import { topAllData } from "data/dashBoardData";
 import { selectYear, selectMonth } from "utils/utilDate";
 import { addZero } from "utils/utilCommon";
 import { chartOption } from "utils/utilChart";
-// css
-import styles from "assets/css/Dashboard.module.css";
 // chart
 import ApexCharts from "react-apexcharts";
 // dummyData
 import { dummyChart } from "data/dummyData";
 // interface
-import { DailyChartProps } from "interface/interfaceDashboard";
+import { DailyChartProps } from "interface/InterfaceDashboard";
 import { ITranslation } from "interface/InterfaceCommon";
 // components
 import InfoCard from "components/atomic/atoms/InfoCard";
@@ -119,10 +117,10 @@ const DashboardDailyChart = ({ t }: ITranslation) => {
   return (
     <Card>
       <CardBody>
-        <div className={styles.chartTopWrap}>
-          <span className={`boxTitle ${styles.chartTitle}`}>Daily Graph</span>
-          <div className={`alignRow ${styles.selectBtnWrap}`}>
-            <div className={`${styles.btnWrap} `}>
+        <div className={"chartTopWrap"}>
+          <span className={"boxTitle chartTitle"}>Daily Graph</span>
+          <div className={"alignRow selectBtnWrap"}>
+            <div className={`btnWrap`}>
               {buttonArr.map((el, idx) => (
                 <Button
                   color="primary"
@@ -134,7 +132,7 @@ const DashboardDailyChart = ({ t }: ITranslation) => {
                 </Button>
               ))}
             </div>
-            <div className={`alignRow ${styles.selectWrap}`}>
+            <div className={"alignRow selectWrap"}>
               <Input
                 type="select"
                 name="select"
@@ -166,10 +164,8 @@ const DashboardDailyChart = ({ t }: ITranslation) => {
         />
 
         <div>
-          <span className={`boxTitle ${styles.chartTitle} marginBottom`}>
-            Total
-          </span>
-          <div className={styles.leftTopCard}>
+          <span className={"boxTitle chartTitle marginBottom"}>Total</span>
+          <div className={"leftTopCard"}>
             {topAllData.map((el, idx) => (
               <InfoCard
                 key={idx}

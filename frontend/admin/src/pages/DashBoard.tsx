@@ -1,6 +1,4 @@
 import { Card, CardBody } from "reactstrap";
-// css
-import styles from "assets/css/Dashboard.module.css";
 // components
 import DashboardDailyChart from "components/templetes/Dashboard/DashboardDailyChart";
 import DashboardRemStatus from "components/templetes/Dashboard/DashboardRemStatus";
@@ -13,15 +11,15 @@ const DashBoard = () => {
   const [t] = useTranslation();
 
   return (
-    <div className={`main-content ${styles.dashWrap} contentWrap`}>
+    <div className={`main-content dashWrap contentWrap`}>
       <SelectCountry />
 
-      <div className={styles.dashboardLeft}>
-        <div className={styles.leftChartWrap}>
+      <div className={"dashboardLeft"}>
+        <div className={"leftChartWrap"}>
           <DashboardDailyChart t={t} />
         </div>
 
-        <div className={styles.bottomLeftCardWrap}>
+        <div className={"bottomLeftCardWrap"}>
           <DashboardRemStatus t={t} />
 
           <Card>
@@ -29,11 +27,11 @@ const DashBoard = () => {
           </Card>
         </div>
       </div>
-      <div className={styles.dashRight}>
+      <div className={"dashRight"}>
         <div>
           <DashboardExRateInfo t={t} />
         </div>
-        <div className={styles.rightBottomCard}>
+        <div className={"rightBottomCard"}>
           <Card style={{ height: "100%" }}>
             <CardBody>차트 미정 - 회의 필요</CardBody>
           </Card>

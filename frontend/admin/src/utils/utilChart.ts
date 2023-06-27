@@ -1,5 +1,5 @@
 import { addComma } from "./utilCommon";
-import { ChartSeriesType } from "interface/interfaceDashboard";
+import { ChartSeriesType } from "interface/InterfaceDashboard";
 
 export const chartOption = (
   date: Array<string | number>,
