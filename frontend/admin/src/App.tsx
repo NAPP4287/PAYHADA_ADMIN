@@ -24,7 +24,7 @@ const App = () => {
   }, [i18n, userInfo.languageCd]);
 
   return (
-    <div className="App">
+    <div style={{ maxWidth: "1980px" }}>
       <Router />
       {commonAlertInfo.isOpen && <BasicAlert />}
     </div>

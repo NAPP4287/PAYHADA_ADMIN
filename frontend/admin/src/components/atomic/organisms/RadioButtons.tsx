@@ -1,6 +1,6 @@
 import RadioButton from "components/atomic/atoms/RadioButton";
 // interfaces
-import { RadioListProps } from "interface/interfaceButton";
+import { RadioListProps } from "interface/InterfaceProps";
 
 const RadioButtons = (props: RadioListProps) => {
   const { radioList, type, changeValue, activeValue } = props;

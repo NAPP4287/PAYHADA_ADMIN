@@ -1,10 +1,11 @@
 import { Label, Input } from "reactstrap";
-import { LabelSelectProps } from "interface/InterfaceBasicLabel";
+// interface
+import { LabelSelectProps, SelectArrayType } from "interface/InterfaceProps";
 
 const SelectOption = (
   value: string,
   setChangeData: Function,
-  dataArray: Array<string>,
+  dataArray: Array<SelectArrayType>,
   border?: string | null,
 ) => {
   return (
@@ -13,9 +14,9 @@ const SelectOption = (
         type="select"
         name="select"
         className={border === "none" ? "borderNone" : ""}>
-        {dataArray.map((el, idx) => (
+        {dataArray.map((el: SelectArrayType, idx: number) => (
           <option key={idx} onClick={() => setChangeData(el)}>
-            {el}
+            {el.name}
           </option>
         ))}
       </Input>

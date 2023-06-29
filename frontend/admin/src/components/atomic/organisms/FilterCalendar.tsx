@@ -3,10 +3,10 @@ import { useState } from "react";
 import LabelSelect from "components/atomic/atoms/LabelSelect";
 import DatePickers from "components/atomic/atoms/DatePickers";
 // data
-import { CALENDAR_DATE_LIST } from "data/selectData";
+import { SELECT_CALENDAR_DATE } from "data/constantsData";
 
 const FilterCalendar = () => {
-  const [changeDate, setChangeDate] = useState("");
+  const [changeDate, setChangeDate] = useState<string>("");
 
   return (
     <div
@@ -18,7 +18,7 @@ const FilterCalendar = () => {
         type={"select"}
         setChangeData={setChangeDate}
         value={changeDate}
-        dataArray={CALENDAR_DATE_LIST}
+        dataArray={SELECT_CALENDAR_DATE}
         border={"none"}
       />
       <div className="marginLeft">

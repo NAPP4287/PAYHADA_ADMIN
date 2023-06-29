@@ -3,7 +3,7 @@ import { Form, Button } from "reactstrap";
 // components
 import InputTimer from "components/atomic/organisms/InputTimer";
 // interface
-import { LoginCertProps } from "interface/InterfaceUser";
+import { LoginCertProps } from "interface/InterfaceProps";
 // recoil
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";

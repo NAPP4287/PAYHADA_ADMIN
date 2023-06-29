@@ -11,3 +11,8 @@ export interface SubMenuType extends DefaultMenuType {
 export interface NavType extends DefaultMenuType {
   sub: Array<SubMenuType>;
 }
+
+export interface TabType {
+  title: string;
+  content: React.ReactNode;
+}

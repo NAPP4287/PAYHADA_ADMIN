@@ -33,7 +33,7 @@ button,
 option,
 select,
 input {
-  font-size: 15px;
+  font-size: 13px !important;
   /* overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; */

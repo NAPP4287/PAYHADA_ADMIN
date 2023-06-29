@@ -76,6 +76,12 @@
   text-align: left !important;
 }
 
+.tabCardStyle {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-top: none !important;
+}
+
 @media (max-width: 700px) {
   .maxWidth {
     width: 70%;
@@ -235,6 +241,21 @@ th {
   padding: 20px 0 !important;
 }
 
+/* tabs */
+.unactive {
+  background-color: #f0f0f0 !important;
+}
+
+.nav-tabs > .nav-item > .nav-link {
+  padding: 10px 50px !important;
+  color: #495057;
+}
+
+.nav-tabs > .nav-item > .active {
+  font-weight: bold;
+  color: #009efd !important;
+}
+
 /* font */
 .primary {
   color: #5e72e4;
@@ -379,7 +400,7 @@ th {
 }
 
 .form-select {
-  width: 80px !important;
+  display: inline !important;
 }
 
 /* radio button */
@@ -511,7 +532,7 @@ th {
     left: 0;
     right: 0;
   }
-  .filterWrap {
+  .cardWrap {
     overflow-x: scroll;
     > div {
       min-width: 768px;

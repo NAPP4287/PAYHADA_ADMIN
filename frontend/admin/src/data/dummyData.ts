@@ -19,7 +19,7 @@ export const dummyNavMenu = [
       {
         name: "에이전트 관리",
         icon: "",
-        url: "/",
+        url: "/exchangeRate",
         sort: 3,
       },
     ],

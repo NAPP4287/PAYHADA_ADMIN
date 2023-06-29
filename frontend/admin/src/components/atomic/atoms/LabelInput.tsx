@@ -1,5 +1,5 @@
 import { Input, Label } from "reactstrap";
-import { LabelInputProps } from "interface/InterfaceBasicLabel";
+import { LabelInputProps } from "interface/InterfaceProps";
 import React from "react";
 
 const LabelInput = (props: LabelInputProps) => {

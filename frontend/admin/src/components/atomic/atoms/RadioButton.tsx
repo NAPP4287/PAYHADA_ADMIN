@@ -1,10 +1,10 @@
-import { RadioButtonProps } from "interface/interfaceButton";
+import { RadioButtonProps } from "interface/InterfaceProps";
 
 const RadioButton = (props: RadioButtonProps) => {
   const { label, value, changeValue, activeValue } = props;
 
   return (
-    <div style={{ flex: 1 }} className="marginRight">
+    <div className="marginRight">
       <label htmlFor={value}>
         <input
           type="checkbox"

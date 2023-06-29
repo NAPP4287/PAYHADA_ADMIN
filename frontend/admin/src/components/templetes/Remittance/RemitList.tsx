@@ -1,3 +1,4 @@
+import { useState } from "react";
 // components
 import ListFilter from "components/layout/ListFilter";
 import ListTable from "components/layout/ListTable";
@@ -5,11 +6,12 @@ import FilterCalendar from "components/atomic/organisms/FilterCalendar";
 import RadioButtons from "components/atomic/organisms/RadioButtons";
 import LabelInput from "components/atomic/atoms/LabelInput";
 // data
-import { TXN_TABLE_INFO } from "data/tableInfoData";
+import { TXN_TABLE_INFO } from "data/constantsData";
 import { statusList } from "data/radioCheckListData";
-import { useState } from "react";
+// interface
+import { RemitListProps } from "interface/InterfaceProps";
 
-const RemitList = (props: any) => {
+const RemitList = (props: RemitListProps) => {
   const { list } = props;
 
   const [chageRadio, setChangeRadio] = useState("");
@@ -19,7 +21,7 @@ const RemitList = (props: any) => {
     setChangeRadio(e.target.value);
   };
 
-  const getFilter = () => {
+  const getFilter = (): void => {
     console.log("filter 조회");
   };
 

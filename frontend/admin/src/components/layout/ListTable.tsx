@@ -4,11 +4,17 @@ import { Badge, Card, CardBody, Table } from "reactstrap";
 import PaginationBtn from "components/atomic/atoms/PaginationBtn";
 import AtomButton from "components/atomic/atoms/AtomButton";
 import LabelSelect from "components/atomic/atoms/LabelSelect";
+// data
+import { SELECT_ROW_FILTER } from "data/constantsData";
+// interface
+import { TABLE_INFO_TYPE } from "interface/InterfaceConstants";
 
 const ListTable = (props: any) => {
   const { isCheck, list, info, action } = props;
 
   const [selectList, setSelectList] = useState<string>("10");
+
+  console.log("INFO", list);
 
   return (
     <Card>
@@ -18,7 +24,7 @@ const ListTable = (props: any) => {
             type={"select"}
             setChangeData={setSelectList}
             value={selectList}
-            dataArray={["10", "30", "50"]}
+            dataArray={SELECT_ROW_FILTER}
           />
           <div>
             <AtomButton
@@ -53,7 +59,7 @@ const ListTable = (props: any) => {
                     <input type="checkbox" />
                   </td>
                 )}
-                {info.map((el2: any, idx2: number) => (
+                {info.map((el2: TABLE_INFO_TYPE, idx2: number) => (
                   <td key={`td_${idx2}`}>
                     {el2.type === "status" ? (
                       <Badge color="primary">{el[el2["name"]]}</Badge>

@@ -6,7 +6,7 @@ import {
   DropdownItem,
 } from "reactstrap";
 // data
-import { availableCountryData } from "data/countryData";
+import { COUNTRY_DATA } from "data/constantsData";
 
 const SelectCountry = () => {
   const [country, setCountry] = useState<string>("한국");
@@ -22,7 +22,7 @@ const SelectCountry = () => {
         <span style={{ marginLeft: "5px" }}>{country}</span>
       </DropdownToggle>
       <DropdownMenu className={"dropdownMenu"}>
-        {availableCountryData.map((el, idx) => (
+        {COUNTRY_DATA.map((el, idx) => (
           <DropdownItem key={idx} onClick={() => changeCountry(el.country)}>
             {el.country}
           </DropdownItem>

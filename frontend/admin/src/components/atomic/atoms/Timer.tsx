@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { TimerProps } from "interface/InterfaceBasicLabel";
+import { TimerProps } from "interface/InterfaceProps";
 
 const Timer = (props: TimerProps) => {
   const { minutes, seconds, setMinutes, setSeconds, setIsEnd } = props;
