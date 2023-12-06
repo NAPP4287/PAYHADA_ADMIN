@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { InputTimerProps } from "interface/InterfaceBasicLabel";
+import { InputTimerProps } from "interface/InterfaceProps";
 import { Button, Label } from "reactstrap";
 import Timer from "components/atomic/atoms/Timer";
 // i18n

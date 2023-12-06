@@ -1,13 +1,9 @@
 import { Card, CardBody } from "reactstrap";
-// data
-import { topAllData } from "data/dashBoardData";
-// css
-import styles from "assets/css/Dashboard.module.css";
 // components
-import InfoCard from "components/atomic/atoms/InfoCard";
-import DashboardDailyChart from "components/templetes/DashboardDailyChart";
-import DashboardRemStatus from "components/templetes/DashboardRemStatus";
-import DashboardExRateInfo from "components/templetes/DashboardExRateInfo";
+import DashboardDailyChart from "components/templetes/Dashboard/DashboardDailyChart";
+import DashboardRemStatus from "components/templetes/Dashboard/DashboardRemStatus";
+import DashboardExRateInfo from "components/templetes/Dashboard/DashboardExRateInfo";
+import SelectCountry from "components/layout/SelectCountry";
 // i18n
 import { useTranslation } from "react-i18next";
 
@@ -15,25 +11,15 @@ const DashBoard = () => {
   const [t] = useTranslation();
 
   return (
-    <div className={`main-content ${styles.dashWrap}`}>
-      <div className={styles.dashboardLeft}>
-        <div className={styles.leftTopCard}>
-          {topAllData.map((el, idx) => (
-            <InfoCard
-              key={idx}
-              idx={idx}
-              count={el.count}
-              title={t(`Dashboard.${el.title}`)}
-              icon={el.icon}
-            />
-          ))}
-        </div>
+    <div className={`main-content dashWrap contentWrap`}>
+      <SelectCountry />
 
-        <div className={`smarginTop ${styles.leftChartWrap}`}>
+      <div className={"dashboardLeft"}>
+        <div className={"leftChartWrap"}>
           <DashboardDailyChart t={t} />
         </div>
 
-        <div className={styles.bottomLeftCardWrap}>
+        <div className={"bottomLeftCardWrap"}>
           <DashboardRemStatus t={t} />
 
           <Card>
@@ -41,11 +27,11 @@ const DashBoard = () => {
           </Card>
         </div>
       </div>
-      <div className={styles.dashRight}>
+      <div className={"dashRight"}>
         <div>
           <DashboardExRateInfo t={t} />
         </div>
-        <div className={styles.rightBottomCard}>
+        <div className={"rightBottomCard"}>
           <Card style={{ height: "100%" }}>
             <CardBody>차트 미정 - 회의 필요</CardBody>
           </Card>

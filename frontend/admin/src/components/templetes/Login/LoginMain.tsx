@@ -4,12 +4,12 @@ import { FormEvent, useState, useEffect } from "react";
 import LabelInput from "components/atomic/atoms/LabelInput";
 import RadioButtons from "components/atomic/organisms/RadioButtons";
 // interface
-import { LoginMainProps } from "interface/InterfaceUser";
+import { LoginMainProps } from "interface/InterfaceProps";
 import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
 // utils
 import { invalidCheck } from "utils/utilInput";
 // data
-import { languageList } from "data/radioCheckList";
+import { LANGUAGE_LIST } from "data/constantsData";
 // recoil
 import { useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
@@ -55,7 +55,7 @@ const LoginMain = (props: LoginMainProps) => {
   return (
     <Form className="maxWidth" onSubmit={onSubmitLogin}>
       <RadioButtons
-        radioList={languageList}
+        radioList={LANGUAGE_LIST}
         type={"row"}
         changeValue={changeValue}
         activeValue={userInfo.languageCd}

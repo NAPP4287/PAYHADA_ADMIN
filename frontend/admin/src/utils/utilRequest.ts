@@ -76,7 +76,7 @@ export const createPostRequest = async (
     },
     withCredentials: true,
   });
-  return result;
+  return result.data;
 };
 
 export const createPutRequest = async (
@@ -89,5 +89,5 @@ export const createPutRequest = async (
     params: params,
   });
 
-  return result;
+  return result.data;
 };

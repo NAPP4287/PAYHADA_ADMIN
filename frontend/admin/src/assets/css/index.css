@@ -20,6 +20,10 @@ li {
   padding: 0;
 }
 
+button {
+  height: 100%;
+}
+
 ul,
 li,
 div,
@@ -29,11 +33,22 @@ button,
 option,
 select,
 input {
-  font-size: 15px;
+  font-size: 13px !important;
+  /* overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; */
 }
 
 th,
 td,
 tr {
   text-align: center;
+}
+
+input[type="checkbox"] {
+  vertical-align: middle;
+}
+
+input:focus {
+  outline: none !important;
 }

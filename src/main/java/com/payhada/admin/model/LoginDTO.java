@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,41 +16,39 @@ import java.util.stream.Collectors;
 @ToString
 @Data
 @NoArgsConstructor
-@Alias("loginDTO")
 public class LoginDTO implements UserDetails {
 
     private static final long LOCK_MIN = 30;
 
-    private String id;
+    private String id;                      // 로그인 아이디
 
-    private String pwd;
+    private String pwd;                     // 패스워드
 
-    private String otpCode; // 발급된 OTP Code
+    private String otpCode;                 // 발급된 OTP Code
 
-    private String otpDate;
+    private String otpDate;                 // OTP Code 발금 날짜
 
-    private String userNo;
+    private String userNo;                  // 유저번호
 
-    private Integer pwdFailCnt;
+    private Integer pwdFailCnt;             // 로그인 실패 횟수
 
-    private String lockStartTime;
+    private String lockStartTime;           // 로그인 락 걸린 시간
 
-    private String languageCd;
+    private String languageCd;              // 마지막으로 선택한 언어코드
 
-    private String lastLoginDate;
+    private String lastLoginDate;           // 마지막으로 로그인한 일시
 
-    private List<EmployeeRoleMappDTO> employeeRoleMappDTOList = new ArrayList<>();
+    private List<EmployeeAgentRoleMappDTO> employeeAgentRoleMappDTOList = new ArrayList<>();      // 권한 리스트 (유저-에이전트가 1:N 매핑될 경우를 대비해 리스트로 전달)
 
-    private String secret; // 사용자가 입력한 OTP Code
+    private String secret;                  // 사용자가 입력한 OTP Code
 
-    // 인증 단계 (1: ID/PW 인증 성공, 2: OTP 인증 진행 중, 3: OTP 인증 성공)
-    private Integer authenticateStep;
+    private Integer authenticateStep;       // 인증 단계 (1: ID/PW 인증 성공, 2: OTP 인증 진행 중, 3: OTP 인증 성공)
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        for (EmployeeRoleMappDTO dto : employeeRoleMappDTOList) {
+        for (EmployeeAgentRoleMappDTO dto : employeeAgentRoleMappDTOList) {
             authorities.add(new SimpleGrantedAuthority(dto.getRoleGroupCode()));
         }
 
@@ -94,7 +91,7 @@ public class LoginDTO implements UserDetails {
 
     @Builder
     public LoginDTO(String id, String pwd, String otpCode, String otpDate, String userNo, Integer pwdFailCnt,
-                    String lockStartTime, String languageCd, String lastLoginDate, List<EmployeeRoleMappDTO> employeeRoleMappDTOList,
+                    String lockStartTime, String languageCd, String lastLoginDate, List<EmployeeAgentRoleMappDTO> employeeRoleMappDTOList,
                     String secret, Integer authenticateStep) {
         this.id = id;
         this.pwd = pwd;
@@ -105,7 +102,7 @@ public class LoginDTO implements UserDetails {
         this.lockStartTime = lockStartTime;
         this.languageCd = languageCd;
         this.lastLoginDate = lastLoginDate;
-        this.employeeRoleMappDTOList = employeeRoleMappDTOList;
+        this.employeeAgentRoleMappDTOList = employeeRoleMappDTOList;
         this.secret = secret;
         this.authenticateStep = authenticateStep;
     }
@@ -115,11 +112,13 @@ public class LoginDTO implements UserDetails {
     }
 
     public List<Map<String, String>> getRoleGroupJson() {
-        return this.employeeRoleMappDTOList.stream()
+        return this.employeeAgentRoleMappDTOList.stream()
                 .map(dto -> {
                     Map<String, String> map = new HashMap<>();
-                    map.put("roleGroupCode", dto.getRoleGroupCode());
-                    map.put("roleGroupName", dto.getRoleGroupName());
+                    map.put("roleCd", dto.getRoleGroupCode());
+                    map.put("roleNm", dto.getRoleGroupName());
+                    map.put("nationCd", dto.getNationCode());
+                    map.put("agentCd", dto.getAgentCode());
                     return map;
                 }).collect(Collectors.toList());
     }

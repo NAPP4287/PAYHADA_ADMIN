@@ -1,56 +1,51 @@
-import {
-  Label,
-  FormGroup,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
-import { LabelSelectProps } from "interface/InterfaceBasicLabel";
+import { Label, Input } from "reactstrap";
+// interface
+import { LabelSelectProps, SelectArrayType } from "interface/InterfaceProps";
 
 const SelectOption = (
   value: string,
   setChangeData: Function,
-  dataArray: Array<string>,
+  dataArray: Array<SelectArrayType>,
+  border?: string | null,
 ) => {
   return (
-    <UncontrolledDropdown group className="fullWidth">
-      <DropdownToggle
-        outline
-        caret
-        style={{
-          textAlign: "left",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ced4da",
-          height: "43px",
-        }}>
-        {value === "" ? "국가를 선택해주세요" : value}
-      </DropdownToggle>
-      <DropdownMenu className="fullWidth">
-        {dataArray.map((el, idx) => (
-          <DropdownItem key={idx} onClick={() => setChangeData(el)}>
-            {el}
-          </DropdownItem>
+    <div>
+      <Input
+        type="select"
+        name="select"
+        className={border === "none" ? "borderNone" : ""}>
+        {dataArray.map((el: SelectArrayType, idx: number) => (
+          <option key={idx} onClick={() => setChangeData(el)}>
+            {el.name}
+          </option>
         ))}
-      </DropdownMenu>
-    </UncontrolledDropdown>
+      </Input>
+    </div>
   );
 };
 
 const LabelSelect = (props: LabelSelectProps) => {
-  const { label, type, setChangeData, value, dataArray, isFailed, failedText } =
-    props;
+  const {
+    label,
+    type,
+    setChangeData,
+    value,
+    dataArray,
+    isFailed,
+    failedText,
+    border,
+  } = props;
 
   return (
-    <FormGroup>
-      <Label for={type} style={{ fontSize: "13px" }}>
-        {label}
-      </Label>
-      {SelectOption(value, setChangeData, dataArray)}
+    <div>
+      {label && (
+        <Label for={type} style={{ fontSize: "13px" }}>
+          {label}
+        </Label>
+      )}
+      {SelectOption(value, setChangeData, dataArray, border)}
       {isFailed && <span className="errorText">{failedText}</span>}
-    </FormGroup>
+    </div>
   );
 };
 

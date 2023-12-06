@@ -5,20 +5,25 @@
 
 <mapper namespace="com.payhada.admin.dao.LoginDAO">
 
-	<select id="selectEmployeeWithLoginId" parameterType="loginDTO" resultType="loginDTO">
+	<select id="selectEmployeeWithLoginId" parameterType="LoginDTO" resultType="LoginDTO">
 		SELECT user_no, login_id AS id, pwd, otp_code, otp_date, pwd_fail_cnt, lock_start_time, language_cd, last_login_date
 		FROM employee 
 		WHERE login_id = #{id}
 	</select>
 
-	<select id="selectEmployeeRoles" parameterType="loginDTO" resultType="EmployeeRoleMappDTO">
-		SELECT erm.user_no, erm.role_group_code, erm.role_level, r.role_group_name
-		FROM employee_role_mapp erm
-		JOIN role_group r ON erm.role_group_code = r.role_group_code AND r.use_yn = 'Y'
-		WHERE erm.user_no = #{userNo}
+	<select id="selectEmployeeRoles" parameterType="String" resultType="EmployeeAgentRoleMappDTO">
+		SELECT erm.user_no
+			 , erm.role_group_code
+			 , rg.role_group_name
+			 , a.agent_code
+			 , a.nation_code
+		FROM employee_agent_role_mapp erm
+		LEFT JOIN role_group rg ON erm.role_group_code = rg.role_group_code AND rg.use_yn = 'Y'
+		LEFT JOIN agent a ON erm.agent_code = a.agent_code
+		WHERE erm.user_no = #{value}
 	</select>
 
-	<update id="updateEmployeeFailureData" parameterType="loginDTO">
+	<update id="updateEmployeeFailureData" parameterType="LoginDTO">
 		UPDATE employee
 		<set>
 			lock_start_time = #{lockStartTime},
@@ -35,7 +40,7 @@
 		WHERE user_no = #{userNo}
 	</update>
 
-	<update id="generateOTPCode" parameterType="loginDTO">
+	<update id="generateOTPCode" parameterType="LoginDTO">
 		UPDATE employee
 		SET otp_code = #{otpCode}, otp_date = #{otpDate}
 		WHERE user_no = #{userNo}
@@ -51,7 +56,7 @@
 		WHERE user_no = #{userNo}
 	</select>
 
-	<update id="updateEmployeeLanguageCd" parameterType="loginDTO">
+	<update id="updateEmployeeLanguageCd" parameterType="LoginDTO">
 		UPDATE employee SET language_cd = #{languageCd} WHERE user_no = #{userNo}
 	</update>
 

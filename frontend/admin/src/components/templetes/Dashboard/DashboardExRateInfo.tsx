@@ -1,6 +1,4 @@
 import { Card, CardBody, Table, Badge } from "reactstrap";
-// css
-import styles from "assets/css/Dashboard.module.css";
 // data
 import { exchangeRateData } from "data/dashBoardData";
 // interfaces
@@ -10,9 +8,7 @@ const DashboardExRateInfo = ({ t }: ITranslation) => {
   return (
     <Card>
       <CardBody>
-        <span className={`boxTitle ${styles.chartTitle}`}>
-          Exchange Rate Info
-        </span>
+        <span className={`boxTitle chartTitle`}>Exchange Rate Info</span>
 
         <div>
           <Table className="align-items-center smarginTop" responsive>
@@ -27,7 +23,7 @@ const DashboardExRateInfo = ({ t }: ITranslation) => {
             </thead>
             <tbody>
               {exchangeRateData.map((el, idx) => (
-                <tr key={idx} className={styles.tableRow}>
+                <tr key={idx} className={"tableRow"}>
                   <td>{el.nation}</td>
                   <td>{el.mto}</td>
                   <td>

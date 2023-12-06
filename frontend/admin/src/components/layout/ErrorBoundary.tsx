@@ -5,7 +5,7 @@ import { Button } from "reactstrap";
 const ErrorBoundary = () => {
   const navigate = useNavigate();
   return (
-    <div className="alginCenter whiteBg textCenter">
+    <div className="alignCenter whiteBg textCenter" style={{ height: "100vh" }}>
       <div>
         <img
           src={errorPerson}

@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 // components
-import LoginMain from "components/templetes/LoginMain";
-import LoginCert from "components/templetes/LoginCert";
+import LoginMain from "components/templetes/Login/LoginMain";
+import LoginCert from "components/templetes/Login/LoginCert";
 // apis
 import { callLogin, callLoginCheck } from "apis/loginApis";
 // i18n
 import { useTranslation } from "react-i18next";
 import Loading from "components/atomic/atoms/Loading";
 // interfaces
-import { LoginMainDataType, LoginCertDataType } from "interface/InterfaceUser";
+import {
+  LoginMainReqType,
+  LoginCertReqType,
+  LoginCertResType,
+} from "interface/apiType/InterfaceLogin";
 // recoil
 import { useResetRecoilState, useRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
@@ -27,7 +31,7 @@ const Login = () => {
   const resetUserInfo = useResetRecoilState(userInfoState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
-  const getLogin = async (data: LoginMainDataType | LoginCertDataType) => {
+  const getLogin = async (data: LoginMainReqType | LoginCertReqType) => {
     setIsLoading(true);
     const result = await callLogin(data);
     if (result?.resultCode === "S0000") {
@@ -40,7 +44,7 @@ const Login = () => {
     const result = await callLoginCheck();
 
     if (result.resultCode === "S0000") {
-      const data = result.data;
+      const data: LoginCertResType = result.data;
       setUserInfo({
         ...userInfo,
         id: data.id,
@@ -67,7 +71,7 @@ const Login = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="alginCenter">
+        <div className="alignCenter" style={{ height: "100vh" }}>
           {isLoginMain ? (
             <LoginMain
               email={email}

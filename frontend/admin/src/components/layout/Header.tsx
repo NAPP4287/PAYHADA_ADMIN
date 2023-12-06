@@ -16,6 +16,8 @@ import { callLogout } from "apis/loginApis";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { userInfoState } from "recoil/stateUser";
 import { commonAlertState } from "recoil/stateAlert";
+// interface
+import { ResultStatusResType } from "interface/apiType/InterfaceSetting";
 
 const Header = () => {
   const [dropDownOpen, setDropDownOpen] = useState<boolean>(false);
@@ -29,7 +31,7 @@ const Header = () => {
   };
 
   const reqChangeLang = async (lang: string) => {
-    const result = await changeLanguage({
+    const result: ResultStatusResType = await changeLanguage({
       languageCd: lang,
       userNo: userInfo.userNo,
     });

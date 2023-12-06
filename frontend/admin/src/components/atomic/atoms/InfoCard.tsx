@@ -1,16 +1,14 @@
 import { Card, CardBody, CardTitle } from "reactstrap";
-// css
-import styles from "assets/css/Dashboard.module.css";
 // interfaces
-import { DashCardProps } from "interface/interfaceDashboard";
+import { DashCardProps } from "interface/InterfaceDashboard";
 
 const InfoCard = (props: DashCardProps) => {
   const { idx, count, title, icon } = props;
 
   return (
-    <Card key={idx} className={`mb-lg-0 ${styles.topCard}`}>
+    <Card key={idx} className={`mb-lg-0 topCard`}>
       <CardBody>
-        <div className={styles.infoCardTop}>
+        <div className={"infoCardTop"}>
           <CardTitle className="text-uppercase text-muted mb-0">
             {title}
           </CardTitle>

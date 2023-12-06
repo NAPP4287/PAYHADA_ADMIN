@@ -3,15 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { dummyNavMenu } from "data/dummyData";
 import {
   Collapse,
-  Navbar,
   NavbarBrand,
-  Nav,
+  Navbar,
   NavItem,
   NavLink,
+  Nav,
 } from "reactstrap";
 import Logo from "assets/images/payhada_logo_1.png";
+// components
+import Header from "./Profile";
 // interfaces
-import { SubMenuType, NavType } from "interface/interfaceNav";
+import { SubMenuType, NavType } from "interface/InterfaceNav";
 import { ObjectBracketBooleanType } from "interface/InterfaceCommon";
 
 const NavSide = () => {
@@ -24,6 +26,7 @@ const NavSide = () => {
   const [subActive, setSubActive] = useState<string>("");
   const [prevIdx, setPrevIdx] = useState<number>(0);
   const [fixIdx, setFixIdx] = useState<number | null>(null);
+  const [collapseOpen, setCollapseOpen] = useState<boolean>(false);
 
   const onToggle = (idx: number) => {
     setMenumDrop({ ...menuDrop, [prevIdx]: false, [idx]: !menuDrop[idx] });
@@ -32,6 +35,7 @@ const NavSide = () => {
 
   const onClickMovePage = (url: string) => {
     navigate(url);
+    setCollapseOpen(false);
   };
 
   const handleMenu = (name: string, url: string, mainIdx: number) => {
@@ -61,15 +65,42 @@ const NavSide = () => {
     });
   };
 
+  const handleCollapse = () => {
+    setCollapseOpen(!collapseOpen);
+  };
+
   return (
     <Navbar
       className="navbar-vertical fixed-left navbar-light bg-white"
       expand="md"
       id="sidenav-main">
-      <NavbarBrand className="pt-0" onClick={goMain}>
-        <img alt={"payhada logo"} className="navbar-brand-img" src={Logo} />
-      </NavbarBrand>
-      <Collapse navbar>
+      <div
+        className="alignRow"
+        style={{
+          width: "100%",
+          padding: "0 30px",
+          alignItems: "center",
+        }}>
+        <button
+          className="navbar-toggler paddingZero"
+          type="button"
+          onClick={handleCollapse}>
+          <span className="navbar-toggler-icon" />
+        </button>
+        <NavbarBrand className="pt-0" onClick={goMain}>
+          <img alt={"payhada logo"} className="navbar-brand-img" src={Logo} />
+        </NavbarBrand>
+      </div>
+      <Collapse navbar isOpen={collapseOpen}>
+        <div className="collapse-close">
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={handleCollapse}>
+            <span />
+            <span />
+          </button>
+        </div>
         <Nav navbar>
           {sortingMenu(dummyMenu).map((el: NavType, index: number) => (
             <div key={index}>
@@ -102,6 +133,7 @@ const NavSide = () => {
           ))}
         </Nav>
       </Collapse>
+      <Header />
     </Navbar>
   );
 };
