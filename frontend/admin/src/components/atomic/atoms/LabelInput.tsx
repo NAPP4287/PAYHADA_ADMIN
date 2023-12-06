@@ -36,7 +36,6 @@ const LabelInput = (props: LabelInputProps) => {
         value={value}
         maxLength={maxLength || undefined}
         className={border === "none" ? "borderNone" : ""}
-        id="exampleFormControlInput1"
         // onKeyPress={(e) => onKeyPressEnter(e, onEnter)}
       />
       {!isFailed && <span className="errorText">{failedText}</span>}

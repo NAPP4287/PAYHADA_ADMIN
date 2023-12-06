@@ -1,11 +1,11 @@
 /*!
 
 =========================================================
-* Argon Dashboard React - v1.2.2
+* Argon Dashboard React - v1.2.3
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
 
 * Coded by Creative Tim
@@ -3979,7 +3979,7 @@ input[type="button"].btn-block {
   display: block;
   min-height: 1.5rem;
   padding-left: 3rem;
-  color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 .custom-control-inline {
@@ -4064,7 +4064,6 @@ input[type="button"].btn-block {
   ~ .custom-control-label::before {
   border-color: #5e72e4;
   background-color: #5e72e4;
-  box-shadow: ;
 }
 
 .custom-checkbox
@@ -18879,11 +18878,11 @@ textarea[resize="horizontal"] {
 .card .table {
   margin-bottom: 0;
 }
-/* .card .table td,
+.card .table td,
 .card .table th {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-} */
+}
 
 p {
   font-size: 1rem;
